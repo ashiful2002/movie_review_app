@@ -13,8 +13,6 @@ import {
 } from "@/components/ui/sidebar";
 import { UserRole } from "@/types";
 
-
-
 type NavItem = {
   title: string;
   url: string;
@@ -103,8 +101,16 @@ const customer_nav: NavItem[] = [
     isActive: true,
     items: [
       {
-        title: "cart",
-        url: "/cart",
+        title: "Cart",
+        url: "/dashboard/cart",
+      },
+      {
+        title: "Orders",
+        url: "/dashboard/orders",
+      },
+      {
+        title: "Profile",
+        url: "/dashboard/profile",
       },
     ],
   },

@@ -12,8 +12,32 @@ import { Badge } from "@/components/ui/badge";
 import { Star, Eye, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-
+import { Separator } from "@/components/ui/separator";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 export default function ProductCard({ product }: any) {
+  const router = useRouter();
+
+  const handleAddToCart = (product: any) => {
+    const existingCart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+    const alreadyExists = existingCart.find(
+      (item: any) => item.id === product.id
+    );
+
+    if (alreadyExists) {
+      alreadyExists.quantity += 1;
+    } else {
+      existingCart.push({
+        ...product,
+        quantity: 1,
+      });
+      toast.success("Added to cart");
+    }
+
+    localStorage.setItem("cart", JSON.stringify(existingCart));
+    router.push("/dashboard/cart"); // navigate to cart page
+  };
   return (
     <div className="flex items-center justify-center bg-muted/40 rounded">
       <motion.div
@@ -86,13 +110,25 @@ export default function ProductCard({ product }: any) {
               </div>
             </div>
           </CardContent>
-
-          <CardFooter className="p-5 pt-0">
+          <Separator />
+          <CardFooter className="p-5 pt-0 flex flex-wrap gap-3 justify-end">
             <Link href={`/meals/${product.id}`}>
-              <Button className="cursor-pointer w-full rounded-xl text-base font-semibold">
+              <Button
+                size={"xs"}
+                variant={"outline"}
+                className="cursor-pointer w-full rounded-xl text-base font-semibold"
+              >
                 Order Now
               </Button>
             </Link>
+
+            <Button
+              onClick={() => handleAddToCart(product)}
+              size={"xs"}
+              className="cursor-pointer w-full rounded-xl text-base font-semibold"
+            >
+              Add to Cart
+            </Button>
           </CardFooter>
         </Card>
       </motion.div>

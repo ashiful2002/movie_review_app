@@ -29,22 +29,26 @@ const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_API;
 //   }
 // };
 
-
 export const getAllMeals = async (params?: Record<string, any>) => {
   const query = params
     ? new URLSearchParams(
-        Object.entries(params).reduce((acc: Record<string, string>, [key, value]) => {
-          if (value !== undefined) {
-            acc[key] = String(value);
-          }
-          return acc;
-        }, {})
+        Object.entries(params).reduce(
+          (acc: Record<string, string>, [key, value]) => {
+            if (value !== undefined) {
+              acc[key] = String(value);
+            }
+            return acc;
+          },
+          {}
+        )
       ).toString()
     : "";
 
   try {
     const res = await fetch(`${BASE_URL}/meals?${query}`, {
-      cache: "no-store",
+      next: {
+        revalidate: 20,
+      },
     });
 
     if (!res.ok) {

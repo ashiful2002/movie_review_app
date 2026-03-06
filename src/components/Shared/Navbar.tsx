@@ -62,9 +62,9 @@ export default function Navbar() {
   //   if (user?.role === "ADMIN") {
   //     navLinks.push(...admin_navs);
   //   }
-  if (user?.role == "CUSTOMER") {
-    navLinks.push(...customer_navs);
-  }
+  // if (user?.role == "CUSTOMER") {
+  //   navLinks.push(...customer_navs);
+  // }
 
   const firstName = user?.name?.trim()?.split(" ")?.[0] || "";
   return (
@@ -86,15 +86,13 @@ export default function Navbar() {
             </Link>
           ))}
 
-          {user?.role === "PROVIDER" || user?.role === "ADMIN" ? (
+          {user ? (
             <>
               <Link href={"/dashboard"}>
                 <Button>Dashboard</Button>
               </Link>
               <LogOut />
             </>
-          ) : user?.role === "CUSTOMER" ? (
-            <LogOut />
           ) : (
             <Link href={"/login"}>
               <Button>Login</Button>

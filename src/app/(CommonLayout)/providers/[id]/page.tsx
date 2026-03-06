@@ -1,3 +1,4 @@
+import BlankProvidersMeals from "@/components/modules/Providers/BlankProvidersMeals";
 import ProvidersMenutable from "@/components/modules/Providers/ProvidersMenuTable";
 import { getSingleProvider } from "@/services/Providers";
 
@@ -7,25 +8,22 @@ export default async function Page({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const {data} = await getSingleProvider(id);
-  console.log(data);
-
+  const { data } = await getSingleProvider(id);
+ 
   return (
     <>
       {data && (
         <div className="min-h-screen  mt-12">
-          {/* 🔥 Hero Section */}
-          <div className="relative h-64 w-full bg-gradient-to-r from-orange-500 to-red-500">
+          {/*Hero Section */}
+          <div className="relative h-64 w-full bg-gradient-to-r bg-red-500/90  to-yellow-300 rounded">
             <div className="absolute inset-0 " />
 
-            <div className="absolute bottom-6 left-8 ">
-              <h1 className="text-4xl font-bold tracking-tight">
+            <div className="absolute top-20 left-52">
+              <h1 className="text-4xl capitalize font-bold tracking-tight">
                 {data?.restaurantName}
               </h1>
-              <p className="text-sm mt-2 opacity-90">{data?.location}</p>
             </div>
           </div>
-          {/* 🔥 Content Section */}
           <div className="max-w-5xl mx-auto px-6 -mt-20 relative z-10">
             <div className="grid md:grid-cols-3 gap-6">
               {/* Logo Card */}
@@ -61,32 +59,41 @@ export default async function Page({
                 <div className="grid sm:grid-cols-2 gap-6 pt-4 border-t">
                   <div>
                     <p className="text-sm text-gray-500">Location</p>
-                    <p className="font-medium">{data?.location}</p>
+                    <p className="text-sm mt-2 text-gray-500 opacity-90">
+                      {data?.location}
+                    </p>
                   </div>
 
                   <div>
                     <p className="text-sm text-gray-500">Joined On</p>
-                    <p className="font-medium">
+                    <p className="font-medium text-gray-500">
                       {new Date(data?.createdAt).toLocaleDateString()}
                     </p>
                   </div>
 
                   <div>
                     <p className="text-sm text-gray-500">Last Updated</p>
-                    <p className="font-medium">
+                    <p className="font-medium text-gray-500">
                       {new Date(data?.updatedAt).toLocaleDateString()}
                     </p>
                   </div>
 
                   <div>
                     <p className="text-sm text-gray-500">Provider ID</p>
-                    <p className="font-medium text-xs break-all">{data?.id}</p>
+                    <p className="font-medium text-xs break-all text-gray-500">{data?.id}</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <ProvidersMenutable meals={data.meals} />{" "}
+
+          {data.meals.length > 0 ? (
+            <ProvidersMenutable meals={data.meals} />
+          ) : (
+            <>
+              <BlankProvidersMeals />
+            </>
+          )}
         </div>
       )}
     </>
