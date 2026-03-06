@@ -72,7 +72,7 @@ const Page = async () => {
 
                 {/* Action */}
                 <TableCell className="text-right">
-                  <Link href={`/dashboard/providers/${provider.id}`}>
+                  <Link href={`/providers/${provider.id}`}>
                     <Button size="sm" variant="outline">
                       View Details
                     </Button>

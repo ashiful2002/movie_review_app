@@ -1,24 +1,94 @@
+import ProvidersMenutable from "@/components/modules/Providers/ProvidersMenuTable";
 import { getSingleProvider } from "@/services/Providers";
 
-interface Props {
-  params: { id: string };
-}
-
-export default async function Page({ params }: Props) {
-//   const provider = await getSingleProvider(params.id);
-//   const data = provider.data;
-//   console.log(data);
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const {data} = await getSingleProvider(id);
+  console.log(data);
 
   return (
-    <div className="p-6 space-y-4">
-      {/* <h1 className="text-3xl font-bold">{data.restaurantName}</h1>
-      <p>{data.description}</p>
-      <p>
-        <strong>Email:</strong> {data.user.email}
-      </p>
-      <p>
-        <strong>Location:</strong> {data.location}
-      </p> */}
-    </div>
+    <>
+      {data && (
+        <div className="min-h-screen  mt-12">
+          {/* 🔥 Hero Section */}
+          <div className="relative h-64 w-full bg-gradient-to-r from-orange-500 to-red-500">
+            <div className="absolute inset-0 " />
+
+            <div className="absolute bottom-6 left-8 ">
+              <h1 className="text-4xl font-bold tracking-tight">
+                {data?.restaurantName}
+              </h1>
+              <p className="text-sm mt-2 opacity-90">{data?.location}</p>
+            </div>
+          </div>
+          {/* 🔥 Content Section */}
+          <div className="max-w-5xl mx-auto px-6 -mt-20 relative z-10">
+            <div className="grid md:grid-cols-3 gap-6">
+              {/* Logo Card */}
+              <div className="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center">
+                <img
+                  src={data?.logo}
+                  alt="Restaurant Logo"
+                  className="w-40 h-40 object-cover rounded-xl shadow-md"
+                />
+
+                <span
+                  className={`mt-4 px-4 py-1 rounded-full text-sm font-medium ${
+                    data?.isApproved
+                      ? "bg-green-100 text-green-700"
+                      : "bg-yellow-100 text-yellow-700"
+                  }`}
+                >
+                  {data?.isApproved ? "Approved Provider" : "Pending Approval"}
+                </span>
+              </div>
+
+              {/* Details Card */}
+              <div className="p-4 md:col-span-2 bg-white rounded-2xl shadow-lg p-8 space-y-6">
+                <div>
+                  <h2 className="text-gray-600 text-xl font-semibold mb-2">
+                    About Restaurant
+                  </h2>
+                  <p className="text-gray-600 leading-relaxed">
+                    {data?.description}
+                  </p>
+                </div>
+
+                <div className="grid sm:grid-cols-2 gap-6 pt-4 border-t">
+                  <div>
+                    <p className="text-sm text-gray-500">Location</p>
+                    <p className="font-medium">{data?.location}</p>
+                  </div>
+
+                  <div>
+                    <p className="text-sm text-gray-500">Joined On</p>
+                    <p className="font-medium">
+                      {new Date(data?.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p className="text-sm text-gray-500">Last Updated</p>
+                    <p className="font-medium">
+                      {new Date(data?.updatedAt).toLocaleDateString()}
+                    </p>
+                  </div>
+
+                  <div>
+                    <p className="text-sm text-gray-500">Provider ID</p>
+                    <p className="font-medium text-xs break-all">{data?.id}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ProvidersMenutable meals={data.meals} />{" "}
+        </div>
+      )}
+    </>
   );
 }

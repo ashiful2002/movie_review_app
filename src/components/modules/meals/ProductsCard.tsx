@@ -15,7 +15,7 @@ import Link from "next/link";
 
 export default function ProductCard({ product }: any) {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-muted/40 p-3 rounded">
+    <div className="flex items-center justify-center bg-muted/40 rounded">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -36,7 +36,7 @@ export default function ProductCard({ product }: any) {
                 <Badge
                   className={`px-3 py-1 text-xs font-semibold rounded-full ${
                     product.isAvailable
-                      ? "bg-green-500 hover:bg-green-500"
+                      ? " bg-yellow-400/90"
                       : "bg-red-500 hover:bg-red-500"
                   }`}
                 >
@@ -55,7 +55,9 @@ export default function ProductCard({ product }: any) {
               <h3 className="text-xl font-semibold leading-tight">
                 {product.name}
               </h3>
-              <p className="text-lg font-bold">${product.price}</p>
+              <p className="text-lg font-bold border-2 px-2 rounded-xl">
+                ${product.price}
+              </p>
             </div>
 
             <p className="text-sm text-muted-foreground line-clamp-2">

@@ -24,12 +24,14 @@ export const getSingleProvider = async (id: string) => {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_API}/providers/${id}`
     );
+    console.log(res);
+
     if (!res.ok) {
       throw new Error("Failed to fetch meals");
     }
     const result = await res.json();
     return result;
   } catch (error: any) {
-    throw new Error(error.message);
+    console.log(error);
   }
 };

@@ -13,8 +13,6 @@ export default async function Page({
 }) {
   const { id } = await params;
   const { data } = await getSingleMeal(id);
-  console.log(data);
-
   return (
     <div className="min-h-screen bg-muted/40 p-6 md:p-10 flex justify-center">
       <div

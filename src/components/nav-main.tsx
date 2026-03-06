@@ -18,28 +18,16 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import Logo from "./Shared/Logo";
+import Link from "next/link";
 
-export function NavMain({
-  items,
-}: {
-  items: {
-    title: string;
-    url: string;
-    icon?: LucideIcon;
-    isActive?: boolean;
-    items?: {
-      title: string;
-      url: string;
-    }[];
-  }[];
-}) {
+export function NavMain({ items }: { items: any }) {
   return (
     <SidebarGroup>
       <SidebarGroupLabel>
         <Logo />
       </SidebarGroupLabel>
       <SidebarMenu>
-        {items.map((item) => (
+        {items.map((item: any) => (
           <Collapsible
             key={item.title}
             asChild
@@ -56,12 +44,12 @@ export function NavMain({
               </CollapsibleTrigger>
               <CollapsibleContent>
                 <SidebarMenuSub>
-                  {item.items?.map((subItem) => (
+                  {item.items?.map((subItem: any) => (
                     <SidebarMenuSubItem key={subItem.title}>
                       <SidebarMenuSubButton asChild>
-                        <a href={subItem.url}>
+                        <Link href={subItem.url}>
                           <span>{subItem.title}</span>
-                        </a>
+                        </Link>
                       </SidebarMenuSubButton>
                     </SidebarMenuSubItem>
                   ))}

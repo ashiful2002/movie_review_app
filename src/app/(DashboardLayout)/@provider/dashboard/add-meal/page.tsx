@@ -1,4 +1,4 @@
-import AddMealForm from "@/components/modules/products/AddMealForm";
+import AddMealForm from "@/components/modules/meals/AddMealForm";
 import { getCategories } from "@/services/categories";
 
 const page = async () => {

@@ -1,44 +1,101 @@
 "use server";
 
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
-export const addMeal = async (payload: any) => {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("token")?.value;
-  if (!token) {
-    throw new Error("you are unauthorised");
-  }
+const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_API;
+
+/**
+ * Get all meals
+ */
+// export const getAllMeals = async (params?: Record<string, any>) => {
+//   const query = new URLSearchParams(params).toString();
+//   try {
+//     const res = await fetch(`${BASE_URL}/meals?${query}`, {
+//       // next: {
+//       //   tags: ["meals"],
+//       // },
+//       cache: "no-store",
+//     });
+
+//     if (!res.ok) {
+//       throw new Error("Failed to fetch meals");
+//     }
+
+//     const result = await res.json();
+//     return result;
+//   } catch (error: any) {
+//     throw new Error(error.message);
+//   }
+// };
+
+
+export const getAllMeals = async (params?: Record<string, any>) => {
+  const query = params
+    ? new URLSearchParams(
+        Object.entries(params).reduce((acc: Record<string, string>, [key, value]) => {
+          if (value !== undefined) {
+            acc[key] = String(value);
+          }
+          return acc;
+        }, {})
+      ).toString()
+    : "";
+
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/meals`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token,
-      },
-      body: JSON.stringify(payload),
+    const res = await fetch(`${BASE_URL}/meals?${query}`, {
+      cache: "no-store",
     });
-    console.log(res);
 
     if (!res.ok) {
       throw new Error("Failed to fetch meals");
     }
-    const result = await res.json();
-    return result;
+
+    return res.json();
   } catch (error: any) {
-    console.log(error);
+    throw new Error(error.message);
   }
 };
 
-export const getAllMeals = async () => {
+/**
+ * Get featured meals
+ */
+// export const featuredMeals = async () => {
+//   try {
+//     const res = await fetch(`${BASE_URL}/meals`, {
+//       next: {
+//         tags: ["meals"],
+//       },
+//     });
+
+//     if (!res.ok) {
+//       throw new Error("Failed to fetch meals");
+//     }
+
+//     const result = await res.json();
+
+//     // Example: filter featured meals
+//     const featured = result?.data?.filter((meal: any) => meal.featured);
+
+//     return featured;
+//   } catch (error: any) {
+//     throw new Error(error.message);
+//   }
+// };
+
+/**
+ * Get single meal
+ */
+export const getSingleMeal = async (id: string) => {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/meals`, {
-      next: {
-        revalidate: 20,
-      },
+    const res = await fetch(`${BASE_URL}/meals/${id}`, {
+      cache: "no-store",
     });
+
     if (!res.ok) {
-      throw new Error("Failed to fetch meals");
+      throw new Error("Failed to fetch meal");
     }
+
     const result = await res.json();
     return result;
   } catch (error: any) {
@@ -46,16 +103,36 @@ export const getAllMeals = async () => {
   }
 };
 
-export const getSingleMeal = async (id: string) => {
+/**
+ * Add new meal
+ */
+export const addMeal = async (payload: any) => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+
+  if (!token) {
+    throw new Error("You are unauthorized");
+  }
+
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_API}/meals/${id}`,
-      {
-        cache: "no-store",
-      }
-    );
+    const res = await fetch(`${BASE_URL}/meals`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token, // use `Bearer ${token}` if your backend requires it
+      },
+      body: JSON.stringify(payload),
+    });
 
     const result = await res.json();
+
+    if (!res.ok) {
+      throw new Error(result.message || "Failed to add meal");
+    }
+
+    // Refresh all cached meal data
+    revalidateTag("meals", {});
+
     return result;
   } catch (error: any) {
     throw new Error(error.message);

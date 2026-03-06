@@ -1,10 +1,16 @@
 "use server";
+import { User } from "@/types";
 import { jwtDecode, JwtPayload } from "jwt-decode";
 import { cookies } from "next/headers";
+
 interface DecodedToken extends JwtPayload {
+  sub: string;
   role: "ADMIN" | "CUSTOMER" | "PROVIDER";
   email: string;
+  name?: string;
+  avatar?: string | null;
 }
+
 export interface LoginPayload {
   email: string;
   password: string;
@@ -42,13 +48,21 @@ export const loginUser = async (data: LoginPayload) => {
   }
 };
 
-export const getUser = async () => {
+export const getUser = async (): Promise<User | null> => {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
 
   if (!token) return null;
 
-  return jwtDecode<DecodedToken>(token);
+  const decoded = jwtDecode<DecodedToken>(token);
+
+  return {
+    id: decoded.sub,
+    name: decoded.name ?? "User",
+    email: decoded.email,
+    avatar: decoded.avatar ?? null,
+    role: decoded.role,
+  };
 };
 // log out user
 export const UserLogOut = async () => {

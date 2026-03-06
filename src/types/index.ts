@@ -11,11 +11,7 @@ export enum OrderStatus {
   DELIVERED = "DELIVERED",
   CANCELLED = "CANCELLED",
 }
-export type UserRole = {
-  customer: "CUSTOMER";
-  provider: "PROVIDER";
-  admin: "ADMIN";
-};
+
 interface Order {
   id: string;
   customerId: string;
@@ -34,3 +30,13 @@ interface Order {
 export interface DashboardProps {
   orders: Order[];
 }
+
+export type User = {
+  id: string;
+  name: string;
+  email: string;
+  avatar: string | null;
+  role: "ADMIN" | "CUSTOMER" | "PROVIDER";
+};
+
+export type UserRole = "ADMIN" | "PROVIDER" | "CUSTOMER";

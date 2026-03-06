@@ -1,13 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  AudioWaveform,
-  Command,
-  GalleryVerticalEnd,
-  LayoutDashboard,
-
-} from "lucide-react";
+import { LayoutDashboard, User, UserIcon } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
 import { NavUser } from "@/components/nav-user";
@@ -17,63 +11,123 @@ import {
   SidebarFooter,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { UserRole } from "@/types";
 
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  teams: [
-    {
-      name: "Acme Inc",
-      logo: GalleryVerticalEnd,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: AudioWaveform,
-      plan: "Startup",
-    },
-    {
-      name: "Evil Corp.",
-      logo: Command,
-      plan: "Free",
-    },
-  ],
-  navMain: [
-    {
-      title: "Providers Dashboard",
-      url: "#",
-      icon: LayoutDashboard,
-      isActive: true,
-      items: [
-        {
-          title: "Add Meal",
-          url: "/dashboard/add-meal",
-        },
-        {
-          title: "My meals",
-          url: "/dashboard/my-meals",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
-      ],
-    },
-  ],
 
+
+type NavItem = {
+  title: string;
+  url: string;
+  icon: React.ComponentType<{ className?: string }>;
+  isActive: boolean;
+  items: {
+    title: string;
+    url: string;
+  }[];
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    avatar: string | null;
+    role: UserRole;
+  } | null;
+};
+
+const navMain: NavItem[] = [
+  {
+    title: "Providers Dashboard",
+    url: "#",
+    icon: LayoutDashboard,
+    isActive: true,
+    items: [
+      {
+        title: "Add Meal",
+        url: "/dashboard/add-meal",
+      },
+      {
+        title: "My meals",
+        url: "/dashboard/my-meals",
+      },
+      {
+        title: "Settings",
+        url: "#",
+      },
+    ],
+  },
+];
+const providers_dashboard: NavItem[] = [
+  {
+    title: "Providers Dashboard",
+    url: "#",
+    icon: LayoutDashboard,
+    isActive: true,
+    items: [
+      {
+        title: "Add Meal",
+        url: "/dashboard/add-meal",
+      },
+      {
+        title: "My meals",
+        url: "/dashboard/my-meals",
+      },
+    ],
+  },
+];
+
+const admin_nav: NavItem[] = [
+  {
+    title: "Admin Dashboard",
+    url: "#",
+    icon: UserIcon,
+    isActive: true,
+    items: [
+      {
+        title: "Manage Users",
+        url: "/dashboard/users",
+      },
+      {
+        title: "My meals",
+        url: "/dashboard/",
+      },
+    ],
+  },
+];
+const customer_nav: NavItem[] = [
+  {
+    title: "Customer Dashboard",
+    url: "#",
+    icon: User,
+    isActive: true,
+    items: [
+      {
+        title: "cart",
+        url: "/cart",
+      },
+    ],
+  },
+];
+
+export function AppSidebar({ user, ...props }: AppSidebarProps) {
+  let navItems: NavItem[] = [];
+
+  if (user?.role === "ADMIN") {
+    navItems = admin_nav;
+  } else if (user?.role === "PROVIDER") {
+    navItems = providers_dashboard;
+  } else if (user?.role === "CUSTOMER") {
+    navItems = customer_nav;
+  }
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <NavMain items={navItems} />
       </SidebarContent>
+
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={user} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

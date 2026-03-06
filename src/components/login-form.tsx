@@ -16,6 +16,13 @@ import {
   FieldGroup,
   FieldLabel,
 } from "@/components/ui/field";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 
 import { useForm } from "react-hook-form";
@@ -24,37 +31,42 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginUser } from "@/services/authentication";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-// ✅ Zod Schema
+import { userCredentials } from "@/constants";
+
 const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
+
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const router = useRouter();
   const [serverError, setServerError] = useState<string | null>(null);
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
-  const router = useRouter();
 
   const onSubmit = async (data: LoginFormValues) => {
     try {
       setServerError(null);
       await loginUser(data);
-      // console.log("Login success:", { response });
-      // 👉 redirect or store token here
       router.push("/dashboard");
     } catch (error: any) {
-      setServerError(error.message);
+      setServerError(error?.message || "Login failed");
     }
   };
 
@@ -64,11 +76,44 @@ export function LoginForm({
         <CardHeader>
           <CardTitle>Login to your account</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            Enter your email and password to login
           </CardDescription>
         </CardHeader>
 
-        <CardContent>
+        <CardContent className="space-y-4">
+          {/* Demo Account Dropdown */}
+          <div className="space-y-2">
+            <p className="text-sm font-medium">
+              Demo Account (for testing)
+            </p>
+
+            <Select
+              onValueChange={(value) => {
+                const selectedUser = userCredentials.find(
+                  (user) => user.role === value
+                );
+
+                if (selectedUser) {
+                  setValue("email", selectedUser.email);
+                  setValue("password", selectedUser.password);
+                }
+              }}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select a demo role" />
+              </SelectTrigger>
+
+              <SelectContent>
+                {userCredentials.map((user) => (
+                  <SelectItem key={user.role} value={user.role}>
+                    {user.role.toUpperCase()}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Login Form */}
           <form onSubmit={handleSubmit(onSubmit)}>
             <FieldGroup>
               {/* Email */}
@@ -81,7 +126,9 @@ export function LoginForm({
                   {...register("email")}
                 />
                 {errors.email && (
-                  <p className="text-sm text-red-500">{errors.email.message}</p>
+                  <p className="text-sm text-red-500">
+                    {errors.email.message}
+                  </p>
                 )}
               </Field>
 
@@ -91,9 +138,9 @@ export function LoginForm({
                   <FieldLabel htmlFor="password">Password</FieldLabel>
                   <a
                     href="#"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+                    className="ml-auto text-sm underline-offset-4 hover:underline"
                   >
-                    Forgot your password?
+                    Forgot password?
                   </a>
                 </div>
 
@@ -127,13 +174,19 @@ export function LoginForm({
                   {isSubmitting ? "Logging in..." : "Login"}
                 </Button>
 
-                <Button variant="outline" type="button" className="w-full mt-2">
+                <Button
+                  variant="outline"
+                  type="button"
+                  className="w-full mt-2"
+                >
                   Login with Google
                 </Button>
 
                 <FieldDescription className="text-center mt-2">
                   Don&apos;t have an account?{" "}
-                  <Link href="/signup">Sign up</Link>
+                  <Link href="/signup" className="underline">
+                    Sign up
+                  </Link>
                 </FieldDescription>
               </Field>
             </FieldGroup>
