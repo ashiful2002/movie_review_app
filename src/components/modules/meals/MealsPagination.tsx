@@ -12,7 +12,7 @@ const MealsPagination = ({ totalPage }: { totalPage: number }) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", String(page));
 
-    router.push(`/meals?${params.toString()}`);
+    router.push(`/movies?${params.toString()}`);
   };
 
   const pages = Array.from({ length: totalPage }, (_, i) => i + 1);

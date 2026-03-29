@@ -36,10 +36,10 @@ export type User = {
   name: string;
   email: string;
   avatar: string | null;
-  role: "ADMIN" | "CUSTOMER" | "PROVIDER";
+  role: "ADMIN" | "USER"  ;
 };
 
-export type UserRole = "ADMIN" | "PROVIDER" | "CUSTOMER";
+export type UserRole = "ADMIN" | "USER";
 
 export type CartItem = {
   id: string;

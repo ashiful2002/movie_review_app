@@ -1,5 +1,4 @@
 export const userCredentials = [
-  { role: "customer", email: "customer@foodhub.com", password: "asdf1234" },
-  { role: "provider", email: "Provider@foodhub.com", password: "asdf1234" },
-  { role: "admin", email: "admin@foodhub.com", password: "asdf1234" },
+  { role: "user", email: "user@mmdb.com", password: "asdf1234" },
+  { role: "admin", email: "superadmifn@gmail.com", password: "asdf1234" },
 ];

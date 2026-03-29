@@ -6,23 +6,18 @@ import { getUser } from "@/services/authentication";
 import { User } from "@/types";
 
 export default async function Page({
-  customer,
+  user,
   admin,
-  provider,
 }: {
-  customer: ReactNode;
+  user: ReactNode;
   admin: ReactNode;
-  provider: ReactNode;
 }) {
-  const user: User | null = await getUser();
-  const userRole = user?.role;
+  const currentUser: User | null = await getUser();
+  const userRole = currentUser?.role;
   return (
     <SidebarProvider>
-      <AppSidebar user={user} />
-
-      {/* {userRole === "ADMIN" && admin}
-      {userRole === "CUSTOMER" && customer}
-      {userRole === "PROVIDER" && provider} */}
+      <AppSidebar user={currentUser} />
+ 
       <main className="flex flex-1 flex-col">
         {/* HEADER */}
         <header className="flex h-14 items-center border-b px-4">
@@ -33,8 +28,7 @@ export default async function Page({
         {/* PAGE CONTENT */}
         <div className="flex-1 p-4">
           {userRole === "ADMIN" && admin}
-          {userRole === "CUSTOMER" && customer}
-          {userRole === "PROVIDER" && provider}
+          {userRole === "USER" && user}
         </div>
       </main>
     </SidebarProvider>

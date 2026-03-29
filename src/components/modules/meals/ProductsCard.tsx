@@ -13,7 +13,7 @@ import {
   Star,
   Eye,
   MapPin,
-  CarTaxiFrontIcon,
+ 
   ShoppingCart,
 } from "lucide-react";
 import { motion } from "framer-motion";

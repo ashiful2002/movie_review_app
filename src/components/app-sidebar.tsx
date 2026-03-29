@@ -56,9 +56,9 @@ const navMain: NavItem[] = [
     ],
   },
 ];
-const providers_dashboard: NavItem[] = [
+const users_nav: NavItem[] = [
   {
-    title: "Providers Dashboard",
+    title: "Users Dashboard",
     url: "#",
     icon: LayoutDashboard,
     isActive: true,
@@ -66,18 +66,6 @@ const providers_dashboard: NavItem[] = [
       {
         title: "Dashboard",
         url: "/dashboard",
-      },
-      {
-        title: "Add Meals",
-        url: "/dashboard/add-meal",
-      },
-      {
-        title: "Menu",
-        url: "/dashboard/my-meals",
-      },
-      {
-        title: "Orders",
-        url: "/dashboard/my-orders",
       },
     ],
   },
@@ -94,39 +82,10 @@ const admin_nav: NavItem[] = [
         title: "Dashboard",
         url: "/dashboard",
       },
+
       {
-        title: "Manage Users",
-        url: "/dashboard/users",
-      },
-      {
-        title: "All Orders",
-        url: "/dashboard/orders",
-      },
-      {
-        title: "Manage Categories",
-        url: "/dashboard/categories",
-      },
-    ],
-  },
-];
-const customer_nav: NavItem[] = [
-  {
-    title: "Customer Dashboard",
-    url: "#",
-    icon: User,
-    isActive: true,
-    items: [
-      {
-        title: "Cart",
-        url: "/dashboard/cart",
-      },
-      {
-        title: "Orders",
-        url: "/dashboard/orders",
-      },
-      {
-        title: "Profile",
-        url: "/dashboard/profile",
+        title: "Add Movie",
+        url: "/dashboard/add-movie",
       },
     ],
   },
@@ -137,10 +96,8 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
 
   if (user?.role === "ADMIN") {
     navItems = admin_nav;
-  } else if (user?.role === "PROVIDER") {
-    navItems = providers_dashboard;
-  } else if (user?.role === "CUSTOMER") {
-    navItems = customer_nav;
+  } else if (user?.role === "USER") {
+    navItems = users_nav;
   }
   return (
     <Sidebar collapsible="icon" {...props}>

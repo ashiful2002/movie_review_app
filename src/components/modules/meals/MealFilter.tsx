@@ -21,7 +21,7 @@ const MealsFilter = () => {
       if (minPrice) params.set("minPrice", minPrice);
       if (maxPrice) params.set("maxPrice", maxPrice);
 
-      router.replace(`/meals?${params.toString()}`);
+      router.replace(`/movies?${params.toString()}`);
     }, 400);
 
     return () => clearTimeout(timeout);

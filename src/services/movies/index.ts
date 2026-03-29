@@ -37,7 +37,7 @@ export const getAllMovies = async (params?: Record<string, any>) => {
   }
 };
 
-export const getSingleMeal = async (id: string) => {
+export const getSingleMovie = async (id: string) => {
   try {
     const res = await fetch(`${BASE_URL}/movies/${id}`, {
       cache: "no-store",
@@ -56,9 +56,9 @@ export const getSingleMeal = async (id: string) => {
 };
 
 /**
- * Add new meal
+ * Add new movie
  */
-export const addMeal = async (payload: any) => {
+export const addMovie = async (payload: any) => {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
 
@@ -67,7 +67,7 @@ export const addMeal = async (payload: any) => {
   }
 
   try {
-    const res = await fetch(`${BASE_URL}/provider/meals`, {
+    const res = await fetch(`${BASE_URL}/movies`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -79,10 +79,10 @@ export const addMeal = async (payload: any) => {
     const result = await res.json();
 
     if (!res.ok) {
-      throw new Error(result.message || "Failed to add meal");
+      throw new Error(result.message || "Failed to add movie");
     }
 
-    revalidateTag("meals", {});
+    revalidateTag("movie", {});
 
     return result;
   } catch (error: any) {

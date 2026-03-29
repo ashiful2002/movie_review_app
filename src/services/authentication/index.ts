@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 
 interface DecodedToken extends JwtPayload {
   sub: string;
-  role: "ADMIN" | "CUSTOMER" | "PROVIDER";
+  role: "ADMIN" | "USER";
   email: string;
   name?: string;
   avatar?: string | null;

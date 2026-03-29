@@ -15,8 +15,8 @@ import { ModeToggle } from "../Buttons/ModeToggler";
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState<UserTypes | null>(null);
+
   const pathname = usePathname();
-  // console.log(user);
 
   useEffect(() => {
     const getCurrentUser = async () => {
@@ -28,43 +28,8 @@ export default function Navbar() {
   }, []);
   const navLinks: any[] = [
     { name: "Home", href: "/" },
-    { name: "Browse Meal", href: "/meals" },
-    //  meal details
-    { name: "Providers", href: "/providers" },
-    // provider details// Manage categories
+    { name: "Movies", href: "/movies" },
   ];
-
-  const customer_navs = [
-    // customer routes
-    // { name: "Cart", href: "/cart" },
-    // { name: "Checkout", href: "/checkout" },
-    // { name: "My Orders", href: "/orders" }, // order details /:id
-    // { name: "Profile", href: "/profile" },
-    // { name: "Dashboard", href: "/dashboard" },
-    { name: "profile", href: "/profile" },
-  ];
-  const provider_navs = [
-    // provider routes
-    { name: "Add Menu", href: "/provider/add-menu" },
-    { name: "Menu", href: "/provider/menu" },
-    { name: "Orders", href: "/provider/orders" },
-  ];
-  const admin_navs = [
-    // admin routes
-    { name: "Users", href: "/admin/users" }, // manage uesrs
-    { name: "Orders", href: "/admin/orders" }, // all orders
-    { name: "Categories", href: "/admin/categories" }, // Manage categories
-  ];
-
-  //   if (user?.role === "PROVIDER") {
-  //     navLinks.push(...provider_navs);
-  //   }
-  //   if (user?.role === "ADMIN") {
-  //     navLinks.push(...admin_navs);
-  //   }
-  // if (user?.role == "CUSTOMER") {
-  //   navLinks.push(...customer_navs);
-  // }
 
   const firstName = user?.name?.trim()?.split(" ")?.[0] || "";
   return (
@@ -79,7 +44,7 @@ export default function Navbar() {
               key={link.name}
               href={link.href}
               className={`text-sm font-medium transition-colors ${
-                pathname === link.href ? "text-red-500/90" : ""
+                pathname === link.href ? "text-yellow-400" : ""
               }`}
             >
               {link.name}
