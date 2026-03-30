@@ -7,12 +7,12 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
- import { Badge } from "@/components/ui/badge";
-import { Star, Eye  } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Star, Eye } from "lucide-react";
 import { motion } from "framer-motion";
- import { Separator } from "@/components/ui/separator";
- import MovieDetails from "@/components/Buttons/movie/ViewDetails";
- import BuySubscription from "@/components/Buttons/movie/BuySubscription";
+import { Separator } from "@/components/ui/separator";
+import MovieDetails from "@/components/Buttons/movie/ViewDetails";
+import BuySubscription from "@/components/Buttons/movie/BuySubscription";
 
 export default function MovieCard({ movie }: any) {
   const averageRating =
@@ -20,6 +20,7 @@ export default function MovieCard({ movie }: any) {
       ? movie.reviews.reduce((a: any, b: any) => a + b.rating, 0) /
         movie.reviews.length
       : 0;
+  console.log(movie);
 
   return (
     <motion.div
@@ -80,20 +81,21 @@ export default function MovieCard({ movie }: any) {
 
           {movie.genres?.length > 0 && (
             <div className="flex flex-wrap gap-2 pt-2">
-              {movie.genres.map((genre: string) => (
-                <Badge key={genre} className="bg-indigo-600 text-xs px-2 py-1">
-                  {genre}
+              {movie.genres.map(({ genre, genreId }: any) => (
+                <Badge variant={"default"}
+                  key={genreId}
+                  className=" "
+                >
+                  {genre.name}
                 </Badge>
               ))}
             </div>
           )}
         </CardContent>
-
         <Separator />
 
         <CardFooter className="flex flex-col gap-3">
           <MovieDetails movie={movie} />
-
           {/* <AddtoWatchlist movie={movie} /> */}
           <BuySubscription movie={movie} />
         </CardFooter>

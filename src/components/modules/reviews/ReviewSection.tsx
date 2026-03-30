@@ -1,81 +1,135 @@
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
-import { Star } from "lucide-react";
 import Image from "next/image";
 
-const ReviewSection = ({ meal }: any) => {
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
+const ReviewSection = ({ movie }: any) => {
   return (
-    <div>
-      {/* Reviews */}
-      <h3 className="text-xl font-semibold">Customer Reviews</h3>
+    <div className="space-y-4">
+      <h3 className="text-xl font-semibold">Reviews</h3>
       <Separator />
-      <div className="">
-        {meal?.reviews?.length > 0 ? (
-          <div className="space-y-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4 ">
-            {meal.reviews.map((review: any) => (
+
+      {movie?.reviews?.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {movie.reviews.map((review: any) => {
+            const user = review.user;
+
+            return (
               <Card
                 key={review.id}
-                className="border shadow-sm rounded-xl hover:shadow-md transition h-36"
+                className="rounded-2xl border  hover:shadow-lg transition-all duration-300"
               >
-                <CardContent className="p-4 space-y-3">
-                  {/* Top Row */}
+                <CardContent className=" space-y-4">
+                  {/* Header */}
                   <div className="flex items-center justify-between">
                     {/* User */}
                     <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-sm font-semibold">
+                      <div className="w-10 h-10 relative">
                         <Image
-                          src={review.customer.avatar}
-                          alt={review.customer.name}
-                          width={60}
-                          height={60}
-                          className="rounded-full"
+                          src={
+                            user?.avatar ||
+                            "https://i.ibb.co/4pDNDk1/avatar.png"
+                          }
+                          alt={user?.name || "User"}
+                          fill
+                          className="rounded-full object-cover border"
                         />
                       </div>
 
-                      <div className="text-sm">
-                        <p className="font-medium capitalize">
-                          {review.customer?.name?.split(" ")[0] || "Customer"}
+                      <div>
+                        <p className="text-sm font-semibold">
+                          {user?.name || "Anonymous"}
                         </p>
-                        <p className="text-muted-foreground text-xs">
-                          {new Date(review.createdAt).toLocaleDateString(
-                            "en-GB",
-                            {
-                              day: "numeric",
-                              month: "short",
-                              year: "numeric",
-                            }
-                          )}{" "}
+                        <p className="text-xs text-muted-foreground">
+                          {new Date(review.createdAt).toLocaleDateString()}
                         </p>
                       </div>
                     </div>
 
                     {/* Rating */}
-                    <div className="flex items-center gap-1">
-                      {[...Array(review.rating)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className="w-4 h-4 text-yellow-500 fill-yellow-500"
-                        />
-                      ))}
-                    </div>
+
+                    {/* 2 */}
+
+                    {/* 3 */}
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <div
+                            className={`px-2 py-1 rounded-full text-xs font-semibold cursor-pointer ${
+                              review.rating >= 8
+                                ? "bg-green-100 text-green-600"
+                                : review.rating >= 5
+                                ? "bg-yellow-100 text-yellow-600"
+                                : "bg-red-100 text-red-600"
+                            }`}
+                          >
+                            {review.rating}/10
+                          </div>
+                        </TooltipTrigger>
+
+                        <TooltipContent>
+                          <p>Rating: {review.rating} out of 10</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   </div>
 
-                  {/* Comment */}
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {review.comment}
+                  {/* Content */}
+                  <p className="text-sm text-muted-foreground line-clamp-3">
+                    {review.content}
                   </p>
+
+                  {/* Tags */}
+                  {review.tags?.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      {review.tags.map((tag: string, i: number) => (
+                        <span
+                          key={i}
+                          className="text-xs bg-indigo-100 text-indigo-600 px-2 py-1 rounded-full"
+                        >
+                          #{tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Footer */}
+                  <div className="flex items-center justify-between text-xs text-muted-foreground">
+                    {review.spoiler && (
+                      <span className="text-red-500 font-medium">
+                        ⚠ Spoiler
+                      </span>
+                    )}
+
+                    <span
+                      className={`px-2 py-0.5 rounded-full text-xs ${
+                        review.status === "APPROVED"
+                          ? "bg-green-100 text-green-600"
+                          : review.status === "PENDING"
+                          ? "bg-yellow-100 text-yellow-600"
+                          : "bg-red-100 text-red-600"
+                      }`}
+                    >
+                      {review.status}
+                    </span>
+                  </div>
                 </CardContent>
               </Card>
-            ))}
-          </div>
-        ) : (
-          <div className="text-sm text-muted-foreground">
-            No reviews yet. Be the first to review this meal.
-          </div>
-        )}
-      </div>
+            );
+          })}
+        </div>
+      ) : (
+        <p className="text-sm text-muted-foreground">
+          No reviews yet. Be the first to review this movie.
+        </p>
+      )}
     </div>
   );
 };
-
 export default ReviewSection;

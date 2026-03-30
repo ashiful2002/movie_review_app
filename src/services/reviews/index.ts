@@ -3,7 +3,6 @@ import { cookies } from "next/headers";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_API;
 
-// create reviews by customer only
 export const createReviews = async (payload: any) => {
   const cookieStore = cookies();
   const token = (await cookieStore).get("token")?.value;
@@ -17,17 +16,17 @@ export const createReviews = async (payload: any) => {
       },
       body: JSON.stringify(payload),
     });
-    // console.log(res);
+    console.log(res);
 
-  if (!res.ok) {
-  const error = await res.json();
-  console.log("Backend error:", error);
-  throw new Error(error.message);
-}
+    if (!res.ok) {
+      const error = await res.json();
+      console.log("Backend error:", error);
+      throw new Error(error.message);
+    }
 
     return res.json();
   } catch (error: any) {
-    console.log(error);
+    console.error("🔥 REAL ERROR:", error);
   }
 };
 
@@ -50,6 +49,8 @@ export const getReviewsByMeals = async (mealId: string) => {
     return res.json();
   } catch (error: any) {
     console.log(error);
+    console.log(error.message);
+    // console.log(err);
   }
 };
 

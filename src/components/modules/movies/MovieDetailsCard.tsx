@@ -20,6 +20,7 @@ import {
 import ReviewSection from "../reviews/ReviewSection";
 import BuySubscription from "@/components/Buttons/movie/BuySubscription";
 import AddtoWatchlist from "@/components/Buttons/movie/AddtoWatchlist";
+import ReviewModal from "../reviews/ReviewModal";
 
 const MovieDetails = ({ movie }: any) => {
   const router = useRouter();
@@ -109,10 +110,15 @@ const MovieDetails = ({ movie }: any) => {
                 ({movie.reviews?.length || 0} reviews)
               </span>
             </div>
-            {movie.genres && movie.genres.length > 0 && (
-              <div className="flex items-center gap-1 text-gray-400">
-                <Film className="w-4 h-4" />
-                {movie.genres.join(", ")}
+           
+
+            {movie.genres?.length > 0 && (
+              <div className="flex flex-wrap gap-2 pt-2">
+                {movie.genres.map(({ genre, genreId }: any) => (
+                  <Badge key={genreId} className="text-xs px-2 py-1">
+                    {genre.name}
+                  </Badge>
+                ))}
               </div>
             )}
           </div>
@@ -145,14 +151,13 @@ const MovieDetails = ({ movie }: any) => {
             {movie.status && <div>Status: {movie.status}</div>}
           </div>
 
-         
           <AddtoWatchlist movie={movie} />
           <BuySubscription movie={movie} />
         </div>
       </div>
-
-      {/* Reviews */}
-      {movie?.reviews && <ReviewSection movie={movie} />}
+      <div className="flex  justify-center ">
+        <ReviewSection movie={movie} /> <ReviewModal movieId={movie?.id} />
+      </div>
     </div>
   );
 };

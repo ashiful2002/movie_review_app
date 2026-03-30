@@ -87,6 +87,10 @@ const admin_nav: NavItem[] = [
         title: "Add Movie",
         url: "/dashboard/add-movie",
       },
+      {
+        title: "Genre",
+        url: "/dashboard/genre",
+      },
     ],
   },
 ];

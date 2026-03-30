@@ -17,6 +17,7 @@ import { toast } from "sonner";
 import ImageUploadField from "@/components/utils/ImageUploadField";
 import { useState } from "react";
 import { addMovie } from "@/services/movies";
+import GenreSelectField from "./fields/GenreSelectField";
 const schema = z.object({
   title: z.string().min(2),
   description: z.string(),
@@ -52,9 +53,10 @@ const schema = z.object({
   boxOffice: z.coerce.number(),
   status: z.string(),
   rating: z.coerce.number(),
+  genreIds: z.array(z.string()).min(1, "Select at least one genre"),
 });
 
-export default function AddMovieForm() {
+export default function AddMovieForm({ genres }: any) {
   const [uploading, setUploading] = useState(false);
 
   const form = useForm({
@@ -85,13 +87,14 @@ export default function AddMovieForm() {
       boxOffice: 0,
       status: "released",
       rating: 0,
+      genreIds: [],
     },
   });
 
   const onSubmit = async (data: any) => {
     console.log(data);
     await addMovie(data);
-    
+
     toast.success("Movie Added!");
   };
 
@@ -125,6 +128,12 @@ export default function AddMovieForm() {
                 control={form.control}
                 name="director"
                 label="Director"
+              />
+              <GenreSelectField
+                control={form.control}
+                name="genreIds"
+                label="Genres"
+                options={genres}
               />
               <TextField
                 control={form.control}
