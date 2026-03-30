@@ -51,6 +51,8 @@ export const getSingleMovie = async (id: string) => {
     const result = await res.json();
     return result;
   } catch (error: any) {
+    console.log(error);
+
     throw new Error(error.message);
   }
 };

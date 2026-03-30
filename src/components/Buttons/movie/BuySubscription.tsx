@@ -1,14 +1,26 @@
- import { CircleDollarSign } from "lucide-react";
+"use client";
+
+import { CircleDollarSign } from "lucide-react";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 import { ActionButton } from "./ActionButton";
 
-const BuySubscription = ({ movie }: any) => {
-  const handleByeSubscription = (movie: any) => {
+interface BuySubscriptionProps {
+  movie: any;
+}
+
+const BuySubscription = ({ movie }: BuySubscriptionProps) => {
+  const router = useRouter();
+
+  const handleBuySubscription = (movie: any) => {
     try {
-      toast("clicked, subscription buying process");
-      //  subscription buying process
+      toast("Redirecting to subscription page...");
+
+      // Navigate to the subscription page with movie details
+      router.push(`/dashboard/subscriptions`);
     } catch (error) {
-      toast.error("Failed to update watchlist");
+      console.error(error);
+      toast.error("Failed to navigate to subscription page");
     }
   };
 
@@ -16,7 +28,7 @@ const BuySubscription = ({ movie }: any) => {
     <ActionButton
       size="xs"
       variant="warning"
-      onClick={() => handleByeSubscription(movie)}
+      onClick={() => handleBuySubscription(movie)}
       icon={<CircleDollarSign />}
     >
       Buy Subscription

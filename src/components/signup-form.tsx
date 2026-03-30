@@ -48,9 +48,7 @@ export function SignupForm(props: React.ComponentProps<typeof Card>) {
       name: form.name,
       email: form.email,
       password: form.password,
-      role: "CUSTOMER",
-      status: "ACTIVE",
-      phone: form.phone,
+      role: "USER",
     };
 
     try {

@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getUser } from "./services/authentication";
 
-const ALLOWED_ROLE = ["ADMIN", "PROVIDER", "CUSTOMER"];
+const ALLOWED_ROLE = ["ADMIN", "USER"];
 
 export async function proxy(request: NextRequest) {
   const user = await getUser();

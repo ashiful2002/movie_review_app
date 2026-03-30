@@ -67,6 +67,10 @@ const users_nav: NavItem[] = [
         title: "Dashboard",
         url: "/dashboard",
       },
+      {
+        title: "Subscriptions",
+        url: "/dashboard/subscriptions",
+      },
     ],
   },
 ];

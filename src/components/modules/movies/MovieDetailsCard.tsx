@@ -34,7 +34,7 @@ const MovieDetails = ({ movie }: any) => {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       {/* Banner */}
-      <div className="relative h-[400px] w-full">
+      <div className="relative h-100 w-full">
         <Image
           src={movie.banner}
           alt={movie.title}
@@ -110,7 +110,6 @@ const MovieDetails = ({ movie }: any) => {
                 ({movie.reviews?.length || 0} reviews)
               </span>
             </div>
-           
 
             {movie.genres?.length > 0 && (
               <div className="flex flex-wrap gap-2 pt-2">

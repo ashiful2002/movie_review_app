@@ -20,7 +20,6 @@ export default function MovieCard({ movie }: any) {
       ? movie.reviews.reduce((a: any, b: any) => a + b.rating, 0) /
         movie.reviews.length
       : 0;
-  console.log(movie);
 
   return (
     <motion.div
@@ -82,10 +81,7 @@ export default function MovieCard({ movie }: any) {
           {movie.genres?.length > 0 && (
             <div className="flex flex-wrap gap-2 pt-2">
               {movie.genres.map(({ genre, genreId }: any) => (
-                <Badge variant={"default"}
-                  key={genreId}
-                  className=" "
-                >
+                <Badge variant={"default"} key={genreId} className=" ">
                   {genre.name}
                 </Badge>
               ))}

@@ -30,7 +30,7 @@ export default function Navbar() {
     { name: "Home", href: "/" },
     { name: "Movies", href: "/movies" },
   ];
-
+ 
   const firstName = user?.name?.trim()?.split(" ")?.[0] || "";
   return (
     <nav className="w-full border-b bg-background sticky top-0 z-50">

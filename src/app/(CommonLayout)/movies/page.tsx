@@ -14,11 +14,9 @@ const page = async ({
   const { data } = await getAllMovies(params);
   const movies = data.data;
   const meta = data.meta;
-  console.log(movies);
 
   return (
     <div>
-      
       <MovieFilter />
       {movies?.length === 0 ? (
         "empty meals"
