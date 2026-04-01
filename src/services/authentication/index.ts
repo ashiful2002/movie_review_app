@@ -9,6 +9,7 @@ interface DecodedToken extends JwtPayload {
   email: string;
   name?: string;
   avatar?: string | null;
+  isPremium?: boolean;
 }
 
 export interface LoginPayload {
@@ -85,6 +86,7 @@ export const getUser = async (): Promise<User | null> => {
     email: decoded.email,
     avatar: decoded.avatar ?? null,
     role: decoded.role,
+    isPremium: decoded.isPremium ?? false, 
   };
 };
 // log out user

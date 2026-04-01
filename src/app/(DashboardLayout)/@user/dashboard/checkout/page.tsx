@@ -113,7 +113,7 @@ const CheckoutPage = () => {
         </div>
 
         <Button onClick={handleSubmit} className="w-full cursor-pointer">
-          Place Order (Cash on Delivery)
+          Place Order 
         </Button>
       </div>
     </div>

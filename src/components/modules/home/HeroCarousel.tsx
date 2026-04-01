@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -18,57 +17,60 @@ const slides: Slide[] = [
     id: 1,
     title: "Fresh Strawberries",
     description: "Juicy, organic, and straight from the farm.",
-    image:
-      "https://static.vecteezy.com/system/resources/thumbnails/057/068/323/small/single-fresh-red-strawberry-on-table-green-background-food-fruit-sweet-macro-juicy-plant-image-photo.jpg",
+    image: "https://i.ibb.co.com/mC9x6wZM/int-thumb.webp",
   },
   {
     id: 2,
     title: "Tasty Burgers",
     description: "Mouthwatering burgers for every craving.",
-    image: "https://i.ibb.co.com/7JbwkQ1B/1.webp",
+    image: "https://i.ibb.co.com/2YtZVvVY/open-banner.jpg",
   },
   {
     id: 3,
     title: "Delicious Smoothies",
     description: "Healthy and refreshing smoothies every day.",
-    image: "https://i.ibb.co.com/V0WkjWh8/2.webp",
+    image:
+      "https://i.ibb.co.com/hxSGjsT0/ferrari-sf-26-2026-3840x1080-25433.jpg",
   },
 ];
 
 export default function HeroCarousel() {
   const [current, setCurrent] = useState(0);
 
+  // Auto-slide every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % slides.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   const nextSlide = () => setCurrent((prev) => (prev + 1) % slides.length);
   const prevSlide = () =>
     setCurrent((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
 
   return (
-    <div className="relative w-full   mx-auto mt-2 overflow-hidden rounded shadow-xl">
+    <div className="relative w-full mx-auto mt-2 overflow-hidden rounded shadow-xl">
       {/* Slides */}
-      <AnimatePresence initial={false}>
-        <motion.div
-          key={slides[current].id}
-          //   initial={{ opacity: 0, x: 50 }}
-          //   animate={{ opacity: 1, x: 0 }}
-          //   exit={{ opacity: 0, x: 50 }}
-          //   transition={{ duration: 0.1 }}
-          className="relative w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[650px]"
-        >
-          <Image
-            src={slides[current].image}
-            alt={slides[current].title}
-            fill
-            className="object-cover rounded -xl"
-            sizes="(max-width: 768px) 100vw, 100vw"
-          />
-          {/* <div className="absolute bottom-8 left-8 sm:left-12 bg-black/50 backdrop-blur-md p-6 rounded-lg max-w-md text-white">
-            <h2 className="text-3xl font-bold">{slides[current].title}</h2>
-            <p className="mt-2 text-sm sm:text-base">
-              {slides[current].description}
-            </p>
-          </div> */}
-        </motion.div>
-      </AnimatePresence>
+      <div className="relative w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[650px]">
+        {slides.map((slide, idx) => (
+          <div
+            key={slide.id}
+            className={`absolute inset-0 transition-opacity duration-700 ${
+              idx === current ? "opacity-100 z-10" : "opacity-0 z-0"
+            }`}
+          >
+            <Image
+              src={slide.image}
+              alt={slide.title}
+              fill
+              className="object-cover rounded-xl"
+              sizes="(max-width: 768px) 100vw, 100vw"
+            />
+          </div>
+        ))}
+      </div>
 
       {/* Navigation Arrows */}
       <div className="absolute inset-0 flex items-center justify-between px-4">
@@ -76,7 +78,7 @@ export default function HeroCarousel() {
           variant="outline"
           size="icon"
           onClick={prevSlide}
-          className="bg-black/30 hover:bg-black/60 text-white hover:text-white cursor-pointer"
+          className="bg-black/30 hover:bg-black/60 text-white cursor-pointer"
         >
           <ChevronLeft size={24} />
         </Button>
@@ -84,7 +86,7 @@ export default function HeroCarousel() {
           variant="outline"
           size="icon"
           onClick={nextSlide}
-          className="bg-black/30 hover:bg-black/60 text-white hover:text-white cursor-pointer"
+          className="bg-black/30 hover:bg-black/60 text-white cursor-pointer"
         >
           <ChevronRight size={24} />
         </Button>

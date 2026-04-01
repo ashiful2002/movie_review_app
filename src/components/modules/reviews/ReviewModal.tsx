@@ -44,9 +44,10 @@ const ReviewModal = ({ movieId }: { movieId: string }) => {
           : [],
       };
 
-      await createReviews(payload);
-
-      toast.success("Review submitted", { position: "top-center" });
+      const review = await createReviews(payload);
+      
+      // If we reach here without error, the review was created successfully
+      toast.success("Review submitted successfully!", { position: "top-center" });
 
       // reset
       setRating(0);

@@ -1,9 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { CircleDollarSign, Check } from "lucide-react";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 import { ActionButton } from "@/components/Buttons/movie/ActionButton";
+import { createCheckoutSession } from "@/services/payments";
 
 interface SubscriptionPlanCardProps {
   id: string;
@@ -29,39 +30,22 @@ const SubscriptionPlanCard = ({
   description,
   stripePriceId,
 }: SubscriptionPlanCardProps) => {
-  const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const handleBuyPlan = async () => {
     try {
-      const token = localStorage.getItem("accessToken"); // ✅ get real token
+      console.log("clicked plan id", id);
 
-      const res = await fetch(
-        "http://localhost:5000/api/v1/payments/checkout", // ✅ full backend URL
-        {
-          method: "POST",
-          credentials: "include", // ✅ VERY IMPORTANT
-
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ planId: id }),
-        }
-      );
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || "Something went wrong");
-      }
-
-      // ✅ Redirect to Stripe
-      window.location.href = data.data.paymentUrl;
+      setLoading(true);
+      const data = await createCheckoutSession(id);
+      window.location.href = data.paymentUrl; // Redirect to Stripe Checkout
     } catch (error: any) {
       toast.error(error.message);
+      setLoading(false);
     }
   };
 
-  const isPopular = duration === 365; // highlight yearly
+  const isPopular = duration === 365;
 
   return (
     <div
@@ -118,10 +102,11 @@ const SubscriptionPlanCard = ({
         size="sm"
         variant={isPopular ? "outline" : "warning"}
         onClick={handleBuyPlan}
+        disabled={loading}
         icon={<CircleDollarSign />}
         className="mt-auto w-full"
       >
-        Get Started
+        {loading ? "Processing..." : "Get Started"}
       </ActionButton>
     </div>
   );

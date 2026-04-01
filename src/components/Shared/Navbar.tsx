@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Menu } from "lucide-react";
+import { Crown, Menu } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -26,11 +26,13 @@ export default function Navbar() {
 
     getCurrentUser();
   }, []);
+
   const navLinks: any[] = [
     { name: "Home", href: "/" },
     { name: "Movies", href: "/movies" },
+    { name: "Watchlist", href: "/watchlist" },
   ];
- 
+
   const firstName = user?.name?.trim()?.split(" ")?.[0] || "";
   return (
     <nav className="w-full border-b bg-background sticky top-0 z-50">
@@ -39,6 +41,11 @@ export default function Navbar() {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-6">
+          {user && user?.isPremium && (
+            <p className="flex">
+              Premium <Crown className="text-yellow-400 ml-2" />
+            </p>
+          )}
           {navLinks.map((link) => (
             <Link
               key={link.name}
@@ -81,6 +88,12 @@ export default function Navbar() {
               side="right"
               className="flex flex-col gap-3 px-3 pt-3"
             >
+              {" "}
+              {user && user?.isPremium && (
+                <p className="flex">
+                  Premium <Crown className="text-yellow-400 ml-2" />
+                </p>
+              )}
               {navLinks.map((link) => (
                 <Link
                   key={link.name}

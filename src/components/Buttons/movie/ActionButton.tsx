@@ -9,6 +9,7 @@ interface ActionButtonProps {
   variant?: "default" | "outline" | "primary" | "warning";
   size?: "sm" | "xs";
   className?: string;
+  disabled?: boolean;
 }
 
 export const ActionButton = ({
@@ -19,6 +20,7 @@ export const ActionButton = ({
   variant = "outline",
   size = "sm",
   className = "",
+  disabled = false,
 }: ActionButtonProps) => {
   const baseStyles =
     "w-full rounded-xl text-base font-semibold flex items-center justify-center gap-2";
@@ -35,6 +37,7 @@ export const ActionButton = ({
       size={size}
       variant={variant === "outline" ? "outline" : "default"}
       onClick={onClick}
+      disabled={disabled}
       className={`${baseStyles} ${variantStyles[variant]} ${className}`}
     >
       {children}

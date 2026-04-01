@@ -2,6 +2,7 @@ export type UserTypes = {
   name: string;
   email: string;
   role: string;
+  isPremium: boolean;
 };
 
 export enum OrderStatus {
@@ -36,7 +37,8 @@ export type User = {
   name: string;
   email: string;
   avatar: string | null;
-  role: "ADMIN" | "USER"  ;
+  role: "ADMIN" | "USER";
+  isPremium: boolean;
 };
 
 export type UserRole = "ADMIN" | "USER";

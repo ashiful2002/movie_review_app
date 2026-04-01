@@ -22,7 +22,7 @@ import BuySubscription from "@/components/Buttons/movie/BuySubscription";
 import AddtoWatchlist from "@/components/Buttons/movie/AddtoWatchlist";
 import ReviewModal from "../reviews/ReviewModal";
 
-const MovieDetails = ({ movie }: any) => {
+const MovieDetails = ({ movie, premiumUser }: any) => {
   const router = useRouter();
 
   const averageRating =
@@ -32,7 +32,7 @@ const MovieDetails = ({ movie }: any) => {
       : 0;
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen ">
       {/* Banner */}
       <div className="relative h-100 w-full">
         <Image
@@ -42,8 +42,8 @@ const MovieDetails = ({ movie }: any) => {
           className="object-cover brightness-75"
         />
         <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-10 bg-gradient-to-t from-black/80 to-transparent">
-          <h1 className="text-5xl font-bold">{movie.title}</h1>
-          <p className="text-gray-300 mt-2">{movie.description}</p>
+          <h1 className="text-5xl text-white font-bold">{movie.title}</h1>
+          <p className="text-white mt-2">{movie.description}</p>
           <div className="flex flex-wrap gap-2 mt-4">
             {movie.isPremium && (
               <Badge
@@ -87,11 +87,12 @@ const MovieDetails = ({ movie }: any) => {
         <div className="w-full md:w-2/3 flex flex-col gap-6">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
             <div>
-              <p className="text-gray-300">
-                Directed by {movie.director || "Unknown"}
+              <p className="">
+                Director:{" "}
+                <span className="">{movie.director || "Unknown"}</span>
               </p>
               {movie.cast && movie.cast.length > 0 && (
-                <p className="text-gray-400 mt-1">
+                <p className=" mt-1">
                   Cast: {movie.cast.join(", ")}
                 </p>
               )}
@@ -106,7 +107,7 @@ const MovieDetails = ({ movie }: any) => {
             <div className="flex items-center gap-1 text-yellow-400">
               <Star className="w-4 h-4 fill-yellow-400" />
               <span className="font-medium">{averageRating.toFixed(1)}</span>
-              <span className="text-gray-400">
+              <span className="">
                 ({movie.reviews?.length || 0} reviews)
               </span>
             </div>
@@ -125,7 +126,7 @@ const MovieDetails = ({ movie }: any) => {
           <Separator />
 
           {/* Extra Info */}
-          <div className="grid grid-cols-2 gap-4 text-gray-400 text-sm">
+          <div className="grid grid-cols-2 gap-4  text-sm">
             {movie.language && (
               <div className="flex items-center gap-2">
                 <Globe className="w-4 h-4" /> Language: {movie.language}
@@ -151,10 +152,11 @@ const MovieDetails = ({ movie }: any) => {
           </div>
 
           <AddtoWatchlist movie={movie} />
-          <BuySubscription movie={movie} />
+          {!premiumUser && <BuySubscription movie={movie} />}
         </div>
       </div>
-      <div className="flex  justify-center ">
+      <Separator className="mb-3" />
+      <div className="flex justify-around ">
         <ReviewSection movie={movie} /> <ReviewModal movieId={movie?.id} />
       </div>
     </div>

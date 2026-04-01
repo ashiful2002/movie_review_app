@@ -116,7 +116,7 @@ const ReviewSection = ({ movie }: any) => {
                           : "bg-red-100 text-red-600"
                       }`}
                     >
-                      {review.status}
+                      {/* {review.status} */}
                     </span>
                   </div>
                 </CardContent>

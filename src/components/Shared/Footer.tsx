@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Github, Instagram, Twitter, Linkedin } from "lucide-react";
+import { Github, Instagram, Linkedin, Facebook } from "lucide-react";
 import Link from "next/link";
 import Logo from "./Logo";
 
@@ -11,27 +11,34 @@ const Footer = () => {
         <div className="space-y-2">
           <Logo />
           <p className="text-sm text-gray-600 dark:text-gray-400">
-            Delicious food, delivered fresh to your doorstep. Follow us on
-            social media!
+            Best Movie review platform right now, stay tuned to the biggest
+            blast of the year
           </p>
           <div className="flex gap-2 mt-2">
             <Button variant="ghost" size="icon" asChild>
-              <Link href="https://github.com" target="_blank">
+              <Link href="https://github.com/ashiful2002" target="_blank">
                 <Github />
               </Link>
             </Button>
             <Button variant="ghost" size="icon" asChild>
-              <Link href="https://twitter.com" target="_blank">
-                <Twitter />
+              <Link
+                href="https://www.facebook.com/ashifulislam.mukto/"
+                target="_blank"
+              >
+                <Facebook />
               </Link>
             </Button>
+
             <Button variant="ghost" size="icon" asChild>
-              <Link href="https://instagram.com" target="_blank">
+              <Link
+                href="https://www.instagram.com/ashifulislammukto/"
+                target="_blank"
+              >
                 <Instagram />
               </Link>
             </Button>
             <Button variant="ghost" size="icon" asChild>
-              <Link href="https://linkedin.com" target="_blank">
+              <Link href="https://www.linkedin.com/" target="_blank">
                 <Linkedin />
               </Link>
             </Button>
@@ -61,13 +68,13 @@ const Footer = () => {
         <div className="space-y-2">
           <h4 className="text-lg font-semibold">Contact Us</h4>
           <p className="text-sm text-gray-600 dark:text-gray-400">
-            Email: support@foodhub.com
+            Email: support@mmdb.com
           </p>
           <p className="text-sm text-gray-600 dark:text-gray-400">
             Phone: 01759-907907
           </p>
           <p className="text-sm text-gray-600 dark:text-gray-400">
-            Address: 102, Azimpur, Dhaka
+            Dhaka, Bangladesh
           </p>
         </div>
       </div>
@@ -75,7 +82,7 @@ const Footer = () => {
       {/* Bottom copyright */}
       <div className="flex justify-around  border-t border-gray-200 dark:border-gray-700 mt-4">
         <p className="text-center text-sm py-4 text-gray-500 dark:text-gray-400">
-          &copy; {new Date().getFullYear()} Food Hub. All rights reserved.
+          &copy; {new Date().getFullYear()} mmdb. All rights reserved.
         </p>
         <p className="text-center text-sm py-4 text-gray-500 dark:text-gray-400">
           Developed by

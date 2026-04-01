@@ -13,13 +13,15 @@ import { motion } from "framer-motion";
 import { Separator } from "@/components/ui/separator";
 import MovieDetails from "@/components/Buttons/movie/ViewDetails";
 import BuySubscription from "@/components/Buttons/movie/BuySubscription";
+import AddtoWatchlist from "@/components/Buttons/movie/AddtoWatchlist";
 
-export default function MovieCard({ movie }: any) {
+export default function MovieCard({ movie, premiumUser }: any) {
   const averageRating =
     movie.reviews && movie.reviews.length > 0
       ? movie.reviews.reduce((a: any, b: any) => a + b.rating, 0) /
         movie.reviews.length
       : 0;
+  console.log(premiumUser);
 
   return (
     <motion.div
@@ -92,8 +94,11 @@ export default function MovieCard({ movie }: any) {
 
         <CardFooter className="flex flex-col gap-3">
           <MovieDetails movie={movie} />
-          {/* <AddtoWatchlist movie={movie} /> */}
-          <BuySubscription movie={movie} />
+          {premiumUser ? (
+            <AddtoWatchlist movie={movie} />
+          ) : (
+            <BuySubscription movie={movie} />
+          )}
         </CardFooter>
       </Card>
     </motion.div>
