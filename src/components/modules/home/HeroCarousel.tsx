@@ -17,13 +17,13 @@ const slides: Slide[] = [
     id: 1,
     title: "Fresh Strawberries",
     description: "Juicy, organic, and straight from the farm.",
-    image: "https://i.ibb.co.com/mC9x6wZM/int-thumb.webp",
+    image: "https://i.ibb.co.com/twKcrcGr/19-b.webp",
   },
   {
     id: 2,
     title: "Tasty Burgers",
     description: "Mouthwatering burgers for every craving.",
-    image: "https://i.ibb.co.com/2YtZVvVY/open-banner.jpg",
+    image: "https://i.ibb.co.com/mVv9b5p1/bb-b.webp",
   },
   {
     id: 3,

@@ -52,11 +52,6 @@ const ReviewSection = ({ movie }: any) => {
                       </div>
                     </div>
 
-                    {/* Rating */}
-
-                    {/* 2 */}
-
-                    {/* 3 */}
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
