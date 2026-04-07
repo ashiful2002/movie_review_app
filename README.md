@@ -1,5 +1,5 @@
 # MMDB Frontend 🎬
-server repo link: <a>href="https://github.com/ashiful2002/movie_review_server"https://github.com/ashiful2002/movie_review_serverÏ</a>
+**Server Repo Link:** [MMDB Server Repository](https://github.com/ashiful2002/movie_review_server)
 ## Overview
 
 MMDB is a modern movie review web application where users can
