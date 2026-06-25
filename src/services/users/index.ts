@@ -3,35 +3,8 @@ import { cookies } from "next/headers";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_API;
 
-// create reviews by customer only
-// export const createReviews = async (payload: any) => {
-//   const cookieStore = cookies();
-//   const token = (await cookieStore).get("token")?.value;
 
-//   try {
-//     const res = await fetch(`${BASE_URL}/reviews`, {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: token!,
-//       },
-//       body: JSON.stringify(payload),
-//     });
-//     console.log(res);
-
-//     if (!res.ok) {
-//       const error = await res.json();
-//       console.log("Backend error:", error);
-//       throw new Error(error.message);
-//     }
-
-//     return res.json();
-//   } catch (error: any) {
-//     console.log(error);
-//   }
-// };
-
-export const getALlUsers = async () => {
+export const getAAllUsers = async () => {
   const cookieStore = cookies();
   const token = (await cookieStore).get("token")?.value;
 

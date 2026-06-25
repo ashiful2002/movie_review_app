@@ -60,6 +60,7 @@ export default function Navbar() {
 
           {user ? (
             <>
+              <Link href={"/plans"}>Plans</Link>
               <Link href={"/dashboard"}>
                 <Button>Dashboard</Button>
               </Link>
@@ -108,9 +109,10 @@ export default function Navbar() {
               ))}
               {user ? (
                 <>
+                  <Link href={"/plans"}>Plans</Link>
                   <Link href={"/dashboard"}>
                     <Button>Dashboard</Button>
-                  </Link>{" "}
+                  </Link>
                   <ModeToggle />
                   <LogOut />
                 </>

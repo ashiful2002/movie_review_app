@@ -1,32 +1,45 @@
 "use server";
 
- import { cookies } from "next/headers";
-// services/movies.ts
+import { revalidateTag } from "next/cache";
+import { cookies } from "next/headers";
 const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_API;
 
 export const getAllMovies = async (params?: Record<string, any>) => {
-  const query = params
-    ? new URLSearchParams(
-        Object.entries(params).reduce((acc: Record<string, string>, [k, v]) => {
-          if (v !== undefined) acc[k] = String(v);
-          return acc;
-        }, {})
-      ).toString()
-    : "";
-
   try {
-    const res = await fetch(`${BASE_URL}/movies?${query}`); // default cache
+    const query = new URLSearchParams();
+
+    if (params) {
+      Object.entries(params).forEach(([key, value]) => {
+        if (value !== undefined && value !== null && value !== "") {
+          query.set(key, String(value));
+        }
+      });
+    }
+
+    const queryString = query.toString();
+    const url = queryString
+      ? `${BASE_URL}/movies?${queryString}`
+      : `${BASE_URL}/movies`;
+
+    const res = await fetch(url, {
+      next: { tags: ["movies"] },
+    });
+
     if (!res.ok) throw new Error("Failed to fetch movies");
     return res.json();
   } catch (err: any) {
     console.error(err);
-    return null; // safe fallback
+    return null;
   }
 };
 
 export const getSingleMovie = async (id: string) => {
   try {
-    const res = await fetch(`${BASE_URL}/movies/${id}`); // default cache
+    const res = await fetch(`${BASE_URL}/movies/${id}`, {
+      next: {
+        tags: [`movie-${id}`],
+      },
+    });
     if (!res.ok) throw new Error("Failed to fetch movie");
     return res.json();
   } catch (err: any) {
@@ -48,11 +61,14 @@ export const addMovie = async (payload: any) => {
         "Content-Type": "application/json",
         Authorization: token,
       },
-      cache: "no-store", // dynamic request required for auth
+      cache: "no-store",
       body: JSON.stringify(payload),
     });
     const result = await res.json();
     if (!res.ok) throw new Error(result.message || "Failed to add movie");
+
+    revalidateTag("movies", {});
+
     return result;
   } catch (err: any) {
     console.error(err);

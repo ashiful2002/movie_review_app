@@ -29,8 +29,7 @@ const slides: Slide[] = [
     id: 3,
     title: "Delicious Smoothies",
     description: "Healthy and refreshing smoothies every day.",
-    image:
-      "https://i.ibb.co.com/hxSGjsT0/ferrari-sf-26-2026-3840x1080-25433.jpg",
+    image: "https://i.ibb.co/4nc6sVvC/int-b.webp",
   },
 ];
 

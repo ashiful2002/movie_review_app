@@ -37,11 +37,11 @@ export type User = {
   name: string;
   email: string;
   avatar: string | null;
-  role: "ADMIN" | "USER";
+  role: "ADMIN" | "USER" | "SUPER_ADMIN";
   isPremium: boolean;
 };
 
-export type UserRole = "ADMIN" | "USER";
+export type UserRole = "ADMIN" | "USER" | "SUPER_ADMIN";
 
 export type CartItem = {
   id: string;

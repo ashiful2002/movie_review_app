@@ -84,7 +84,7 @@ export default function MovieCard({ movie, premiumUser }: any) {
             <div className="flex flex-wrap gap-2 pt-2">
               {movie.genres.map(({ genre, genreId }: any) => (
                 <Badge variant={"default"} key={genreId} className=" ">
-                  {genre.name}
+                  {}
                 </Badge>
               ))}
             </div>

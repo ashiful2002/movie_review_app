@@ -1,8 +1,4 @@
-
-// =========================
-// FilterGroup.tsx (layout wrapper)
-// =========================
-interface GroupProps {
+ interface GroupProps {
   children: React.ReactNode;
 }
 

@@ -60,6 +60,12 @@ export function LoginForm({
     },
   });
 
+  // const handleGoogleLogin = () => {
+  //   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  //   //TODO redirect path after login in frontend
+  //   window.location.href = `${baseUrl}/auth/login/google`;
+  // };
+
   const onSubmit = async (data: LoginFormValues) => {
     try {
       setServerError(null);
@@ -83,9 +89,7 @@ export function LoginForm({
         <CardContent className="space-y-4">
           {/* Demo Account Dropdown */}
           <div className="space-y-2">
-            <p className="text-sm font-medium">
-              Demo Account (for testing)
-            </p>
+            <p className="text-sm font-medium">Demo Account (for testing)</p>
 
             <Select
               onValueChange={(value) => {
@@ -126,9 +130,7 @@ export function LoginForm({
                   {...register("email")}
                 />
                 {errors.email && (
-                  <p className="text-sm text-red-500">
-                    {errors.email.message}
-                  </p>
+                  <p className="text-sm text-red-500">{errors.email.message}</p>
                 )}
               </Field>
 
@@ -175,6 +177,7 @@ export function LoginForm({
                 </Button>
 
                 <Button
+                  // onClick={handleGoogleLogin}
                   variant="outline"
                   type="button"
                   className="w-full mt-2"

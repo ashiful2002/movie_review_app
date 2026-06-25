@@ -12,28 +12,26 @@ import {
   DialogDescription,
   DialogFooter,
 } from "@/components/ui/dialog";
-import { UserLogOut } from "@/services/authentication";
+import { logoutUser } from "@/services/authentication";
 
 const LogOut = () => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
   const handleLogOut = async () => {
-    await UserLogOut(); // call server action
-    router.push("/login"); // redirect
+    await logoutUser();
+    router.push("/login");
     router.refresh();
-    setOpen(false); // close dialog
+    setOpen(false);
   };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      {/* Logout Button */}
-      <DialogTrigger asChild>
+       <DialogTrigger asChild>
         <Button variant="outline">Log out</Button>
       </DialogTrigger>
 
-      {/* Dialog Modal */}
-      <DialogContent className="sm:max-w-sm">
+       <DialogContent className="sm:max-w-sm">
         <DialogHeader>
           <DialogTitle>Confirm Logout</DialogTitle>
           <DialogDescription>
