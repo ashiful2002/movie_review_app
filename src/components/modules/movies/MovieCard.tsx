@@ -14,14 +14,20 @@ import { Separator } from "@/components/ui/separator";
 import MovieDetails from "@/components/Buttons/movie/ViewDetails";
 import BuySubscription from "@/components/Buttons/movie/BuySubscription";
 import AddtoWatchlist from "@/components/Buttons/movie/AddtoWatchlist";
+import { Movie } from "@/types/movie";
 
-export default function MovieCard({ movie, premiumUser }: any) {
+
+interface MovieCardProps {
+  movie: Movie;
+  premiumUser: boolean;
+}
+
+export default function MovieCard({ movie, premiumUser }: MovieCardProps) {
   const averageRating =
     movie.reviews && movie.reviews.length > 0
       ? movie.reviews.reduce((a: any, b: any) => a + b.rating, 0) /
-        movie.reviews.length
+      movie.reviews.length
       : 0;
-  console.log(premiumUser);
 
   return (
     <motion.div
@@ -31,7 +37,7 @@ export default function MovieCard({ movie, premiumUser }: any) {
       transition={{ duration: 0.3 }}
       className="w-full max-w-sm mx-auto"
     >
-      <Card className="overflow-hidden rounded-2xl shadow-2xl border-0 bg-gradient-to-t from-gray-900/80 to-transparent text-white">
+      <Card className="overflow-hidden rounded-2xl shadow-2xl border">
         <CardHeader className="p-0 relative">
           <div className="relative h-64 w-full">
             <Image
@@ -44,11 +50,10 @@ export default function MovieCard({ movie, premiumUser }: any) {
               {movie.isPremium && (
                 <Badge
                   variant={"secondary"}
-                  className={`px-3 py-1 text-xs font-semibold rounded-full ${
-                    movie.isPremium
-                      ? "bg-yellow-400 text-black"
-                      : "bg-green-500"
-                  }`}
+                  className={`px-3 py-1 text-xs font-semibold rounded-full ${movie.isPremium
+                    ? "bg-yellow-400  "
+                    : "bg-green-500"
+                    }`}
                 >
                   {movie.isPremium && "Premium"}
                 </Badge>
@@ -66,12 +71,12 @@ export default function MovieCard({ movie, premiumUser }: any) {
 
         <CardContent className="p-5 space-y-2">
           <h3 className="text-xl font-bold leading-tight">{movie.title}</h3>
-          <p className="text-sm text-gray-300 line-clamp-2">
+          <p className="text-sm line-clamp-2">
             {movie.description}
           </p>
 
           <div className="flex items-center gap-2 pt-2">
-            <Star className="w-4 h-4 fill-yellow-400" />
+            <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
             <span className="text-sm font-medium">
               {averageRating.toFixed(1)}
             </span>
@@ -80,20 +85,33 @@ export default function MovieCard({ movie, premiumUser }: any) {
             </span>
           </div>
 
-          {movie.genres?.length > 0 && (
+          {/* {movie.genres?.length > 0 && (
             <div className="flex flex-wrap gap-2 pt-2">
-              {movie.genres.map(({ genre, genreId }: any) => (
+              {movie.genres?.map(({ genre, genreId }: any) => (
                 <Badge variant={"default"} key={genreId} className=" ">
-                  {}
+                  {genre?.name}
                 </Badge>
               ))}
             </div>
-          )}
+          )} */}
+
+
+          {
+            movie.cast.length > 0 && (
+              <div className="flex flex-wrap gap-2 pt-2">
+                {movie.cast.slice(0, 2).map((cast: string) => (
+                  <Badge variant={"default"} key={cast} className="">
+                    {cast.split(" ")[0]}
+                  </Badge>
+                ))}
+              </div>
+            )
+          }
         </CardContent>
         <Separator />
 
         <CardFooter className="flex flex-col gap-3">
-          <MovieDetails movie={movie} />
+          <MovieDetails movieId={movie.id} />
           {premiumUser ? (
             <AddtoWatchlist movie={movie} />
           ) : (

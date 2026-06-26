@@ -3,7 +3,6 @@ import MovieCard from "@/components/modules/movies/MovieCard";
 import MovieFilterWrapper from "@/components/Filter/MovieFilterWrapper";
 import { getAllMovies } from "@/services/movies";
 
-// Next.js 15: searchParams is a Promise and must be awaited
 type MoviesPageProps = {
   searchParams?: Promise<{
     page?: string;
@@ -29,13 +28,12 @@ const MoviesPage = async ({ searchParams }: MoviesPageProps) => {
   const page = Number(params?.page) || 1;
   const limit = Number(params?.limit) || 10;
 
-  // Parse sort param ("releaseYear_desc" → sortBy + sortOrder)
   const [sortBy, sortOrder] = (params?.sort ?? "").split("_");
 
   const response = await getAllMovies({
     page,
     limit,
-    ...(params?.search && { search: params.search }),
+    ...(params?.search && { searchTerm: params.search }),
     ...(params?.genre && { genre: params.genre }),
     ...(params?.language && { language: params.language }),
     ...(params?.ageRating && { ageRating: params.ageRating }),

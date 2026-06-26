@@ -98,6 +98,37 @@ const admin_nav: NavItem[] = [
     ],
   },
 ];
+const super_admin_nav: NavItem[] = [
+  {
+    title: "SuperAdmin Dashboard",
+    url: "/dashboard",
+    icon: UserIcon,
+    isActive: true,
+    items: [
+      {
+        title: "Dashboard",
+        url: "/dashboard",
+      },
+
+      {
+        title: "Manage Users",
+        url: "/dashboard/manage-users",
+      },
+      {
+        title: "Add Movies",
+        url: "/dashboard/add-movies",
+      },
+      {
+        title: "Genres",
+        url: "/dashboard/genres",
+      },
+      {
+        title: "Add Genre",
+        url: "/dashboard/add-genre",
+      },
+    ],
+  },
+];
 
 export function AppSidebar({ user, ...props }: AppSidebarProps) {
   let navItems: NavItem[] = [];
@@ -106,6 +137,8 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
     navItems = admin_nav;
   } else if (user?.role === "USER") {
     navItems = users_nav;
+  } else if (user?.role === "SUPER_ADMIN") {
+    navItems = super_admin_nav;
   }
   return (
     <Sidebar collapsible="icon" {...props}>

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Crown, Menu } from "lucide-react";
+import { Crown, Menu, Search } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -11,6 +11,8 @@ import Logo from "./Logo";
 import LogOut from "../Buttons/Logout";
 import { UserTypes } from "@/types";
 import { ModeToggle } from "../Buttons/ModeToggler";
+import MovieFilterWrapper from "../Filter/MovieFilterWrapper";
+import { Input } from "../ui/input";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -21,7 +23,9 @@ export default function Navbar() {
   useEffect(() => {
     const getCurrentUser = async () => {
       const userData = await getUser();
-      setUser(userData);
+      console.log("userdata from navbar", userData?.isPremium);
+
+      setUser(userData!);
     };
 
     getCurrentUser();
@@ -41,6 +45,9 @@ export default function Navbar() {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-6">
+          <div className="">
+            <Input placeholder="search movies" className="text-slate-400 w-96" />
+          </div>
           {user && user?.isPremium && (
             <p className="flex">
               Premium <Crown className="text-yellow-400 ml-2" />
@@ -50,9 +57,8 @@ export default function Navbar() {
             <Link
               key={link.name}
               href={link.href}
-              className={`text-sm font-medium transition-colors ${
-                pathname === link.href ? "text-yellow-400" : ""
-              }`}
+              className={`text-sm font-medium transition-colors ${pathname === link.href ? "text-yellow-400" : ""
+                }`}
             >
               {link.name}
             </Link>
@@ -61,8 +67,8 @@ export default function Navbar() {
           {user ? (
             <>
               <Link href={"/plans"}>Plans</Link>
-              <Link href={"/dashboard"}>
-                <Button>Dashboard</Button>
+              <Link href={"/dashboard"} >
+                <Button className="cursor-pointer">Dashboard</Button>
               </Link>
               <LogOut />
               <ModeToggle />
@@ -70,7 +76,7 @@ export default function Navbar() {
           ) : (
             <>
               <Link href={"/login"}>
-                <Button>Login</Button>
+                <Button className="cursor-pointer">Login</Button>
               </Link>
               <ModeToggle />
             </>
@@ -100,9 +106,8 @@ export default function Navbar() {
                   key={link.name}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className={`text-lg font-medium transition-colors ${
-                    pathname === link.href ? "text-red-500" : ""
-                  }`}
+                  className={`text-lg font-medium transition-colors ${pathname === link.href ? "text-red-500" : ""
+                    }`}
                 >
                   {link.name}
                 </Link>

@@ -27,11 +27,11 @@ const LogOut = () => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-       <DialogTrigger asChild>
-        <Button variant="outline">Log out</Button>
+      <DialogTrigger asChild>
+        <Button variant="outline" className="cursor-pointer">Log out</Button>
       </DialogTrigger>
 
-       <DialogContent className="sm:max-w-sm">
+      <DialogContent className="sm:max-w-sm">
         <DialogHeader>
           <DialogTitle>Confirm Logout</DialogTitle>
           <DialogDescription>

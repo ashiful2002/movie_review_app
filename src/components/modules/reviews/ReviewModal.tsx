@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Plus, Star } from "lucide-react";
 import { toast } from "sonner";
 import { createReviews } from "@/services/reviews";
+import { ActionButton } from "@/components/Buttons/movie/ActionButton";
 
 const ReviewModal = ({ movieId }: { movieId: string }) => {
   const [open, setOpen] = useState(false);
@@ -40,20 +41,18 @@ const ReviewModal = ({ movieId }: { movieId: string }) => {
         spoiler,
         tags: tags
           ? tags
-              .split(",")
-              .map((t) => t.trim())
-              .filter(Boolean)
+            .split(",")
+            .map((t) => t.trim())
+            .filter(Boolean)
           : [],
       };
 
       await createReviews(payload);
 
-      // If we reach here without error, the review was created successfully
       toast.success("Review submitted successfully!", {
         position: "top-center",
       });
 
-      // reset
       setRating(0);
       setContent("");
       setTags("");
@@ -74,9 +73,9 @@ const ReviewModal = ({ movieId }: { movieId: string }) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size="sm" className="cursor-pointer">
-          Write Review <Plus className="ml-1 w-4 h-4" />
-        </Button>
+        <ActionButton icon={<Plus />} variant="outline" size="sm" className="cursor-pointer" tooltip="Write your openion about this movie">
+          Write Review
+        </ActionButton>
       </DialogTrigger>
 
       <DialogContent className="max-w-md">
@@ -97,11 +96,10 @@ const ReviewModal = ({ movieId }: { movieId: string }) => {
                 <Star
                   key={i}
                   onClick={() => setRating(starValue)}
-                  className={`w-5 h-5 cursor-pointer transition ${
-                    starValue <= rating
-                      ? "text-yellow-500 fill-yellow-500"
-                      : "text-gray-300"
-                  }`}
+                  className={`w-5 h-5 cursor-pointer transition ${starValue <= rating
+                    ? "text-yellow-500 fill-yellow-500"
+                    : "text-gray-300"
+                    }`}
                 />
               );
             })}
@@ -136,7 +134,7 @@ const ReviewModal = ({ movieId }: { movieId: string }) => {
 
         {/*  Submit */}
         <Button
-          className="mt-4 w-full"
+          className="mt-4 w-full cursor-pointer"
           onClick={handleSubmit}
           disabled={loading}
         >

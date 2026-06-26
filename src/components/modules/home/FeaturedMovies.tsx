@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -94,11 +94,10 @@ const movies: Movie[] = [
 export function FeaturedMovies() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Auto-slide functionality
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % movies.length);
-    }, 5000);
+    }, 12000);
     return () => clearInterval(interval);
   }, []);
 
@@ -233,9 +232,8 @@ export function FeaturedMovies() {
               <button
                 key={idx}
                 onClick={() => setCurrentIndex(idx)}
-                className={`h-2 rounded-full transition-all ${
-                  idx === currentIndex ? "bg-primary w-8" : "bg-muted w-2"
-                }`}
+                className={`h-2 rounded-full transition-all ${idx === currentIndex ? "bg-primary w-8" : "bg-muted w-2"
+                  }`}
               />
             ))}
           </div>

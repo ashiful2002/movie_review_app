@@ -15,7 +15,6 @@ export default async function Home() {
   let premiumUser = false;
   try {
     const moviesResponse = await getAllMovies();
-    // safely get data, default to empty array if undefined
     movies = moviesResponse?.data || [];
   } catch (err) {
     console.error("Failed to fetch movies:", err);

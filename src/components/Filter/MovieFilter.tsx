@@ -27,7 +27,7 @@ const SORT_OPTIONS = [
 
 // ─── All filter keys managed by this component ───────────────────────────────
 const FILTER_KEYS = [
-  "search",
+  "searchTerm",
   "genre",
   "language",
   "ageRating",
@@ -142,7 +142,6 @@ const MovieFilter = ({ genres = [] }: MovieFilterProps) => {
       <div className="flex flex-col md:flex-row items-stretch md:items-center gap-3 p-4">
         {/* Search input - takes full width */}
         <div className="relative flex-1">
-          {/* Left search icon centered vertically */}
           <div className="absolute inset-y-0 flex items-center pointer-events-none">
             <Search size={16} className="text-slate-400" />
           </div>

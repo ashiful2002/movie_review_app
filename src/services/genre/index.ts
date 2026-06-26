@@ -38,7 +38,7 @@ export const getAllGenres = async () => {
 /**
  * Get single genre
  */
-export const getSingleGenre = async (id: string) => {
+export const getGenreById = async (id: string) => {
   try {
     const res = await fetch(`${BASE_URL}/genres/${id}`, {
       next: {

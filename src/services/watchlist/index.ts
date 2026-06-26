@@ -1,5 +1,3 @@
-// services/watchlist/index.ts
-
 export interface WatchlistItem {
   id: string;
   title: string;
@@ -8,9 +6,6 @@ export interface WatchlistItem {
 
 const WATCHLIST_KEY = "watchlist";
 
-/**
- * Get all items from watchlist
- */
 export const getWatchlist = (): WatchlistItem[] => {
   try {
     const watchlist = localStorage.getItem(WATCHLIST_KEY) || "[]";
@@ -21,16 +16,14 @@ export const getWatchlist = (): WatchlistItem[] => {
   }
 };
 
-/**
- * Add item to watchlist
- */
+
 export const addToWatchlist = (movie: any): boolean => {
   try {
     const watchlist = getWatchlist();
     const exists = watchlist.find((item) => item.id === movie.id);
 
     if (exists) {
-      return false; // Already exists
+      return false;
     }
 
     watchlist.push({

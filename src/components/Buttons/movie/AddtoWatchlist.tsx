@@ -4,9 +4,13 @@ import { EyeIcon } from "lucide-react";
 import { toast } from "sonner";
 import { ActionButton } from "./ActionButton";
 import { addToWatchlist } from "@/services/watchlist";
+import { Movie } from "@/types/movie";
 
-const AddtoWatchlist = ({ movie }: any) => {
-  const handleAddToWatchlist = (movie: any) => {
+const AddWatchlistButton = ({ movie }: { movie: Movie | null }) => {
+  const handleAddToWatchlist = (movie: Movie | null) => {
+    if (!movie) {
+      return
+    }
     try {
       const added = addToWatchlist(movie);
 
@@ -27,8 +31,9 @@ const AddtoWatchlist = ({ movie }: any) => {
           size="xs"
           variant="outline"
           onClick={() => handleAddToWatchlist(movie)}
-          className="text-yellow-400 hover:bg-yellow-500"
+          className="text-yellow-400 hover:bg-yellow-500 cursor-pointer"
           icon={<EyeIcon />}
+          tooltip="click to add Watchlist"
         >
           Add to Watchlist
         </ActionButton>
@@ -37,4 +42,4 @@ const AddtoWatchlist = ({ movie }: any) => {
   );
 };
 
-export default AddtoWatchlist;
+export default AddWatchlistButton;
