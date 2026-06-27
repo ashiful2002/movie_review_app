@@ -15,6 +15,7 @@ import MovieDetails from "@/components/Buttons/movie/ViewDetails";
 import BuySubscription from "@/components/Buttons/movie/BuySubscription";
 import AddtoWatchlist from "@/components/Buttons/movie/AddtoWatchlist";
 import { Movie } from "@/types/movie";
+import ReviewModal from "../reviews/ReviewModal";
 
 
 interface MovieCardProps {
@@ -28,6 +29,7 @@ export default function MovieCard({ movie, premiumUser }: MovieCardProps) {
       ? movie.reviews.reduce((a: any, b: any) => a + b.rating, 0) /
       movie.reviews.length
       : 0;
+  console.log(movie);
 
   return (
     <motion.div
@@ -110,12 +112,16 @@ export default function MovieCard({ movie, premiumUser }: MovieCardProps) {
         </CardContent>
         <Separator />
 
-        <CardFooter className="flex flex-col gap-3">
+        <CardFooter className="flex flex-col gap-3 justify-start items-start">
           <MovieDetails movieId={movie.id} />
+
           {premiumUser ? (
-            <AddtoWatchlist movie={movie} />
+            // <AddtoWatchlist movie={movie} /> 
+            ""
           ) : (
-            <BuySubscription movie={movie} />
+            <>
+              <BuySubscription movie={movie} />
+            </>
           )}
         </CardFooter>
       </Card>

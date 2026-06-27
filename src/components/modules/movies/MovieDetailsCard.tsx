@@ -147,7 +147,7 @@ const MovieDetails = ({ movie, premiumUser }: any) => {
             {movie?.status && <div>Status: {movie?.status}</div>}
           </div>
 
-          <div className="flex flex-wrap gap-2 ">
+          <div className="flex flex-wrap gap-4">
             <AddWatchlistButton movie={movie} />
             <AddFavouriteButton />
             <ReviewModal movieId={movie?.id} />

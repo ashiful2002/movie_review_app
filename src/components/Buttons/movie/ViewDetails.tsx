@@ -1,4 +1,4 @@
-import {  ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { ActionButton } from "./ActionButton";
 
 const MovieDetails = ({ movieId }: { movieId: string }) => {

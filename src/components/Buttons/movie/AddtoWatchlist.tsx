@@ -31,7 +31,7 @@ const AddWatchlistButton = ({ movie }: { movie: Movie | null }) => {
           size="xs"
           variant="outline"
           onClick={() => handleAddToWatchlist(movie)}
-          className="text-yellow-400 hover:bg-yellow-500 cursor-pointer"
+          className="text-yellow-400 hover:bg-yellow-500 cursor-pointer "
           icon={<EyeIcon />}
           tooltip="click to add Watchlist"
         >

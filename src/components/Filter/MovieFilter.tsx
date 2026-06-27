@@ -10,7 +10,6 @@ type MovieFilterProps = {
   genres?: Genre[];
 };
 
-
 const LANGUAGES = ["English", "Hindi", "French", "Spanish", "Korean", "Japanese", "German", "Italian"];
 const AGE_RATINGS = ["G", "PG", "PG-13", "R", "NC-17"];
 const STATUSES = ["released", "upcoming", "in-production"];
@@ -27,7 +26,7 @@ const SORT_OPTIONS = [
 
 // ─── All filter keys managed by this component ───────────────────────────────
 const FILTER_KEYS = [
-  "searchTerm",
+  "search",
   "genre",
   "language",
   "ageRating",
@@ -40,7 +39,6 @@ const FILTER_KEYS = [
   "sort",
 ];
 
-// ─── Small reusable primitives ───────────────────────────────────────────────
 
 const Label = ({ children }: { children: React.ReactNode }) => (
   <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 block">

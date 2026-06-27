@@ -73,7 +73,7 @@ const ReviewModal = ({ movieId }: { movieId: string }) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <ActionButton icon={<Plus />} variant="outline" size="sm" className="cursor-pointer" tooltip="Write your openion about this movie">
+        <ActionButton icon={<Plus />} variant="outline" size="xs" className="cursor-pointer" tooltip="Write your openion about this movie">
           Write Review
         </ActionButton>
       </DialogTrigger>

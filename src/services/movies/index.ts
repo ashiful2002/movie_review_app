@@ -25,6 +25,7 @@ export const getAllMovies = async (params?: Record<string, any>) => {
       next: { tags: ["movies"] },
     });
 
+
     if (!res.ok) throw new Error("Failed to fetch movies");
     return res.json();
   } catch (err: any) {

@@ -111,12 +111,16 @@ const super_admin_nav: NavItem[] = [
       },
 
       {
-        title: "Manage Users",
-        url: "/dashboard/manage-users",
+        title: "Manage Admin",
+        url: "/dashboard/manage-admin",
       },
       {
         title: "Add Movies",
         url: "/dashboard/add-movies",
+      },
+      {
+        title: "Manage Movies",
+        url: "/dashboard/manage-movie",
       },
       {
         title: "Genres",

@@ -15,9 +15,7 @@ const BuySubscription = ({ movie }: BuySubscriptionProps) => {
   const handleBuySubscription = (movie: any) => {
     try {
       toast("Redirecting to subscription page...");
-
-      // Navigate to the subscription page with movie details
-      router.push(`/dashboard/subscriptions`);
+      router.push(`/plans`);
     } catch (error) {
       console.error(error);
       toast.error("Failed to navigate to subscription page");
@@ -29,7 +27,8 @@ const BuySubscription = ({ movie }: BuySubscriptionProps) => {
       size="xs"
       variant="warning"
       onClick={() => handleBuySubscription(movie)}
-      icon={<CircleDollarSign />}
+      tooltip="Buy subscription to unlock premium Features"
+      className="cursor-pointer"
     >
       Buy Subscription
     </ActionButton>

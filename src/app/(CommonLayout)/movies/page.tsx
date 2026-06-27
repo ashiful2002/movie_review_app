@@ -2,6 +2,7 @@ import Pagination, { PaginationMeta } from "@/components/Shared/Pagination";
 import MovieCard from "@/components/modules/movies/MovieCard";
 import MovieFilterWrapper from "@/components/Filter/MovieFilterWrapper";
 import { getAllMovies } from "@/services/movies";
+import { getUser } from "@/services/authentication";
 
 type MoviesPageProps = {
   searchParams?: Promise<{
@@ -55,6 +56,9 @@ const MoviesPage = async ({ searchParams }: MoviesPageProps) => {
     totalPages: 0,
   };
 
+  const user = await getUser()
+  const premiumUser = user?.isPremium;
+
   return (
     <div className="space-y-4">
       <MovieFilterWrapper />
@@ -67,7 +71,7 @@ const MoviesPage = async ({ searchParams }: MoviesPageProps) => {
         <>
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
             {movies.map((movie: any) => (
-              <MovieCard movie={movie} key={movie.id} />
+              <MovieCard movie={movie} premiumUser={Boolean(premiumUser)} key={movie.id} />
             ))}
           </div>
 
