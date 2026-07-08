@@ -3,10 +3,10 @@ import { getSubscriptionPlans } from "@/services/subscriptions";
 
 const page = async () => {
   const { data: plans } = await getSubscriptionPlans();
+  console.log(plans);
 
   return (
     <div>
-      {" "}
       <div className="container mx-auto bg-muted/20 p-6 md:p-10 flex justify-center">
         <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {plans.map((plan: any) => (

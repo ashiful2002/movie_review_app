@@ -69,7 +69,7 @@ const MoviesPage = async ({ searchParams }: MoviesPageProps) => {
         </p>
       ) : (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
             {movies.map((movie: any) => (
               <MovieCard movie={movie} premiumUser={Boolean(premiumUser)} key={movie.id} />
             ))}

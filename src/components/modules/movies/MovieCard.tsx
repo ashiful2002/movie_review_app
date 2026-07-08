@@ -29,7 +29,6 @@ export default function MovieCard({ movie, premiumUser }: MovieCardProps) {
       ? movie.reviews.reduce((a: any, b: any) => a + b.rating, 0) /
       movie.reviews.length
       : 0;
-  console.log(movie);
 
   return (
     <motion.div

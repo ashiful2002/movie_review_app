@@ -1,8 +1,8 @@
 import UserTable from "@/components/modules/admin/UsersTable";
-import { getALlUsers } from "@/services/users";
+import { getAAllUsers } from "@/services/users";
 
 const Page = async () => {
-  const { data: users } = await getALlUsers();
+  const { data: users } = await getAAllUsers();
 
   const admins = users?.filter((user: any) => user.role === "ADMIN");
   const customers = users?.filter((user: any) => user.role === "CUSTOMER");

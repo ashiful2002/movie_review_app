@@ -18,8 +18,14 @@ import AddtoWatchlist from "@/components/Buttons/movie/AddtoWatchlist";
 import ReviewModal from "../reviews/ReviewModal";
 import AddWatchlistButton from "@/components/Buttons/movie/AddtoWatchlist";
 import AddFavouriteButton from "@/components/Buttons/movie/AddFavourite";
+import { Movie } from "@/types/movie";
 
-const MovieDetails = ({ movie, premiumUser }: any) => {
+interface MovieDetailsProps {
+  movie: Movie;
+  premiumUser: boolean;
+}
+
+const MovieDetails = ({ movie, premiumUser }: MovieDetailsProps) => {
   const router = useRouter();
 
   const averageRating =
@@ -148,11 +154,10 @@ const MovieDetails = ({ movie, premiumUser }: any) => {
           </div>
 
           <div className="flex flex-wrap gap-4">
-            <AddWatchlistButton movie={movie} />
-            <AddFavouriteButton />
+            <AddWatchlistButton movieId={movie.id} />
+            <AddFavouriteButton movieId={movie.id} />
             <ReviewModal movieId={movie?.id} />
           </div>
-          {/* {!premiumUser && <BuySubscription movie={movie} />} */}
         </div>
       </div>
       <Separator className="mb-3" />

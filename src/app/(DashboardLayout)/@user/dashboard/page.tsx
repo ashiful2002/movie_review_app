@@ -1,7 +1,9 @@
 import { UserDashboardStats } from "@/components/modules/dashboard/UserDashboardStatus";
+import getStats from "@/services/stats";
 
- 
-const page = () => {
+const UserDashboard = async () => {
+  const statsData = await getStats();
+
   return (
     <div className="space-y-6">
       <div>
@@ -10,9 +12,9 @@ const page = () => {
           Track your viewing activity and preferences.
         </p>
       </div>
-      <UserDashboardStats />
+      <UserDashboardStats data={statsData.data} />
     </div>
   );
 };
 
-export default page;
+export default UserDashboard;

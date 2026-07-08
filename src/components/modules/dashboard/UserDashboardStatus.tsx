@@ -1,169 +1,179 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Clock, Star, Heart, Zap } from "lucide-react";
+import {
+  Star,
+  Heart,
+  List,
+  Users,
+  ThumbsUp,
+  MessageSquare,
+} from "lucide-react";
 import { StatCard } from "./StatCard";
 import { PieChartComponent } from "./PieChartComponent";
-import { BarChartComponent } from "./BarChartComponent";
+import { RecentReviewsList } from "./RecentReviewsList";
 
-interface UserStats {
-  watchedMovies: number;
-  watchlistItems: number;
-  reviewsWritten: number;
-  avgRating: number;
-  watchingHours: Array<{ name: string; hours: number }>;
-  favoriteGenres: Array<{ name: string; value: number }>;
-  watchTrend: number;
-  ratingTrend: number;
+interface RecentReview {
+  id: string;
+  rating: number;
+  createdAt: string;
+  movie: {
+    title: string;
+    thumbnail: string | null;
+  };
 }
 
-export function UserDashboardStats() {
-  const [stats, setStats] = useState<UserStats | null>(null);
-  const [loading, setLoading] = useState(true);
+interface UserStats {
+  totalReviews: number;
+  totalWatchlist: number;
+  totalFavourites: number;
+  totalComments: number;
+  totalFollowers: number;
+  totalFollowing: number;
+  likesReceived: number;
+  isPremium: boolean;
+  hasActiveSubscription: boolean;
+  moviesByGenre: Array<{ name: string; value: number }>;
+  recentReviews: RecentReview[];
+}
 
-  useEffect(() => {
-    // Simulate fetching user stats
-    // In a real app, this would be an API call
-    const mockStats: UserStats = {
-      watchedMovies: 142,
-      watchlistItems: 45,
-      reviewsWritten: 38,
-      avgRating: 4.2,
-      watchingHours: [
-        { name: "Mon", hours: 2.5 },
-        { name: "Tue", hours: 1.8 },
-        { name: "Wed", hours: 3.2 },
-        { name: "Thu", hours: 2.1 },
-        { name: "Fri", hours: 4.5 },
-        { name: "Sat", hours: 5.8 },
-        { name: "Sun", hours: 3.5 },
-      ],
-      favoriteGenres: [
-        { name: "Action", value: 38 },
-        { name: "Drama", value: 28 },
-        { name: "Sci-Fi", value: 22 },
-        { name: "Comedy", value: 18 },
-        { name: "Thriller", value: 36 },
-      ],
-      watchTrend: 15,
-      ratingTrend: 8,
-    };
+interface UserDashboardStatsProps {
+  data: UserStats;
+}
 
-    // Simulate API delay
-    setTimeout(() => {
-      setStats(mockStats);
-      setLoading(false);
-    }, 500);
-  }, []);
+export function UserDashboardStats({ data }: UserDashboardStatsProps) {
+  console.log(data?.totalReviews, "data");
 
-  if (loading) {
-    return (
-      <div className="space-y-8 animate-pulse">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {[...Array(4)].map((_, i) => (
-            <div key={i} className="h-32 bg-muted rounded-lg" />
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  if (!stats) {
+  if (!data) {
     return <div>Failed to load your statistics</div>;
   }
+
+  const avgRating =
+    data?.recentReviews?.length > 0
+      ? (
+          data.recentReviews.reduce((sum, r) => sum + r.rating, 0) /
+          data.recentReviews.length
+        ).toFixed(1)
+      : "0.0";
 
   return (
     <div className="space-y-8">
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
-          title="Movies Watched"
-          value={stats.watchedMovies}
-          description="Your viewing history"
-          icon={Clock}
-          bgColor="bg-cyan-50 dark:bg-cyan-950"
-          iconColor="text-cyan-600 dark:text-cyan-400"
-          trend={stats.watchTrend}
-        />
-        <StatCard
-          title="Watchlist Items"
-          value={stats.watchlistItems}
-          description="Saved for later"
-          icon={Heart}
-          bgColor="bg-rose-50 dark:bg-rose-950"
-          iconColor="text-rose-600 dark:text-rose-400"
-          trend={6}
-        />
-        <StatCard
           title="Reviews Written"
-          value={stats.reviewsWritten}
-          description="Contributions to community"
+          value={data.totalReviews}
+          description="Your contributions"
           icon={Star}
           bgColor="bg-amber-50 dark:bg-amber-950"
           iconColor="text-amber-600 dark:text-amber-400"
-          trend={stats.ratingTrend}
         />
         <StatCard
-          title="Avg Rating Given"
-          value={`${stats.avgRating}/5`}
-          description="Your review score"
-          icon={Zap}
+          title="Watchlist Items"
+          value={data.totalWatchlist}
+          description="Saved for later"
+          icon={List}
+          bgColor="bg-cyan-50 dark:bg-cyan-950"
+          iconColor="text-cyan-600 dark:text-cyan-400"
+        />
+        <StatCard
+          title="Favourites"
+          value={data.totalFavourites}
+          description="Movies you loved"
+          icon={Heart}
+          bgColor="bg-rose-50 dark:bg-rose-950"
+          iconColor="text-rose-600 dark:text-rose-400"
+        />
+        <StatCard
+          title="Likes Received"
+          value={data.likesReceived}
+          description="On your reviews"
+          icon={ThumbsUp}
           bgColor="bg-violet-50 dark:bg-violet-950"
           iconColor="text-violet-600 dark:text-violet-400"
-          trend={3}
+        />
+      </div>
+
+      {/* Secondary Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <StatCard
+          title="Comments"
+          value={data.totalComments}
+          description="Your discussion activity"
+          icon={MessageSquare}
+          bgColor="bg-blue-50 dark:bg-blue-950"
+          iconColor="text-blue-600 dark:text-blue-400"
+        />
+        <StatCard
+          title="Followers"
+          value={data.totalFollowers}
+          description="People following you"
+          icon={Users}
+          bgColor="bg-emerald-50 dark:bg-emerald-950"
+          iconColor="text-emerald-600 dark:text-emerald-400"
+        />
+        <StatCard
+          title="Following"
+          value={data.totalFollowing}
+          description="People you follow"
+          icon={Users}
+          bgColor="bg-indigo-50 dark:bg-indigo-950"
+          iconColor="text-indigo-600 dark:text-indigo-400"
         />
       </div>
 
       {/* Charts Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Bar Chart - Weekly Watching Hours */}
-        <BarChartComponent
-          data={stats.watchingHours}
-          dataKey="hours"
-          title="Your Weekly Watch Time"
-          description="Hours spent watching this week"
-          xAxisKey="name"
-          color="#06b6d4"
-          height={320}
-        />
+        {/* Recent Reviews List */}
+        <RecentReviewsList reviews={data.recentReviews} />
 
         {/* Pie Chart - Favorite Genres */}
         <PieChartComponent
-          data={stats.favoriteGenres}
+          data={data.moviesByGenre}
           title="Your Favorite Genres"
-          description="Distribution of your watched content"
-          colors={["#3b82f6", "#8b5cf6", "#ec4899", "#f59e0b", "#ef4444"]}
+          description="Based on movies you've reviewed"
+          colors={[
+            "#3b82f6",
+            "#8b5cf6",
+            "#ec4899",
+            "#f59e0b",
+            "#10b981",
+            "#06b6d4",
+          ]}
           height={320}
         />
       </div>
 
       {/* User Insights */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-950 dark:to-blue-950 p-6 rounded-lg border border-cyan-200 dark:border-cyan-800">
-          <p className="text-sm text-muted-foreground">Total Watch Time</p>
-          <p className="text-3xl font-bold text-cyan-600 dark:text-cyan-400 mt-2">
-            127 hrs
+        <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950 dark:to-orange-950 p-6 rounded-lg border border-amber-200 dark:border-amber-800">
+          <p className="text-sm text-muted-foreground">Avg Rating Given</p>
+          <p className="text-3xl font-bold text-amber-600 dark:text-amber-400 mt-2">
+            {avgRating}/10
           </p>
           <p className="text-xs text-muted-foreground mt-3">
-            ~5.3 hours per day
+            Based on your recent reviews
           </p>
         </div>
         <div className="bg-gradient-to-br from-rose-50 to-pink-50 dark:from-rose-950 dark:to-pink-950 p-6 rounded-lg border border-rose-200 dark:border-rose-800">
           <p className="text-sm text-muted-foreground">Premium Member</p>
           <p className="text-3xl font-bold text-rose-600 dark:text-rose-400 mt-2">
-            Active
+            {data.isPremium ? "Active" : "Inactive"}
           </p>
           <p className="text-xs text-muted-foreground mt-3">
-            Premium access unlocked
+            {data.isPremium
+              ? "Premium access unlocked"
+              : "Upgrade for premium content"}
           </p>
         </div>
-        <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950 dark:to-orange-950 p-6 rounded-lg border border-amber-200 dark:border-amber-800">
-          <p className="text-sm text-muted-foreground">Recommendation Score</p>
-          <p className="text-3xl font-bold text-amber-600 dark:text-amber-400 mt-2">
-            92%
+        <div className="bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-950 dark:to-blue-950 p-6 rounded-lg border border-cyan-200 dark:border-cyan-800">
+          <p className="text-sm text-muted-foreground">Subscription</p>
+          <p className="text-3xl font-bold text-cyan-600 dark:text-cyan-400 mt-2">
+            {data.hasActiveSubscription ? "Active" : "None"}
           </p>
           <p className="text-xs text-muted-foreground mt-3">
-            Based on your activity
+            {data.hasActiveSubscription
+              ? "Your plan is currently active"
+              : "No active subscription plan"}
           </p>
         </div>
       </div>

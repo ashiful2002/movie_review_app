@@ -3,7 +3,8 @@
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useTransition } from "react";
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Loader2 } from "lucide-react";
-import Loading from "./Loading";
+// import Loading from "./Loading";
+import Loading from "@/app/(CommonLayout)/movies/loading";
 
 export type PaginationMeta = {
   page: number;
@@ -70,8 +71,7 @@ const Pagination = ({
 
   const { page: currentPage, totalPages, total, limit } = meta;
 
-  // ── Navigation helpers ───────────────────────────────────────────────────
-
+ 
   const buildUrl = (updates: Record<string, string | number>) => {
     const params = new URLSearchParams(searchParams.toString());
     Object.entries(updates).forEach(([k, v]) => params.set(k, String(v)));

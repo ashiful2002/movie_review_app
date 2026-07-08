@@ -1,44 +1,51 @@
 "use client";
 
-import { EyeIcon } from "lucide-react";
+import { EyeIcon, Check } from "lucide-react";
 import { toast } from "sonner";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { ActionButton } from "./ActionButton";
 import { addToWatchlist } from "@/services/watchlist";
-import { Movie } from "@/types/movie";
 
-const AddWatchlistButton = ({ movie }: { movie: Movie | null }) => {
-  const handleAddToWatchlist = (movie: Movie | null) => {
-    if (!movie) {
-      return
-    }
+interface AddWatchlistButtonProps {
+  movieId: string;
+}
+
+const AddWatchlistButton = ({ movieId }: AddWatchlistButtonProps) => {
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  const handleAddToWatchlist = async () => {
+    setLoading(true);
+
     try {
-      const added = addToWatchlist(movie);
+      const res = await addToWatchlist(movieId);
 
-      if (!added) {
-        toast("Already in your watchlist");
+      if (res?.success) {
+        toast.success("Movie added to watchlist");
+        router.refresh();
       } else {
-        toast.success("Added to watchlist");
+        toast.error(res?.message || "Failed to add to watchlist");
       }
-    } catch (error) {
-      toast.error("Failed to update watchlist");
+    } finally {
+      setLoading(false);
     }
   };
 
+
+
   return (
-    <>
-      {
-        <ActionButton
-          size="xs"
-          variant="outline"
-          onClick={() => handleAddToWatchlist(movie)}
-          className="text-yellow-400 hover:bg-yellow-500 cursor-pointer "
-          icon={<EyeIcon />}
-          tooltip="click to add Watchlist"
-        >
-          Add to Watchlist
-        </ActionButton>
-      }
-    </>
+    <ActionButton
+      disabled={loading}
+      size="xs"
+      variant="outline"
+      onClick={handleAddToWatchlist}
+      className="cursor-pointer text-yellow-400 hover:bg-yellow-500"
+      icon={<EyeIcon className="h-4 w-4" />}
+      tooltip="Add to watchlist"
+    >
+      {loading ? "Adding..." : "Add to Watchlist"}
+    </ActionButton>
   );
 };
 

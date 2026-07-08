@@ -31,6 +31,32 @@ export interface User {
   isPremium?: boolean;
 }
 
+export const registerUser = async (data: any): Promise<AuthResponse> => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API}/auth/register`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      }
+    );
+
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(error.message || "Registration failed");
+    }
+
+    return {
+      success: true,
+      message: "Registration successful",
+    };
+  } catch (error) {
+    console.error("Registration error:", error);
+    throw error;
+  }
+};
+
 export const loginUser = async (data: LoginPayload): Promise<AuthResponse> => {
   const cookieStore = await cookies();
   try {

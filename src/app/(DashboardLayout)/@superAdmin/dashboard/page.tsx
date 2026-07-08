@@ -1,18 +1,22 @@
-import { AdminDashboardStats } from "@/components/modules/dashboard/AdminDashboardStatas";
+import { SuperAdminDashboardStats } from "@/components/modules/dashboard/AdminDashboardStatas";
+import getStats from "@/services/stats";
 
 
-const page = () => {
+const SuperAdminDashboardPage = async () => {
+
+    const statsData = await getStats();
+
     return (
         <div className="space-y-6">
             <div>
-                <h2 className="text-3xl font-bold tracking-tight"> super admin Dashboard</h2>
+                <h2 className="text-3xl font-bold tracking-tight"> Super Admin Dashboard</h2>
                 <p className="text-muted-foreground mt-2">
                     Welcome back! Here&apos;s your platform overview.
                 </p>
             </div>
-            <AdminDashboardStats />
+            <SuperAdminDashboardStats statsData={statsData.data} />
         </div>
     );
 };
 
-export default page;
+export default SuperAdminDashboardPage;

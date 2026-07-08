@@ -1,15 +1,15 @@
 "use client";
 
 import {
+  ResponsiveContainer,
   BarChart,
   Bar,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
-  ResponsiveContainer,
 } from "recharts";
+
 import {
   Card,
   CardContent,
@@ -40,30 +40,53 @@ export function BarChartComponent({
   description,
   xAxisKey = "name",
   color = "#3b82f6",
-  height = 300,
+  height = 320,
 }: BarChartComponentProps) {
   return (
     <Card>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
-        {description && <CardDescription>{description}</CardDescription>}
+        {description && (
+          <CardDescription>{description}</CardDescription>
+        )}
       </CardHeader>
+
       <CardContent>
         <ResponsiveContainer width="100%" height={height}>
-          <BarChart data={data}>
+          <BarChart
+            data={data}
+            margin={{
+              top: 20,
+              right: 20,
+              left: 0,
+              bottom: 10,
+            }}
+          >
             <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
-            <XAxis dataKey={xAxisKey} className="text-xs" />
-            <YAxis className="text-xs" />
-            <Tooltip
-              contentStyle={{
-                backgroundColor: "hsl(var(--background))",
-                border: "1px solid hsl(var(--border))",
-                borderRadius: "8px",
-              }}
-              cursor={{ fill: "rgba(59, 130, 246, 0.1)" }}
+
+            <XAxis
+              dataKey={xAxisKey}
+              tick={{ fontSize: 12 }}
+              interval={0}
             />
-            <Legend />
-            <Bar dataKey={dataKey} fill={color} radius={[8, 8, 0, 0]} />
+
+            <YAxis tick={{ fontSize: 12 }} />
+
+            <Tooltip
+              cursor={{ fill: "rgba(59,130,246,0.08)" }}
+              contentStyle={{
+                borderRadius: "8px",
+                border: "1px solid hsl(var(--border))",
+                backgroundColor: "hsl(var(--background))",
+              }}
+              formatter={(value) => [`${value} Reviews`, "Reviews"]}
+            />
+
+            <Bar
+              dataKey={dataKey}
+              fill={color}
+              radius={[8, 8, 0, 0]}
+            />
           </BarChart>
         </ResponsiveContainer>
       </CardContent>

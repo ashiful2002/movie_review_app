@@ -24,6 +24,7 @@ type NavItem = {
   }[];
 };
 
+
 type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
   user: {
     id: string;
@@ -77,7 +78,7 @@ const users_nav: NavItem[] = [
 
 const admin_nav: NavItem[] = [
   {
-    title: "Admin Dashboard",
+    title: "Admin",
     url: "/dashboard",
     icon: UserIcon,
     isActive: true,
@@ -100,7 +101,7 @@ const admin_nav: NavItem[] = [
 ];
 const super_admin_nav: NavItem[] = [
   {
-    title: "SuperAdmin Dashboard",
+    title: "SuperAdmin",
     url: "/dashboard",
     icon: UserIcon,
     isActive: true,
@@ -115,8 +116,8 @@ const super_admin_nav: NavItem[] = [
         url: "/dashboard/manage-admin",
       },
       {
-        title: "Add Movies",
-        url: "/dashboard/add-movies",
+        title: "Add Movie",
+        url: "/dashboard/add-movie",
       },
       {
         title: "Manage Movies",

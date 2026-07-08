@@ -61,7 +61,6 @@ const SortableHeader = ({
   </Button>
 );
 
-// Actions cell component
 const ActionsCell = ({ movie }: { movie: Movie }) => (
   <DropdownMenu>
     <DropdownMenuTrigger asChild>

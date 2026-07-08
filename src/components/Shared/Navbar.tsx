@@ -11,7 +11,6 @@ import Logo from "./Logo";
 import LogOut from "../Buttons/Logout";
 import { UserTypes } from "@/types";
 import { ModeToggle } from "../Buttons/ModeToggler";
-import MovieFilterWrapper from "../Filter/MovieFilterWrapper";
 import { Input } from "../ui/input";
 
 export default function Navbar() {
@@ -19,6 +18,7 @@ export default function Navbar() {
   const [user, setUser] = useState<UserTypes | null>(null);
 
   const pathname = usePathname();
+
 
   useEffect(() => {
     const getCurrentUser = async () => {
@@ -34,8 +34,14 @@ export default function Navbar() {
   const navLinks: any[] = [
     { name: "Home", href: "/" },
     { name: "Movies", href: "/movies" },
-    { name: "Watchlist", href: "/watchlist" },
+
+
   ];
+
+  const userNavs = [{ name: "Watchlist", href: "/watchlist" },
+  { name: "favourite", href: "/favourite" }, { name: "plans", href: "/plans" }]
+
+  const userRole = user?.role
 
   const firstName = user?.name?.trim()?.split(" ")?.[0] || "";
   return (
@@ -66,7 +72,16 @@ export default function Navbar() {
 
           {user ? (
             <>
-              <Link href={"/plans"}>Plans</Link>
+              {user && userRole == "USER" ? userNavs.map((link) => (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className={`text-sm font-medium transition-colors ${pathname === link.href ? "text-yellow-400" : ""
+                    }`}
+                >
+                  {link.name}
+                </Link>
+              )) : ""}
               <Link href={"/dashboard"} >
                 <Button className="cursor-pointer">Dashboard</Button>
               </Link>
@@ -106,7 +121,7 @@ export default function Navbar() {
                   key={link.name}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className={`text-lg font-medium transition-colors ${pathname === link.href ? "text-red-500" : ""
+                  className={`text-lg font-medium transition-colors ${pathname === link.href ? "text-yellow-400" : ""
                     }`}
                 >
                   {link.name}
@@ -114,7 +129,6 @@ export default function Navbar() {
               ))}
               {user ? (
                 <>
-                  <Link href={"/plans"}>Plans</Link>
                   <Link href={"/dashboard"}>
                     <Button>Dashboard</Button>
                   </Link>

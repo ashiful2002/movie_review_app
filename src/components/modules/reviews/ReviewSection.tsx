@@ -11,6 +11,7 @@ import {
 import { toast } from "sonner";
 
 const ReviewSection = ({ movie }: any) => {
+   
   return (
     <div className="space-y-4">
       <h3 className="text-xl font-semibold">Reviews</h3>
@@ -96,7 +97,7 @@ const ReviewSection = ({ movie }: any) => {
                   )}
 
                   {/* Footer */}
-                  <div className="flex items-center justify-between text-xs text-muted-foreground">
+                  {/* <div className="flex items-center justify-between text-xs text-muted-foreground">
                     {review.spoiler && (
                       <span className="text-red-500 font-medium">
                         ⚠ Spoiler
@@ -124,7 +125,7 @@ const ReviewSection = ({ movie }: any) => {
                         }`}
                       />
                     </div>
-                  </div>
+                  </div> */}
                 </CardContent>
               </Card>
             );
