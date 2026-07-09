@@ -17,12 +17,14 @@ interface DashboardStats {
   totalReviews: number;
   totalGenres: number;
   totalSubscriptionPlans: number;
-  topReviewedMovies: string[]
+  topReviewedMovies: string[];
 }
 
-export const SuperAdminDashboardStats = ({ statsData }: { statsData: DashboardStats }) => {
-
-
+export const SuperAdminDashboardStats = ({
+  statsData,
+}: {
+  statsData: DashboardStats;
+}) => {
   return (
     <div className="space-y-8">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -72,7 +74,7 @@ export const SuperAdminDashboardStats = ({ statsData }: { statsData: DashboardSt
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Bar Chart - Monthly Revenue */}
         <BarChartComponent
-          data={statsData.topReviewedMovies}
+          data={statsData.topReviewedMovies || 0}
           dataKey="reviews"
           title="Top 5 Most Reviewed Movies"
           description="Movies with the highest number of user reviews"

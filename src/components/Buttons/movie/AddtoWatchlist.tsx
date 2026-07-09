@@ -9,9 +9,10 @@ import { addToWatchlist } from "@/services/watchlist";
 
 interface AddWatchlistButtonProps {
   movieId: string;
+  text?: string;
 }
 
-const AddWatchlistButton = ({ movieId }: AddWatchlistButtonProps) => {
+const AddWatchlistButton = ({ movieId, text }: AddWatchlistButtonProps) => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -22,17 +23,17 @@ const AddWatchlistButton = ({ movieId }: AddWatchlistButtonProps) => {
       const res = await addToWatchlist(movieId);
 
       if (res?.success) {
-        toast.success("Movie added to watchlist");
+        toast.success("Movie added to watchlist", { position: "top-center" });
         router.refresh();
       } else {
-        toast.error(res?.message || "Failed to add to watchlist");
+        toast.error(res?.message || "Failed to add to watchlist", {
+          position: "top-center",
+        });
       }
     } finally {
       setLoading(false);
     }
   };
-
-
 
   return (
     <ActionButton
@@ -40,11 +41,11 @@ const AddWatchlistButton = ({ movieId }: AddWatchlistButtonProps) => {
       size="xs"
       variant="outline"
       onClick={handleAddToWatchlist}
-      className="cursor-pointer text-yellow-400 hover:bg-yellow-500"
+      className="cursor-pointer  text-yellow-400"
       icon={<EyeIcon className="h-4 w-4" />}
       tooltip="Add to watchlist"
     >
-      {loading ? "Adding..." : "Add to Watchlist"}
+      {loading ? "Adding..." : text ? text : "Add to Watchlist"}
     </ActionButton>
   );
 };

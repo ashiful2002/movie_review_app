@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useState, useTransition } from "react";
 import {
   Dialog,
@@ -15,7 +14,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { updateProfile } from "@/services/profile";
- 
+
 interface User {
   name: string;
   phone?: string | null;
@@ -68,7 +67,7 @@ export default function UpdateProfileModal({ user }: { user: User }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-blue-500 hover:bg-blue-600 text-white">
+        <Button className="bg-yellow-400 hover:bg-yellow-600 text-black cursor-pointer">
           Edit Profile
         </Button>
       </DialogTrigger>
@@ -158,7 +157,7 @@ export default function UpdateProfileModal({ user }: { user: User }) {
             <Button
               type="submit"
               disabled={isPending}
-              className="bg-blue-500 hover:bg-blue-600 text-white"
+              className="bg-yellow-400 hover:bg-yellow-500 text-black cursor-pointer"
             >
               {isPending ? "Saving..." : "Save Changes"}
             </Button>

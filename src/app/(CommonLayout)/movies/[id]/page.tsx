@@ -9,8 +9,5 @@ export default async function Page({ params }: { params: { id: string } }) {
   const user = await getUser();
 
   const premiumUser = user?.isPremium ?? false;
-  return <MovieDetails movie={movie} premiumUser={premiumUser} />
-
-
-
+  return <MovieDetails movie={movie} premiumUser={premiumUser} />;
 }
