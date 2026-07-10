@@ -1,5 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { ReactNode } from "react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface ActionButtonProps {
   children: ReactNode;
@@ -10,6 +16,8 @@ interface ActionButtonProps {
   size?: "sm" | "xs";
   className?: string;
   disabled?: boolean;
+  tooltip?: ReactNode;
+
 }
 
 export const ActionButton = ({
@@ -21,9 +29,10 @@ export const ActionButton = ({
   size = "sm",
   className = "",
   disabled = false,
+  tooltip,
 }: ActionButtonProps) => {
   const baseStyles =
-    "w-full rounded-xl text-base font-semibold flex items-center justify-center gap-2";
+    "px-4 rounded-lg text-base font-semibold flex items-center justify-center gap-2";
 
   const variantStyles = {
     outline: "border",
@@ -45,13 +54,24 @@ export const ActionButton = ({
     </Button>
   );
 
-  if (href) {
-    return (
-      <a href={href} className="w-full">
-        {button}
-      </a>
-    );
-  }
+  const content = href ? (
+    <a href={href} className="w-full">
+      {button}
+    </a>
+  ) : (
+    button
+  );
 
-  return button;
+  if (!tooltip) return content;
+
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>{content}</TooltipTrigger>
+        <TooltipContent>
+          {tooltip}
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
 };

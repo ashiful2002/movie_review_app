@@ -1,0 +1,125 @@
+# MMDB | Movie Review Server
+
+[MMDB](http://localhost:3000/)
+[MMDB](http://localhost:3000/)
+[Home](http://localhost:3000/)
+[Movies](http://localhost:3000/movies)
+[Login](http://localhost:3000/login)
+[MMDB](http://localhost:3000/)
+Best Movie review platform right now, stay tuned to the biggest blast of the year
+
+#### Quick Links
+- [Home](http://localhost:3000/)
+- [Menu](http://localhost:3000/menu)
+- [About](http://localhost:3000/about)
+- [Contact](http://localhost:3000/contact)
+[Home](http://localhost:3000/)
+[Menu](http://localhost:3000/menu)
+[About](http://localhost:3000/about)
+[Contact](http://localhost:3000/contact)
+
+#### Contact Us
+Email: support@mmdb.com
+Phone: 01759-907907
+Dhaka, Bangladesh
+© 2026 mmdb. All rights reserved.
+Developed by[Mukto](https://ashiful-islam.vercel.app)
+
+## Latest Movies
+Here is 10 Latest Movies
+
+### Interstellar
+A team of explorers travel through a wormhole in space to ensure humanity's survival.
+[View Details](http://localhost:3000/movies/867f79ed-b0be-4898-b49a-aa1c67d8585d)
+
+### messi
+A team of explorers travel through a wormhole in space to ensure humanity's survival.
+[View Details](http://localhost:3000/movies/0dc1b4f8-764f-44d3-b8cc-1b3b921a0a92)
+
+### Interstellar
+A team of explorers travel through a wormhole in space to ensure humanity's survival.
+[View Details](http://localhost:3000/movies/652dd64f-d2c9-4d3f-9598-2963dc782778)
+
+### haland
+A team of explorers travel through a wormhole in space to ensure humanity's survival.
+[View Details](http://localhost:3000/movies/12105e69-1c7e-40ac-859c-20acf9758cb4)
+
+### Interstellar
+A team of explorers travel through a wormhole in space to ensure humanity's survival.
+[View Details](http://localhost:3000/movies/70d72d9a-f92a-454f-9c94-1fae21ef0bbf)
+
+### Interstellar
+A team of explorers travel through a wormhole in space to ensure humanity's survival.
+[View Details](http://localhost:3000/movies/6d6477f5-9123-4242-a5b7-2aaded48484f)
+
+### Interstellar
+A team of explorers travel through a wormhole in space to ensure humanity's survival.
+[View Details](http://localhost:3000/movies/82191de9-8eb0-4ac9-9fb6-6b195f0fcc62)
+
+### Interstellar
+A team of explorers travel through a wormhole in space to ensure humanity's survival.
+[View Details](http://localhost:3000/movies/901bc971-f1b9-4d3d-a711-7103dffcbd0f)
+
+### Interstellar
+A team of explorers travel through a wormhole in space to ensure humanity's survival.
+[View Details](http://localhost:3000/movies/697d39e9-b8fb-43bd-bf9e-592f1d86942c)
+
+### Interstellar
+A team of explorers travel through a wormhole in space to ensure humanity's survival.
+[View Details](http://localhost:3000/movies/495d6a93-5542-4cb0-8e9d-eb566171378a)
+[View All](http://localhost:3000/movies)
+
+## Featured Movies
+Discover our curated selection of critically acclaimed films.
+
+### The Prestige
+Directed by Christopher Nolan
+
+#### Dunkirk
+
+#### Tenet
+
+## Choose Your Perfect Plan
+Flexible subscription tiers designed for every level of movie passion. Start watching instantly.
+[Discover Plans to Enjoy Exclusive Features](http://localhost:3000/plans)
+Active Subscribers
+Satisfaction Rating
+Customer Support
+
+## Loved by Film Enthusiasts
+Subscribers discovering their new favorite films
+
+### Alexandra Chen
+Film Critic & Author
+"The curation on MMDB is unmatched. I&apos;ve discovered masterpieces I would never have found elsewhere. Worth every penny."
+
+### Marcus Johnson
+Documentary Enthusiast
+"The personalized recommendations powered by their AI are remarkably accurate. It&apos;s like having your own film concierge."
+
+### Sophia Rodriguez
+Independent Filmmaker
+"Finally, a platform that respects cinema as art. The reviews are thoughtful and the community is incredible."
+
+## Explore Movies by Genre
+Discover thousands of movies across every genre—from action-packed adventures and thrilling mysteries to heartfelt romances and laugh-out-loud comedies.
+[actionExplore →](http://localhost:3000/movies?genre=06836bd7-8c45-4622-99f8-c1c7aadfe252)
+
+### action
+Explore →
+[RomanceExplore →](http://localhost:3000/movies?genre=9ee27531-d8ed-4879-9f16-09502eb53121)
+
+### Romance
+Explore →
+[HorrorExplore →](http://localhost:3000/movies?genre=b3b016a5-e1f5-4bfc-923a-2e76b4b6f5bc)
+
+### Horror
+Explore →
+[ActionExplore →](http://localhost:3000/movies?genre=30ba63fa-3a4c-48f3-8d53-8ee0714e66fd)
+
+### Action
+Explore →
+[DramaaExplore →](http://localhost:3000/movies?genre=a7db861a-6dce-49ea-8bf6-8c07a936f288)
+
+### Dramaa
+Explore →

@@ -5,7 +5,7 @@ import Logo from "./Logo";
 
 const Footer = () => {
   return (
-    <footer className="bg-yellow-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200 mt-12">
+    <footer className="bg-gray-200 dark:bg-gray-900 text-gray-800 dark:text-gray-200 mt-12">
       <div className="max-w-6xl mx-auto px-4 py-10 grid grid-cols-1 sm:grid-cols-3 gap-8">
         {/* About / Brand */}
         <div className="space-y-2">
@@ -53,7 +53,7 @@ const Footer = () => {
               <Link href="/">Home</Link>
             </li>
             <li>
-              <Link href="/menu">Menu</Link>
+              <Link href="/movies">Movies</Link>
             </li>
             <li>
               <Link href="/about">About</Link>

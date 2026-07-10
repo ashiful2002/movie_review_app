@@ -4,7 +4,7 @@ import { getSubscriptionPlans } from "@/services/subscriptions";
 
 const page = async () => {
   const { data: plans } = await getSubscriptionPlans();
-  const user = await getUser();
+
 
   return (
     <div className="min-h-screen bg-muted/20 p-6 md:p-10 flex justify-center">

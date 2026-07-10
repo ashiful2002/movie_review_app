@@ -1,13 +1,12 @@
-import { Info } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { ActionButton } from "./ActionButton";
 
-const MovieDetails = ({ movie }: any) => {
+const MovieDetails = ({ movieId }: { movieId: string }) => {
   return (
-    <ActionButton
-      href={`/movies/${movie.id}`}
+    <ActionButton className="hover:translate-y-1 transition-transform duration-300 ease-in-out cursor-pointer"
+      href={`/movies/${movieId}`}
       variant="outline"
-      icon={<Info />}
-      size={"xs"}
+      icon={<ChevronRight />}
     >
       View Details
     </ActionButton>

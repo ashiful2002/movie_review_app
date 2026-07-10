@@ -1,4 +1,5 @@
 "use server";
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_API;
@@ -7,13 +8,6 @@ export const createReviews = async (payload: any) => {
   try {
     const cookieStore = await cookies();
     const token = cookieStore.get("token")?.value;
-    // console.log("🔍 Debug Info:");
-    // console.log("  Token exists:", !!token);
-    // console.log(
-    //   "  Token preview:",
-    //   token ? `${token.substring(0, 30)}...` : "NONE"
-    // );
-    // console.log("  BASE_URL:", BASE_URL);
 
     if (!token) {
       throw new Error("Authentication token not found. Please log in.");
@@ -29,60 +23,52 @@ export const createReviews = async (payload: any) => {
       body: JSON.stringify(payload),
     });
 
+    const result = await res.json();
     if (!res.ok) {
-      const error = await res.json();
-      throw new Error(error.message);
+      throw new Error(result.message);
     }
 
-    return res.json();
+    revalidateTag(`movie-${payload.movieId}`, {});
+    revalidateTag("movies", {});
+
+    return result;
   } catch (error: any) {
     console.error("REAL ERROR:", error);
     throw new Error(error.message);
   }
 };
 
-// export const getReviewsByMeals = async (mealId: string) => {
-//   const cookieStore = cookies();
-//   const token = (await cookieStore).get("token")?.value;
 
-//   try {
-//     const res = await fetch(`${BASE_URL}/reviews/meal/${mealId}`, {
-//       method: "GET",
-//       headers: {
-//         Authorization: token!,
-//       },
-//     });
+export const getReviews = async (payload: any) => {
+  try {
+    const cookieStore = await cookies();
+    const token = cookieStore.get("token")?.value;
 
-//     if (!res.ok) {
-//       throw new Error("Failed to fetch orders");
-//     }
+    if (!token) {
+      throw new Error("Authentication token not found. Please log in.");
+    }
 
-//     return res.json();
-//   } catch (error: any) {
-//     console.log(error);
-//     console.log(error.message);
-//     // console.log(err);
-//   }
-// };
+    const res = await fetch(`${BASE_URL}/reviews`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+      cache: "no-store",
+      body: JSON.stringify(payload),
+    });
 
-// export const getSingleReview = async (id: string) => {
-//   const cookieStore = await cookies();
-//   const token = cookieStore.get("token")?.value;
-//   try {
-//     const res = await fetch(`${BASE_URL}/reviews/${id}`, {
-//       method: "GET",
-//       headers: {
-//         Authorization: token!,
-//       },
-//     });
+    const result = await res.json();
+    if (!res.ok) {
+      throw new Error(result.message);
+    }
 
-//     if (!res.ok) {
-//       throw new Error("Failed to fetch orders");
-//     }
+    revalidateTag(`movie-${payload.movieId}`, {});
+    revalidateTag("movies", {});
 
-//     const result = await res.json();
-//     return result;
-//   } catch (error: any) {
-//     throw new Error(error.message);
-//   }
-// };
+    return result;
+  } catch (error: any) {
+    console.error("REAL ERROR:", error);
+    throw new Error(error.message);
+  }
+};

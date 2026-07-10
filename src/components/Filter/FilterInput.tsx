@@ -1,7 +1,3 @@
-
-// =========================
-// FilterInput.tsx
-// =========================
 import { Input } from "@/components/ui/input";
 import { X } from "lucide-react";
 

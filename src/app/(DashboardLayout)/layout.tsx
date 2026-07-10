@@ -8,16 +8,18 @@ import { User } from "@/types";
 export default async function Page({
   user,
   admin,
+  superAdmin,
 }: {
   user: ReactNode;
   admin: ReactNode;
+  superAdmin: ReactNode;
 }) {
-  const currentUser: User | null = await getUser();
+  const currentUser: User | any = await getUser();
   const userRole = currentUser?.role;
   return (
     <SidebarProvider>
       <AppSidebar user={currentUser} />
- 
+
       <main className="flex flex-1 flex-col">
         {/* HEADER */}
         <header className="flex h-14 items-center border-b px-4">
@@ -27,6 +29,7 @@ export default async function Page({
 
         {/* PAGE CONTENT */}
         <div className="flex-1 p-4">
+          {userRole === "SUPER_ADMIN" && superAdmin}
           {userRole === "ADMIN" && admin}
           {userRole === "USER" && user}
         </div>

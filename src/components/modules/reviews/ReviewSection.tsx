@@ -1,15 +1,17 @@
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
-
+import { ThumbsUp, ThumbsDown, Heart, HeartOff } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { toast } from "sonner";
 
 const ReviewSection = ({ movie }: any) => {
+   
   return (
     <div className="space-y-4">
       <h3 className="text-xl font-semibold">Reviews</h3>
@@ -95,25 +97,35 @@ const ReviewSection = ({ movie }: any) => {
                   )}
 
                   {/* Footer */}
-                  <div className="flex items-center justify-between text-xs text-muted-foreground">
+                  {/* <div className="flex items-center justify-between text-xs text-muted-foreground">
                     {review.spoiler && (
                       <span className="text-red-500 font-medium">
                         ⚠ Spoiler
                       </span>
                     )}
 
-                    <span
-                      className={`px-2 py-0.5 rounded-full text-xs ${
-                        review.status === "APPROVED"
-                          ? "bg-green-100 text-green-600"
-                          : review.status === "PENDING"
-                          ? "bg-yellow-100 text-yellow-600"
-                          : "bg-red-100 text-red-600"
-                      }`}
-                    >
-                      {/* {review.status} */}
-                    </span>
-                  </div>
+                    <div className="flex items-center gap-3 border px-3 py-2 rounded-full">
+                      <div className="flex items-center gap-1 border px-2 py-1 rounded-full">
+                        <ThumbsUp
+                          onClick={() =>
+                            toast("Still working on this feature...")
+                          }
+                          className={`w-5 h-5 ${
+                            review.liked ? "fill-current text-blue-500" : ""
+                          }`}
+                        />
+                        <span className="text-[15px]">5</span>
+                      </div>
+                      <ThumbsDown
+                        onClick={() =>
+                          toast("Still working on this feature...")
+                        }
+                        className={`w-5 h-5 ${
+                          review.disliked ? "fill-current text-red-500" : ""
+                        }`}
+                      />
+                    </div>
+                  </div> */}
                 </CardContent>
               </Card>
             );

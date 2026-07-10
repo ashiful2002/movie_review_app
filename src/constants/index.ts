@@ -1,4 +1,4 @@
 export const userCredentials = [
-  { role: "user", email: "user@mmdb.com", password: "asdf1234" },
-  { role: "admin", email: "superadmifn@gmail.com", password: "asdf1234" },
+  { role: "SUPER ADMIN", email: "superadmifn@gmail.com", password: "asdf1234" },
+  { role: "USER", email: "user@mmdb.com", password: "asdf1234" },
 ];

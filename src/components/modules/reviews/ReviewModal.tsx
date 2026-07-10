@@ -8,6 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -15,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Plus, Star } from "lucide-react";
 import { toast } from "sonner";
 import { createReviews } from "@/services/reviews";
+import { ActionButton } from "@/components/Buttons/movie/ActionButton";
 
 const ReviewModal = ({ movieId }: { movieId: string }) => {
   const [open, setOpen] = useState(false);
@@ -23,6 +25,7 @@ const ReviewModal = ({ movieId }: { movieId: string }) => {
   const [tags, setTags] = useState("");
   const [spoiler, setSpoiler] = useState(false);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async () => {
     try {
@@ -38,24 +41,29 @@ const ReviewModal = ({ movieId }: { movieId: string }) => {
         spoiler,
         tags: tags
           ? tags
-              .split(",")
-              .map((t) => t.trim())
-              .filter(Boolean)
+            .split(",")
+            .map((t) => t.trim())
+            .filter(Boolean)
           : [],
       };
 
-      const review = await createReviews(payload);
-      
-      // If we reach here without error, the review was created successfully
-      toast.success("Review submitted successfully!", { position: "top-center" });
+      await createReviews(payload);
 
-      // reset
+      toast.success("Review submitted successfully!", {
+        position: "top-center",
+      });
+
       setRating(0);
       setContent("");
       setTags("");
       setSpoiler(false);
       setOpen(false);
     } catch (error: any) {
+      if (error.message === "Authentication token not found. Please log in.") {
+        router.push("/login");
+        return;
+      }
+
       toast.error(error.message || "Something went wrong");
     } finally {
       setLoading(false);
@@ -65,9 +73,9 @@ const ReviewModal = ({ movieId }: { movieId: string }) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size="sm" className="cursor-pointer">
-          Write Review <Plus className="ml-1 w-4 h-4" />
-        </Button>
+        <ActionButton icon={<Plus />} variant="outline" size="xs" className="cursor-pointer text-yellow-400" tooltip="Write your openion about this movie">
+          Write Review
+        </ActionButton>
       </DialogTrigger>
 
       <DialogContent className="max-w-md">
@@ -75,7 +83,7 @@ const ReviewModal = ({ movieId }: { movieId: string }) => {
           <DialogTitle>Write a Review</DialogTitle>
         </DialogHeader>
 
-        {/* ⭐ Rating (1–10) */}
+        {/*Rating (1–10) */}
         <div>
           <p className="text-sm font-medium mb-2">
             Rating: <span className="text-primary">{rating}/10</span>
@@ -88,18 +96,17 @@ const ReviewModal = ({ movieId }: { movieId: string }) => {
                 <Star
                   key={i}
                   onClick={() => setRating(starValue)}
-                  className={`w-5 h-5 cursor-pointer transition ${
-                    starValue <= rating
-                      ? "text-yellow-500 fill-yellow-500"
-                      : "text-gray-300"
-                  }`}
+                  className={`w-5 h-5 cursor-pointer transition ${starValue <= rating
+                    ? "text-yellow-500 fill-yellow-500"
+                    : "text-gray-300"
+                    }`}
                 />
               );
             })}
           </div>
         </div>
 
-        {/* ✍️ Content */}
+        {/* Content */}
         <Textarea
           placeholder="Write your honest review..."
           value={content}
@@ -107,7 +114,7 @@ const ReviewModal = ({ movieId }: { movieId: string }) => {
           className="mt-3"
         />
 
-        {/* 🏷 Tags */}
+        {/* Tags */}
         <Input
           placeholder="Tags (comma separated, e.g. amazing, slow, emotional)"
           value={tags}
@@ -115,7 +122,7 @@ const ReviewModal = ({ movieId }: { movieId: string }) => {
           className="mt-3"
         />
 
-        {/* ⚠ Spoiler */}
+        {/* Spoiler */}
         <label className="flex items-center gap-2 mt-3 text-sm">
           <input
             type="checkbox"
@@ -125,9 +132,9 @@ const ReviewModal = ({ movieId }: { movieId: string }) => {
           This review contains spoilers
         </label>
 
-        {/* 🚀 Submit */}
+        {/*  Submit */}
         <Button
-          className="mt-4 w-full"
+          className="mt-4 w-full cursor-pointer"
           onClick={handleSubmit}
           disabled={loading}
         >

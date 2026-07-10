@@ -5,15 +5,13 @@ import { cookies } from "next/headers";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_API;
 
-/**
- * Get all genres
- */
-export const getAllGenres = async (params?: Record<string, any>) => {
+
+export const getAllGenres = async () => {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
-  if (!token) {
-    throw new Error("You are unauthorized");
-  }
+  // if (!token) {
+  //   throw new Error("You are unauthorized");
+  // }
 
   try {
     const res = await fetch(`${BASE_URL}/genres`, {
@@ -22,8 +20,11 @@ export const getAllGenres = async (params?: Record<string, any>) => {
         "Content-Type": "application/json",
         Authorization: token!,
       },
+      next: {
+        tags: ["genres"],
+      },
     });
- 
+
     if (!res.ok) {
       throw new Error("Failed to fetch genres");
     }
@@ -37,10 +38,12 @@ export const getAllGenres = async (params?: Record<string, any>) => {
 /**
  * Get single genre
  */
-export const getSingleGenre = async (id: string) => {
+export const getGenreById = async (id: string) => {
   try {
     const res = await fetch(`${BASE_URL}/genres/${id}`, {
-      cache: "no-store",
+      next: {
+        tags: [`genre-${id}`],
+      },
     });
 
     if (!res.ok) {
@@ -80,7 +83,7 @@ export const addGenre = async (payload: { name: string }) => {
       throw new Error(result.message || "Failed to add genre");
     }
 
-    revalidateTag("genre", {});
+    revalidateTag("genres", {});
 
     return result;
   } catch (error: any) {
@@ -116,7 +119,7 @@ export const updateGenre = async (id: string, payload: { name?: string }) => {
       throw new Error(result.message || "Failed to update genre");
     }
 
-    revalidateTag("genre", {});
+    revalidateTag("genres", {});
 
     return result;
   } catch (error: any) {
@@ -149,7 +152,7 @@ export const deleteGenre = async (id: string) => {
       throw new Error(result.message || "Failed to delete genre");
     }
 
-    revalidateTag("genre", {});
+    revalidateTag("genres", {});
 
     return true;
   } catch (error: any) {

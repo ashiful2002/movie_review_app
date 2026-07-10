@@ -29,8 +29,7 @@ const slides: Slide[] = [
     id: 3,
     title: "Delicious Smoothies",
     description: "Healthy and refreshing smoothies every day.",
-    image:
-      "https://i.ibb.co.com/hxSGjsT0/ferrari-sf-26-2026-3840x1080-25433.jpg",
+    image: "https://i.ibb.co/4nc6sVvC/int-b.webp",
   },
 ];
 
@@ -41,7 +40,7 @@ export default function HeroCarousel() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % slides.length);
-    }, 3000);
+    }, 8000);
 
     return () => clearInterval(interval);
   }, []);
@@ -57,9 +56,8 @@ export default function HeroCarousel() {
         {slides.map((slide, idx) => (
           <div
             key={slide.id}
-            className={`absolute inset-0 transition-opacity duration-700 ${
-              idx === current ? "opacity-100 z-10" : "opacity-0 z-0"
-            }`}
+            className={`absolute inset-0 transition-opacity duration-700 ${idx === current ? "opacity-100 z-10" : "opacity-0 z-0"
+              }`}
           >
             <Image
               src={slide.image}
@@ -97,9 +95,8 @@ export default function HeroCarousel() {
         {slides.map((_, idx) => (
           <span
             key={idx}
-            className={`h-2 w-2 rounded-full transition-all duration-300 cursor-pointer ${
-              idx === current ? "bg-white w-4" : "bg-white/50"
-            }`}
+            className={`h-2 w-2 rounded-full transition-all duration-300 cursor-pointer ${idx === current ? "bg-white w-4" : "bg-white/50"
+              }`}
             onClick={() => setCurrent(idx)}
           ></span>
         ))}

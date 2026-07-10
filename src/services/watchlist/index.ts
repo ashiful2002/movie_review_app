@@ -1,100 +1,82 @@
-// services/watchlist/index.ts
+"use server"
 
-export interface WatchlistItem {
-  id: string;
-  title: string;
-  poster: string;
-}
+import { cookies } from "next/headers";
+import { revalidateTag } from "next/cache";
 
-const WATCHLIST_KEY = "watchlist";
+const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_API;
 
-/**
- * Get all items from watchlist
- */
-export const getWatchlist = (): WatchlistItem[] => {
+export const getWatchlist = async () => {
   try {
-    const watchlist = localStorage.getItem(WATCHLIST_KEY) || "[]";
-    return JSON.parse(watchlist);
-  } catch (error) {
-    console.error("Failed to get watchlist:", error);
-    return [];
-  }
-};
+    const cookieStore = await cookies();
+    const token = cookieStore.get("token")?.value;
 
-/**
- * Add item to watchlist
- */
-export const addToWatchlist = (movie: any): boolean => {
-  try {
-    const watchlist = getWatchlist();
-    const exists = watchlist.find((item) => item.id === movie.id);
-
-    if (exists) {
-      return false; // Already exists
-    }
-
-    watchlist.push({
-      id: movie.id,
-      title: movie.title,
-      poster: movie.thumbnail,
+    const res = await fetch(`${BASE_URL}/watchlist`, {
+      headers: {
+        Authorization: token || "",
+      },
+      next: {
+        tags: ["watchlist"],
+      },
     });
 
-    localStorage.setItem(WATCHLIST_KEY, JSON.stringify(watchlist));
-    return true; // Successfully added
-  } catch (error) {
-    console.error("Failed to add to watchlist:", error);
-    throw error;
-  }
-};
-
-/**
- * Remove item from watchlist
- */
-export const removeFromWatchlist = (movieId: string): boolean => {
-  try {
-    const watchlist = getWatchlist();
-    const filtered = watchlist.filter((item) => item.id !== movieId);
-
-    if (filtered.length === watchlist.length) {
-      return false; // Item not found
+    if (!res.ok) {
+      throw new Error("Failed to fetch watchlist");
     }
 
-    localStorage.setItem(WATCHLIST_KEY, JSON.stringify(filtered));
-    return true; // Successfully removed
+    return res.json();
   } catch (error) {
-    console.error("Failed to remove from watchlist:", error);
-    throw error;
+    console.error(error);
+    return null;
   }
 };
 
-/**
- * Check if movie is in watchlist
- */
-export const isInWatchlist = (movieId: string): boolean => {
+export const addToWatchlist = async (movieId: string) => {
   try {
-    const watchlist = getWatchlist();
-    return watchlist.some((item) => item.id === movieId);
+    const cookieStore = await cookies();
+    const token = cookieStore.get("token")?.value;
+
+    const res = await fetch(`${BASE_URL}/watchlist`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token || "",
+      },
+      body: JSON.stringify({ movieId }),
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to add movie");
+    }
+
+    revalidateTag("watchlist", {});
+
+    return res.json();
   } catch (error) {
-    console.error("Failed to check watchlist:", error);
-    return false;
+    console.error(error);
+    return null;
   }
 };
-
-/**
- * Clear entire watchlist
- */
-export const clearWatchlist = (): void => {
+export const removeFromWatchlist = async (movieId: string) => {
   try {
-    localStorage.removeItem(WATCHLIST_KEY);
-  } catch (error) {
-    console.error("Failed to clear watchlist:", error);
-    throw error;
-  }
-};
+    const cookieStore = await cookies();
+    const token = cookieStore.get("token")?.value;
 
-/**
- * Get watchlist count
- */
-export const getWatchlistCount = (): number => {
-  return getWatchlist().length;
+    const res = await fetch(`${BASE_URL}/watchlist/${movieId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: token || "",
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to remove movie");
+    }
+
+    revalidateTag("watchlist", {});
+
+    return res.json();
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 };

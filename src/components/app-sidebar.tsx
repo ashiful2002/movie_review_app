@@ -1,8 +1,21 @@
 "use client";
 
 import * as React from "react";
-import { LayoutDashboard, User, UserIcon } from "lucide-react";
-
+import {
+  LayoutDashboard,
+  Plus,
+  UtensilsCrossed,
+  Clapperboard,
+  Film,
+  Tags,
+  Tag,
+  User,
+  Users,
+  Shield,
+  ShieldCheck,
+  Star,
+  CreditCard,
+} from "lucide-react";
 import { NavMain } from "@/components/nav-main";
 import { NavUser } from "@/components/nav-user";
 import {
@@ -21,6 +34,7 @@ type NavItem = {
   items: {
     title: string;
     url: string;
+    icon?: React.ComponentType<{ className?: string }>;
   }[];
 };
 
@@ -36,40 +50,55 @@ type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
 
 const navMain: NavItem[] = [
   {
-    title: "Providers Dashboard",
+    title: "",
     url: "#",
-    icon: LayoutDashboard,
+    icon: UtensilsCrossed,
     isActive: true,
     items: [
       {
         title: "Dashboard",
         url: "/dashboard",
+        icon: LayoutDashboard,
       },
       {
         title: "Add Meal",
         url: "/dashboard/add-meal",
+        icon: Plus,
       },
       {
-        title: "My meals",
+        title: "My Meals",
         url: "/dashboard/my-meals",
+        icon: UtensilsCrossed,
       },
     ],
   },
 ];
 const users_nav: NavItem[] = [
   {
-    title: "Users Dashboard",
+    title: "User",
     url: "#",
-    icon: LayoutDashboard,
+    icon: User,
     isActive: true,
     items: [
       {
-        title: "Dashboard",
+        title: "User Dashboard",
         url: "/dashboard",
+        icon: LayoutDashboard,
+      },
+      {
+        title: "My Profile",
+        url: "/dashboard/profile",
+        icon: User,
+      },
+      {
+        title: "My Reviews",
+        url: "/dashboard/reviews",
+        icon: Star,
       },
       {
         title: "Subscriptions",
         url: "/dashboard/subscriptions",
+        icon: CreditCard,
       },
     ],
   },
@@ -77,23 +106,66 @@ const users_nav: NavItem[] = [
 
 const admin_nav: NavItem[] = [
   {
-    title: "Admin Dashboard",
+    title: "Admin",
     url: "/dashboard",
-    icon: UserIcon,
+    icon: Shield,
     isActive: true,
     items: [
       {
         title: "Dashboard",
         url: "/dashboard",
+        icon: LayoutDashboard,
       },
-
       {
         title: "Add Movie",
         url: "/dashboard/add-movie",
+        icon: Plus,
       },
       {
-        title: "Genre",
+        title: "Genres",
         url: "/dashboard/genre",
+        icon: Tags,
+      },
+    ],
+  },
+];
+
+const super_admin_nav: NavItem[] = [
+  {
+    title: "Super Admin",
+    url: "/dashboard",
+    icon: ShieldCheck,
+    isActive: true,
+    items: [
+      {
+        title: "Dashboard",
+        url: "/dashboard",
+        icon: LayoutDashboard,
+      },
+      {
+        title: "Manage Admin",
+        url: "/dashboard/manage-admin",
+        icon: Users,
+      },
+      {
+        title: "Add Movie",
+        url: "/dashboard/add-movie",
+        icon: Plus,
+      },
+      {
+        title: "Manage Movies",
+        url: "/dashboard/manage-movie",
+        icon: Film,
+      },
+      {
+        title: "Genres",
+        url: "/dashboard/genres",
+        icon: Tags,
+      },
+      {
+        title: "Add Genre",
+        url: "/dashboard/add-genre",
+        icon: Tag,
       },
     ],
   },
@@ -106,6 +178,8 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
     navItems = admin_nav;
   } else if (user?.role === "USER") {
     navItems = users_nav;
+  } else if (user?.role === "SUPER_ADMIN") {
+    navItems = super_admin_nav;
   }
   return (
     <Sidebar collapsible="icon" {...props}>

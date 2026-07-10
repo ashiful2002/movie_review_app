@@ -1,40 +1,53 @@
 "use client";
 
-import { EyeIcon } from "lucide-react";
+import { EyeIcon, Check } from "lucide-react";
 import { toast } from "sonner";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { ActionButton } from "./ActionButton";
 import { addToWatchlist } from "@/services/watchlist";
 
-const AddtoWatchlist = ({ movie }: any) => {
-  const handleAddToWatchlist = (movie: any) => {
-    try {
-      const added = addToWatchlist(movie);
+interface AddWatchlistButtonProps {
+  movieId: string;
+  text?: string;
+}
 
-      if (!added) {
-        toast("Already in your watchlist");
+const AddWatchlistButton = ({ movieId, text }: AddWatchlistButtonProps) => {
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  const handleAddToWatchlist = async () => {
+    setLoading(true);
+
+    try {
+      const res = await addToWatchlist(movieId);
+
+      if (res?.success) {
+        toast.success("Movie added to watchlist", { position: "top-center" });
+        router.refresh();
       } else {
-        toast.success("Added to watchlist");
+        toast.error(res?.message || "Failed to add to watchlist", {
+          position: "top-center",
+        });
       }
-    } catch (error) {
-      toast.error("Failed to update watchlist");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <>
-      {
-        <ActionButton
-          size="xs"
-          variant="outline"
-          onClick={() => handleAddToWatchlist(movie)}
-          className="text-yellow-400 hover:bg-yellow-500"
-          icon={<EyeIcon />}
-        >
-          Add to Watchlist
-        </ActionButton>
-      }
-    </>
+    <ActionButton
+      disabled={loading}
+      size="xs"
+      variant="outline"
+      onClick={handleAddToWatchlist}
+      className="cursor-pointer  text-yellow-400"
+      icon={<EyeIcon className="h-4 w-4" />}
+      tooltip="Add to watchlist"
+    >
+      {loading ? "Adding..." : text ? text : "Add to Watchlist"}
+    </ActionButton>
   );
 };
 
-export default AddtoWatchlist;
+export default AddWatchlistButton;
