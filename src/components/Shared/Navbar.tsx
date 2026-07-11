@@ -25,7 +25,7 @@ export default function Navbar() {
       const userData = await getUser();
       console.log("userdata from navbar", userData?.isPremium);
 
-      setUser(userData!);
+      setUser(userData);
     };
 
     getCurrentUser();

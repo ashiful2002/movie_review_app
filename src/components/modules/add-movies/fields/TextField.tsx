@@ -9,13 +9,19 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-export default function TextField({ control, name, label, placeholder }: any) {
+export default function TextField({
+  control,
+  name,
+  label,
+  placeholder,
+  className,
+}: any) {
   return (
     <FormField
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem>
+        <FormItem className={className}>
           <FormLabel>{label}</FormLabel>
           <FormControl>
             <Input placeholder={placeholder} {...field} />

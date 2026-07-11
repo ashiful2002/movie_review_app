@@ -3,9 +3,9 @@
 
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { removeFromWatchlist } from "@/services/watchlist";
-import { WatchlistRow } from "./WatchListRow";
+ import { WatchlistRow } from "./WatchListRow";
 import { useState } from "react";
+import { removeFromWatchlist } from "@/app/_actions/watchlist.actions";
 
 interface WatchlistItem {
   id: string;

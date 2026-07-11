@@ -36,9 +36,10 @@ import {
   ChevronsRight,
 } from "lucide-react";
 import { MovieColumns } from "./colums";
- 
+
 interface Movie {
   id: string;
+  slug: string;
   title: string;
   director: string;
   releaseYear: number;
@@ -64,10 +65,7 @@ export const MoviesTable = ({ movies }: MoviesTableProps) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [searchValue, setSearchValue] = useState("");
 
-  const columns: ColumnDef<Movie>[] = useMemo(
-    () => MovieColumns,
-    []
-  );
+  const columns: ColumnDef<Movie>[] = useMemo(() => MovieColumns, []);
 
   const table = useReactTable({
     data: movies,
@@ -166,7 +164,8 @@ export const MoviesTable = ({ movies }: MoviesTableProps) => {
               {" "}
               • Showing{" "}
               <span className="font-medium">
-                {pageIndex * pageSize + 1}-{Math.min((pageIndex + 1) * pageSize, totalRows)}
+                {pageIndex * pageSize + 1}-
+                {Math.min((pageIndex + 1) * pageSize, totalRows)}
               </span>{" "}
               of <span className="font-medium">{totalRows}</span>
             </>

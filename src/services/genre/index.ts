@@ -1,17 +1,14 @@
 "use server";
 
+import { CACHE_TAGS } from "@/lib/cache-tags";
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_API;
 
-
 export const getAllGenres = async () => {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
-  // if (!token) {
-  //   throw new Error("You are unauthorized");
-  // }
 
   try {
     const res = await fetch(`${BASE_URL}/genres`, {
@@ -21,23 +18,24 @@ export const getAllGenres = async () => {
         Authorization: token!,
       },
       next: {
-        tags: ["genres"],
+        tags: [CACHE_TAGS.GENRES],
       },
     });
+    const data = await res.json();
 
     if (!res.ok) {
-      throw new Error("Failed to fetch genres");
+      return {
+        success: false,
+        message: data.message,
+      };
     }
 
-    return res.json();
+    return data;
   } catch (error: any) {
     console.log(error);
   }
 };
 
-/**
- * Get single genre
- */
 export const getGenreById = async (id: string) => {
   try {
     const res = await fetch(`${BASE_URL}/genres/${id}`, {
@@ -45,20 +43,21 @@ export const getGenreById = async (id: string) => {
         tags: [`genre-${id}`],
       },
     });
+    const data = await res.json();
 
     if (!res.ok) {
-      throw new Error("Failed to fetch genre");
+      return {
+        success: false,
+        message: data.message,
+      };
     }
 
-    return await res.json();
+    return data;
   } catch (error: any) {
     throw new Error(error.message);
   }
 };
 
-/**
- * Add new genre
- */
 export const addGenre = async (payload: { name: string }) => {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
@@ -77,25 +76,24 @@ export const addGenre = async (payload: { name: string }) => {
       body: JSON.stringify(payload),
     });
 
-    const result = await res.json();
+    const data = await res.json();
 
     if (!res.ok) {
-      throw new Error(result.message || "Failed to add genre");
+      return {
+        success: false,
+        message: data.message,
+      };
     }
+    revalidateTag(CACHE_TAGS.GENRES, {});
 
-    revalidateTag("genres", {});
-
-    return result;
+    return data;
   } catch (error: any) {
     console.log(error);
     throw new Error(error.message);
   }
 };
 
-/**
- * Update genre
- */
-export const updateGenre = async (id: string, payload: { name?: string }) => {
+export const updateGenre = async (id: string, payload: { name?: string; isActive?: boolean }) => {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
 
@@ -113,24 +111,23 @@ export const updateGenre = async (id: string, payload: { name?: string }) => {
       body: JSON.stringify(payload),
     });
 
-    const result = await res.json();
+    const data = await res.json();
 
     if (!res.ok) {
-      throw new Error(result.message || "Failed to update genre");
+      return {
+        success: false,
+        message: data.message,
+      };
     }
+    revalidateTag(CACHE_TAGS.GENRES, {});
 
-    revalidateTag("genres", {});
-
-    return result;
+    return data;
   } catch (error: any) {
     console.log(error);
     throw new Error(error.message);
   }
 };
 
-/**
- * Delete genre
- */
 export const deleteGenre = async (id: string) => {
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
@@ -146,15 +143,17 @@ export const deleteGenre = async (id: string) => {
         Authorization: token,
       },
     });
+    const data = await res.json();
 
     if (!res.ok) {
-      const result = await res.json();
-      throw new Error(result.message || "Failed to delete genre");
+      return {
+        success: false,
+        message: data.message,
+      };
     }
+    revalidateTag(CACHE_TAGS.GENRES, {});
 
-    revalidateTag("genres", {});
-
-    return true;
+    return data;
   } catch (error: any) {
     console.log(error);
     throw new Error(error.message);

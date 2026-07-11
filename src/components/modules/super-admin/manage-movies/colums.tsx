@@ -27,6 +27,7 @@ import {
 
 interface Movie {
   id: string;
+  slug: string;
   title: string;
   director: string;
   releaseYear: number;
@@ -90,7 +91,9 @@ export const MovieColumns: ColumnDef<Movie>[] = [
   {
     accessorKey: "title",
     header: ({ column }) => (
-      <SortableHeader onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+      <SortableHeader
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
         Title
       </SortableHeader>
     ),
@@ -98,7 +101,7 @@ export const MovieColumns: ColumnDef<Movie>[] = [
       const movie = row.original;
       return (
         <Link
-          href={`/admin/movies/${movie.id}`}
+          href={`/movies/${movie.slug}`}
           className="flex items-center gap-3 hover:underline max-w-xs"
         >
           <img
@@ -116,18 +119,25 @@ export const MovieColumns: ColumnDef<Movie>[] = [
       );
     },
     filterFn: (row, id, value) => {
-      return row.getValue<string>(id).toLowerCase().includes(value.toLowerCase());
+      return row
+        .getValue<string>(id)
+        .toLowerCase()
+        .includes(value.toLowerCase());
     },
   },
   {
     accessorKey: "director",
     header: "Director",
-    cell: ({ row }) => <span className="text-sm">{row.getValue("director")}</span>,
+    cell: ({ row }) => (
+      <span className="text-sm">{row.getValue("director")}</span>
+    ),
   },
   {
     accessorKey: "status",
     header: ({ column }) => (
-      <SortableHeader onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+      <SortableHeader
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
         Status
       </SortableHeader>
     ),
@@ -139,7 +149,9 @@ export const MovieColumns: ColumnDef<Movie>[] = [
   {
     accessorKey: "rating",
     header: ({ column }) => (
-      <SortableHeader onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+      <SortableHeader
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
         Rating
       </SortableHeader>
     ),
@@ -151,7 +163,9 @@ export const MovieColumns: ColumnDef<Movie>[] = [
   {
     accessorKey: "price",
     header: ({ column }) => (
-      <SortableHeader onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+      <SortableHeader
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
         Price
       </SortableHeader>
     ),
@@ -164,7 +178,9 @@ export const MovieColumns: ColumnDef<Movie>[] = [
   {
     accessorKey: "views",
     header: ({ column }) => (
-      <SortableHeader onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+      <SortableHeader
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
         Views
       </SortableHeader>
     ),
@@ -188,7 +204,9 @@ export const MovieColumns: ColumnDef<Movie>[] = [
   {
     accessorKey: "duration",
     header: ({ column }) => (
-      <SortableHeader onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+      <SortableHeader
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
         Duration
       </SortableHeader>
     ),

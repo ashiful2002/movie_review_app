@@ -1,6 +1,12 @@
 "use client";
 
-import { Search, SlidersHorizontal, X, ChevronDown, Loader2 } from "lucide-react";
+import {
+  Search,
+  SlidersHorizontal,
+  X,
+  ChevronDown,
+  Loader2,
+} from "lucide-react";
 import { useState } from "react";
 import { useQueryFilters } from "@/hooks/useQueryFilters";
 
@@ -10,7 +16,16 @@ type MovieFilterProps = {
   genres?: Genre[];
 };
 
-const LANGUAGES = ["English", "Hindi", "French", "Spanish", "Korean", "Japanese", "German", "Italian"];
+const LANGUAGES = [
+  "English",
+  "Hindi",
+  "French",
+  "Spanish",
+  "Korean",
+  "Japanese",
+  "German",
+  "Italian",
+];
 const AGE_RATINGS = ["G", "PG", "PG-13", "R", "NC-17"];
 const STATUSES = ["released", "upcoming", "in-production"];
 const SORT_OPTIONS = [
@@ -39,7 +54,6 @@ const FILTER_KEYS = [
   "sort",
 ];
 
-
 const Label = ({ children }: { children: React.ReactNode }) => (
   <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 block">
     {children}
@@ -53,7 +67,12 @@ type SelectProps = {
   placeholder: string;
 };
 
-const FilterSelect = ({ value, onChange, options, placeholder }: SelectProps) => (
+const FilterSelect = ({
+  value,
+  onChange,
+  options,
+  placeholder,
+}: SelectProps) => (
   <div className="relative">
     <select
       value={value}
@@ -71,7 +90,10 @@ const FilterSelect = ({ value, onChange, options, placeholder }: SelectProps) =>
         </option>
       ))}
     </select>
-    <ChevronDown size={14} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+    <ChevronDown
+      size={14}
+      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
+    />
   </div>
 );
 
@@ -84,7 +106,14 @@ type RangeProps = {
   maxPlaceholder: string;
 };
 
-const RangeInput = ({ minValue, maxValue, onMinChange, onMaxChange, minPlaceholder, maxPlaceholder }: RangeProps) => (
+const RangeInput = ({
+  minValue,
+  maxValue,
+  onMinChange,
+  onMaxChange,
+  minPlaceholder,
+  maxPlaceholder,
+}: RangeProps) => (
   <div className="flex items-center gap-2">
     <input
       type="number"
@@ -110,7 +139,6 @@ const RangeInput = ({ minValue, maxValue, onMinChange, onMaxChange, minPlacehold
   </div>
 );
 
-
 const MovieFilter = ({ genres = [] }: MovieFilterProps) => {
   const [expanded, setExpanded] = useState(false);
 
@@ -132,7 +160,9 @@ const MovieFilter = ({ genres = [] }: MovieFilterProps) => {
   }));
 
   // Calculate active filter count excluding search
-  const activeCount = FILTER_KEYS.filter((k) => k !== "search" && !!filters[k]).length;
+  const activeCount = FILTER_KEYS.filter(
+    (k) => k !== "search" && !!filters[k]
+  ).length;
 
   return (
     <div className="rounded-xl border border-white/10 bg-white/[0.03] backdrop-blur-sm overflow-hidden">
@@ -151,7 +181,7 @@ const MovieFilter = ({ genres = [] }: MovieFilterProps) => {
             placeholder="Search by title, director, cast…"
             className="w-full ml-5 rounded-lg border border-white/10 bg-white/5 pl-10  pr-10 py-2.5 text-sm
                        text-slate-200 placeholder:text-slate-500 focus:outline-none focus:ring-2
-                       focus:ring-indigo-500 hover:bg-white/10 transition-colors"
+                       focus:ring-yellow-400 hover:bg-white/10 transition-colors"
           />
 
           {/* Right spinner/clear indicator centered vertically */}
@@ -178,9 +208,10 @@ const MovieFilter = ({ genres = [] }: MovieFilterProps) => {
             type="button"
             onClick={() => setExpanded((p) => !p)}
             className={`flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border text-sm font-medium transition-all duration-200 shrink-0 select-none cursor-pointer
-              ${expanded
-                ? "bg-indigo-600 border-indigo-500 text-white shadow-lg shadow-indigo-600/30"
-                : "border-white/10 bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white"
+              ${
+                expanded
+                  ? "bg-yellow-400 border-yellow-500 text-white shadow-lg shadow-indigo-600/30"
+                  : "border-white/10 bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white"
               }`}
           >
             <SlidersHorizontal size={14} />

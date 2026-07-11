@@ -4,6 +4,7 @@ import { Users, Film, BarChart3, MessageSquareText, Tag } from "lucide-react";
 import { StatCard } from "./StatCard";
 import { BarChartComponent } from "./BarChartComponent";
 import { PieChartComponent } from "./PieChartComponent";
+import { stat } from "fs";
 
 interface DashboardStats {
   totalUsers: number;
@@ -25,6 +26,8 @@ export const SuperAdminDashboardStats = ({
 }: {
   statsData: DashboardStats;
 }) => {
+  console.log(statsData.topReviewedMovies, "statsData");
+
   return (
     <div className="space-y-8">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -43,6 +46,7 @@ export const SuperAdminDashboardStats = ({
           icon={Film}
           bgColor="bg-purple-50 dark:bg-purple-950"
           iconColor="text-purple-600 dark:text-purple-400"
+          link={`/dashboard/manage-movies`}
         />
         <StatCard
           title="Total Reviews"
@@ -53,12 +57,13 @@ export const SuperAdminDashboardStats = ({
           iconColor="text-green-600 dark:text-green-400"
         />
         <StatCard
-          title="Movie Genre"
+          title="Total Movie Genres"
           value={statsData.totalGenres}
           description="Total genres available"
           icon={Tag}
           bgColor="bg-amber-50 dark:bg-amber-950"
           iconColor="text-amber-600 dark:text-amber-400"
+          link={`/dashboard/genres`}
         />
         <StatCard
           title="Subscription Plans"
@@ -74,7 +79,7 @@ export const SuperAdminDashboardStats = ({
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Bar Chart - Monthly Revenue */}
         <BarChartComponent
-          data={statsData.topReviewedMovies || 0}
+          data={statsData.topReviewedMovies}
           dataKey="reviews"
           title="Top 5 Most Reviewed Movies"
           description="Movies with the highest number of user reviews"

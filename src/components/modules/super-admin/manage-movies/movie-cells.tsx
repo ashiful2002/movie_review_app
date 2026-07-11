@@ -1,7 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Star, Eye, DollarSign, Crown } from "lucide-react";
 
-// Status Badge - Shows movie status with color coding
 export const StatusBadge = ({
   status,
 }: {
@@ -24,10 +23,9 @@ export const StatusBadge = ({
 
   const config = statusConfig[status];
 
-  return <Badge variant={config.variant}>{config.label}</Badge>;
+  return <Badge variant={config?.variant}>{config?.label}</Badge>;
 };
 
-// Rating Badge - Shows IMDB-style rating with stars
 export const RatingBadge = ({ rating }: { rating: number }) => {
   const getColor = (rating: number) => {
     if (rating >= 8) return "text-green-600";
@@ -40,7 +38,7 @@ export const RatingBadge = ({ rating }: { rating: number }) => {
       <div className="flex items-center gap-1">
         <Star className={`w-4 h-4 fill-current ${getColor(rating)}`} />
         <span className={`font-semibold text-sm ${getColor(rating)}`}>
-          {rating.toFixed(1)}
+          {rating?.toFixed(1)}
         </span>
       </div>
     </div>
@@ -71,7 +69,7 @@ export const PriceCard = ({
     <div className="flex items-center gap-2">
       <DollarSign className="w-4 h-4 text-muted-foreground" />
       <span className="font-semibold text-sm">{price.toFixed(2)}</span>
-      {isPremium && <Crown className="w-4 h-4 text-yellow-600" />}
+      {isPremium && <Crown className="w-4 h-4 text-yellow-400" />}
     </div>
   );
 };
@@ -113,7 +111,7 @@ export const DurationCard = ({ duration }: { duration: number }) => {
 export const FeaturedBadge = ({ isFeatured }: { isFeatured: boolean }) => {
   if (!isFeatured) return null;
 
-  return <Badge className="bg-amber-500 hover:bg-amber-600">Featured</Badge>;
+  return <Badge className="bg-yellow-400 hover:bg-yellow-500">Featured</Badge>;
 };
 
 // Genre Chip - Shows genre tags

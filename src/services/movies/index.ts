@@ -25,9 +25,16 @@ export const getAllMovies = async (params?: Record<string, any>) => {
       next: { tags: ["movies"] },
     });
 
+    const data = await res.json();
 
-    if (!res.ok) throw new Error("Failed to fetch movies");
-    return res.json();
+    if (!res.ok) {
+      return {
+        success: false,
+        message: data.message,
+      };
+    }
+
+    return data;
   } catch (err: any) {
     console.error(err);
     return null;
@@ -41,8 +48,16 @@ export const getSingleMovie = async (id: string) => {
         tags: [`movie-${id}`],
       },
     });
-    if (!res.ok) throw new Error("Failed to fetch movie");
-    return res.json();
+    const data = await res.json();
+
+    if (!res.ok) {
+      return {
+        success: false,
+        message: data.message,
+      };
+    }
+
+    return data;
   } catch (err: any) {
     console.error(err);
     throw new Error(err.message);
@@ -65,12 +80,19 @@ export const addMovie = async (payload: any) => {
       cache: "no-store",
       body: JSON.stringify(payload),
     });
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.message || "Failed to add movie");
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      return {
+        success: false,
+        message: data.message,
+      };
+    }
 
     revalidateTag("movies", {});
 
-    return result;
+    return data;
   } catch (err: any) {
     console.error(err);
     throw new Error(err.message);

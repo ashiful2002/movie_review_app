@@ -1,14 +1,9 @@
 import MyWatchlist from "@/components/modules/user/watchlist/MyWatchlist";
-import { getWatchlist } from "@/services/watchlist";
 
-const WatchlistPage = async () => {
-  const { data } = await getWatchlist()
-
+export default function WatchlistPage() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      < MyWatchlist watchlistMovies={data} />
+      <MyWatchlist />
     </div>
   );
-};
-
-export default WatchlistPage;
+}

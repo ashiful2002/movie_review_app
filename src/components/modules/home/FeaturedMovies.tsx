@@ -121,7 +121,7 @@ export function FeaturedMovies() {
     <section className="py-24 px-4 md:px-8 ">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="mb-16">
+        <div className="mb-16 text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
             Featured Movies
           </h2>
@@ -232,8 +232,9 @@ export function FeaturedMovies() {
               <button
                 key={idx}
                 onClick={() => setCurrentIndex(idx)}
-                className={`h-2 rounded-full transition-all ${idx === currentIndex ? "bg-primary w-8" : "bg-muted w-2"
-                  }`}
+                className={`h-2 rounded-full transition-all ${
+                  idx === currentIndex ? "bg-primary w-8" : "bg-muted w-2"
+                }`}
               />
             ))}
           </div>

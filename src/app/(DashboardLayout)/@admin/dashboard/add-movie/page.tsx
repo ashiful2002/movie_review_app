@@ -1,4 +1,4 @@
-import AddMovieForm from "@/components/modules/add-movie/AddMovieForm";
+import AddMovieForm from "@/components/modules/add-movies/AddMovieForm";
 import { getAllGenres } from "@/services/genre";
 
 const page = async () => {

@@ -1,6 +1,8 @@
 export interface Genre {
   id: string;
   name: string;
+  slug: string;
+  image: string;
 }
 
 export interface MovieGenre {
@@ -21,28 +23,29 @@ export interface Review {
 
 export interface Movie {
   id: string;
+  slug: string;
+
   title: string;
   description: string;
+
   thumbnail: string;
   banner: string;
 
   releaseYear: number;
   duration: number;
-  language: string;
-  country: string;
-  ageRating: string;
 
   director: string;
   cast: string[];
 
-  rating: number;
-  views?: number;
+  language: string[];
+  country: string;
 
-  isPremium: boolean;
-  price: number;
+  imdbRating: number;
+  averageRating: number;
+  rating: number | null;
 
   budget: number;
-  boxOffice: number;
+  boxOffice: number | null;
 
   trailerLink: string;
   streamingLink: string;
@@ -50,7 +53,14 @@ export interface Movie {
   subtitles: string[];
   awards: string[];
 
-  status: string;
+  status: "UPCOMING" | "RELEASED" | "ARCHIVED" | string;
+
+  isPremium: boolean;
+  isFeatured: boolean;
+  isDeleted: boolean;
+
+  price: number;
+  views: number;
 
   createdAt: string;
   updatedAt: string;

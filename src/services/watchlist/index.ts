@@ -1,80 +1,33 @@
-"use server"
+"use server";
 
 import { cookies } from "next/headers";
-import { revalidateTag } from "next/cache";
+import { CACHE_TAGS } from "@/lib/cache-tags";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_API;
 
 export const getWatchlist = async () => {
   try {
-    const cookieStore = await cookies();
-    const token = cookieStore.get("token")?.value;
+    const token = (await cookies()).get("token")?.value;
 
     const res = await fetch(`${BASE_URL}/watchlist`, {
       headers: {
-        Authorization: token || "",
+        Authorization: token ?? "",
       },
       next: {
-        tags: ["watchlist"],
+        tags: [CACHE_TAGS.WATCHLIST],
       },
     });
 
-    if (!res.ok) {
-      throw new Error("Failed to fetch watchlist");
-    }
-
-    return res.json();
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
-};
-
-export const addToWatchlist = async (movieId: string) => {
-  try {
-    const cookieStore = await cookies();
-    const token = cookieStore.get("token")?.value;
-
-    const res = await fetch(`${BASE_URL}/watchlist`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: token || "",
-      },
-      body: JSON.stringify({ movieId }),
-    });
+    const data = await res.json();
 
     if (!res.ok) {
-      throw new Error("Failed to add movie");
+      return {
+        success: false,
+        message: data.message,
+      };
     }
 
-    revalidateTag("watchlist", {});
-
-    return res.json();
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
-};
-export const removeFromWatchlist = async (movieId: string) => {
-  try {
-    const cookieStore = await cookies();
-    const token = cookieStore.get("token")?.value;
-
-    const res = await fetch(`${BASE_URL}/watchlist/${movieId}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: token || "",
-      },
-    });
-
-    if (!res.ok) {
-      throw new Error("Failed to remove movie");
-    }
-
-    revalidateTag("watchlist", {});
-
-    return res.json();
+    return data;
   } catch (error) {
     console.error(error);
     return null;

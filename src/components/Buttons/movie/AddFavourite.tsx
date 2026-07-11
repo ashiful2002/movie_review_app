@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { ActionButton } from "./ActionButton";
 import { EyeIcon, Heart } from "lucide-react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { addToFavourite } from "@/services/favourite";
+import { addToFavouriteAction } from "@/app/_actions/favourite.action";
 
 interface AddFavouriteButtonProps {
   movieId: string;
@@ -15,28 +16,29 @@ const AddFavouriteButton = ({ movieId, text }: AddFavouriteButtonProps) => {
   const router = useRouter();
 
   const handleAddToFavourite = async () => {
+    if (loading) return;
+
     setLoading(true);
 
     try {
-      const res = await addToFavourite(movieId);
+      const res = await addToFavouriteAction(movieId);
 
-      if (res?.success) {
-        toast.success("Movie added to favourite", { position: "top-center" });
+      if (res.success) {
+        toast.success(res.message, { position: "top-center" });
         router.refresh();
       } else {
-        toast.error(res?.message || "Failed to add to favourite", {
-          position: "top-center",
-        });
+        toast.error(res.message, { position: "top-center" });
       }
     } finally {
       setLoading(false);
     }
   };
+
   return (
     <ActionButton
       size="xs"
       variant="outline"
-      className=" text-yellow-400  cursor-pointer"
+      className=" text-yellow-400  cursor-pointer font-thin"
       icon={<Heart />}
       tooltip="click to add to your favourite movie"
       onClick={handleAddToFavourite}

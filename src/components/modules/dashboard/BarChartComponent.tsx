@@ -18,13 +18,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-interface ChartData {
+interface TopMovie {
   name: string;
-  [key: string]: string | number;
+  reviews: number;
 }
 
 interface BarChartComponentProps {
-  data: ChartData[];
+  data: TopMovie[];
   dataKey: string;
   title: string;
   description?: string;
@@ -41,14 +41,14 @@ export function BarChartComponent({
   xAxisKey = "name",
   color = "#3b82f6",
   height = 320,
-}: BarChartComponentProps) {
+}: any) {
+  console.log(data, "data in bar chart component");
+
   return (
     <Card>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
-        {description && (
-          <CardDescription>{description}</CardDescription>
-        )}
+        {description && <CardDescription>{description}</CardDescription>}
       </CardHeader>
 
       <CardContent>
@@ -64,11 +64,7 @@ export function BarChartComponent({
           >
             <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
 
-            <XAxis
-              dataKey={xAxisKey}
-              tick={{ fontSize: 12 }}
-              interval={0}
-            />
+            <XAxis dataKey={xAxisKey} tick={{ fontSize: 12 }} interval={0} />
 
             <YAxis tick={{ fontSize: 12 }} />
 
@@ -82,11 +78,7 @@ export function BarChartComponent({
               formatter={(value) => [`${value} Reviews`, "Reviews"]}
             />
 
-            <Bar
-              dataKey={dataKey}
-              fill={color}
-              radius={[8, 8, 0, 0]}
-            />
+            <Bar dataKey={dataKey} fill={color} radius={[8, 8, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </CardContent>
