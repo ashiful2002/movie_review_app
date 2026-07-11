@@ -7,8 +7,7 @@ import { Testimonials } from "./Testimonials";
 export default function AdvancedHomeSections() {
   return (
     <>
-      < FloatingChatbot />
-
+      <FloatingChatbot />
       <GenreSection />
       <FeaturedMovies />
       <SubscriptionPlans />

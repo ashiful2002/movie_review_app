@@ -9,7 +9,12 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-export default function MultiInputField({ control, name, label }: any) {
+export default function MultiInputField({
+  control,
+  name,
+  label,
+  className,
+}: any) {
   const [input, setInput] = useState("");
 
   return (
@@ -17,7 +22,7 @@ export default function MultiInputField({ control, name, label }: any) {
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem>
+        <FormItem className={className}>
           <FormLabel>{label}</FormLabel>
 
           <div className="flex gap-2">

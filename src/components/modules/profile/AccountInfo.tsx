@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import FormattedDate from "@/components/Shared/FormattedDate";
 import { UserProfile } from "@/app/(DashboardLayout)/@user/dashboard/profile/types";
 
-interface AccountInfoProps {
+export interface AccountInfoProps {
   user: UserProfile;
 }
 

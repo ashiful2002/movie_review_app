@@ -41,9 +41,9 @@ const ReviewModal = ({ movieId }: { movieId: string }) => {
         spoiler,
         tags: tags
           ? tags
-            .split(",")
-            .map((t) => t.trim())
-            .filter(Boolean)
+              .split(",")
+              .map((t) => t.trim())
+              .filter(Boolean)
           : [],
       };
 
@@ -73,7 +73,13 @@ const ReviewModal = ({ movieId }: { movieId: string }) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <ActionButton icon={<Plus />} variant="outline" size="xs" className="cursor-pointer text-yellow-400" tooltip="Write your openion about this movie">
+        <ActionButton
+          icon={<Plus />}
+          variant="outline"
+          size="xs"
+          className="cursor-pointer text-yellow-400 font-thin"
+          tooltip="Write your openion about this movie"
+        >
           Write Review
         </ActionButton>
       </DialogTrigger>
@@ -83,7 +89,6 @@ const ReviewModal = ({ movieId }: { movieId: string }) => {
           <DialogTitle>Write a Review</DialogTitle>
         </DialogHeader>
 
-        {/*Rating (1–10) */}
         <div>
           <p className="text-sm font-medium mb-2">
             Rating: <span className="text-primary">{rating}/10</span>
@@ -96,33 +101,28 @@ const ReviewModal = ({ movieId }: { movieId: string }) => {
                 <Star
                   key={i}
                   onClick={() => setRating(starValue)}
-                  className={`w-5 h-5 cursor-pointer transition ${starValue <= rating
-                    ? "text-yellow-500 fill-yellow-500"
-                    : "text-gray-300"
-                    }`}
+                  className={`w-5 h-5 cursor-pointer transition ${
+                    starValue <= rating
+                      ? "text-yellow-500 fill-yellow-500"
+                      : "text-gray-300"
+                  }`}
                 />
               );
             })}
           </div>
         </div>
-
-        {/* Content */}
         <Textarea
           placeholder="Write your honest review..."
           value={content}
           onChange={(e) => setContent(e.target.value)}
           className="mt-3"
         />
-
-        {/* Tags */}
         <Input
           placeholder="Tags (comma separated, e.g. amazing, slow, emotional)"
           value={tags}
           onChange={(e) => setTags(e.target.value)}
           className="mt-3"
         />
-
-        {/* Spoiler */}
         <label className="flex items-center gap-2 mt-3 text-sm">
           <input
             type="checkbox"
@@ -131,8 +131,6 @@ const ReviewModal = ({ movieId }: { movieId: string }) => {
           />
           This review contains spoilers
         </label>
-
-        {/*  Submit */}
         <Button
           className="mt-4 w-full cursor-pointer"
           onClick={handleSubmit}

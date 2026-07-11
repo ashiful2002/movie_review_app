@@ -1,7 +1,9 @@
-import { AdminDashboardStats } from "@/components/modules/dashboard/AdminDashboardStatas";
+import { SuperAdminDashboardStats } from "@/components/modules/dashboard/AdminDashboardStatas";
+import getStats from "@/services/stats";
 
- 
-const page = () => {
+const page = async () => {
+  const statsData = await getStats();
+
   return (
     <div className="space-y-6">
       <div>
@@ -10,7 +12,7 @@ const page = () => {
           Welcome back! Here&apos;s your platform overview.
         </p>
       </div>
-      <AdminDashboardStats />
+      <SuperAdminDashboardStats statsData={statsData} />
     </div>
   );
 };

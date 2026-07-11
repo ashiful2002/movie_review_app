@@ -148,14 +148,14 @@ const super_admin_nav: NavItem[] = [
         icon: Users,
       },
       {
+        title: "Manage Movies",
+        url: "/dashboard/manage-movies",
+        icon: Film,
+      },
+      {
         title: "Add Movie",
         url: "/dashboard/add-movie",
         icon: Plus,
-      },
-      {
-        title: "Manage Movies",
-        url: "/dashboard/manage-movie",
-        icon: Film,
       },
       {
         title: "Genres",

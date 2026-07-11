@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { toast } from "sonner";
-import TextField from "../../add-movie/fields/TextField";
+import TextField from "../../add-movies/fields/TextField";
 import TextAreaField from "./TextAreaField";
 import ToggleField from "./ToggleField";
 import ImageUploadField from "./ImageUploadField";
@@ -23,7 +23,7 @@ const schema = z.object({
   slug: z.string().optional(),
   image: z.string().optional(),
   description: z.string().optional(),
-  isActive: z.boolean().default(true),
+  isActive: z.boolean(),
 });
 
 type GenreFormData = z.infer<typeof schema>;
@@ -57,16 +57,14 @@ export default function EditGenreForm() {
     },
   });
 
-  // Fetch genre data
-  useEffect(() => {
+   useEffect(() => {
     const fetchGenre = async () => {
       try {
         setIsLoading(true);
         const data = await getGenreById(genreId);
         setGenre(data);
 
-        // Set form values
-        form.reset({
+         form.reset({
           name: data.name,
           slug: data.slug || "",
           image: data.image || "",
@@ -86,8 +84,7 @@ export default function EditGenreForm() {
     }
   }, [genreId, router]);
 
-  // Auto-generate slug from name
-  useEffect(() => {
+   useEffect(() => {
     const subscription = form.watch((value) => {
       if (value.name && !value.slug) {
         const generatedSlug = value.name
@@ -103,16 +100,14 @@ export default function EditGenreForm() {
   const onSubmit = async (data: GenreFormData) => {
     setIsSubmitting(true);
     try {
-      // Remove empty fields
-      const submitData = Object.fromEntries(
+       const submitData = Object.fromEntries(
         Object.entries(data).filter(([, value]) => value !== "")
       );
 
       await updateGenre(genreId, submitData);
       toast.success("Genre updated successfully!");
 
-      // Redirect
-      setTimeout(() => {
+       setTimeout(() => {
         router.push("/dashboard/admin/genres");
       }, 500);
     } catch (error: any) {

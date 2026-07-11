@@ -80,7 +80,7 @@ export function Testimonials() {
     <section className="py-24 px-4 md:px-8 bg-gradient-to-b from-background via-background to-secondary/5">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="mb-16">
+        <div className="mb-16 text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
             Loved by Film Enthusiasts{" "}
           </h2>

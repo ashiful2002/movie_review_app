@@ -1,11 +1,11 @@
 "use client";
 
-import { EyeIcon, Check } from "lucide-react";
+import { EyeIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ActionButton } from "./ActionButton";
-import { addToWatchlist } from "@/services/watchlist";
+import { addToWatchlist } from "@/app/_actions/watchlist.actions";
 
 interface AddWatchlistButtonProps {
   movieId: string;
@@ -41,7 +41,7 @@ const AddWatchlistButton = ({ movieId, text }: AddWatchlistButtonProps) => {
       size="xs"
       variant="outline"
       onClick={handleAddToWatchlist}
-      className="cursor-pointer  text-yellow-400"
+      className="cursor-pointer  text-yellow-400 font-light"
       icon={<EyeIcon className="h-4 w-4" />}
       tooltip="Add to watchlist"
     >

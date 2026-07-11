@@ -1,10 +1,9 @@
 export type UserTypes = {
-  name: string;
-  email: string;
-  role: UserRole;
-  isPremium: boolean;
+  name?: string;
+  email?: string;
+  role?: UserRole;
+  isPremium?: boolean;
 };
-
 
 export enum OrderStatus {
   PLACED = "PLACED",

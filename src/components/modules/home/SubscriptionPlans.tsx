@@ -61,8 +61,8 @@ const plans = [
 
 export function SubscriptionPlans() {
   return (
-    <section className="py-24 px-4 md:px-8 bg-gradient-to-b from-secondary/5 via-background to-background">
-      <div className="max-w-7xl mx-auto">
+    <section className="pt-24 px-4 md:px-8 bg-gradient-to-b from-secondary/5 via-background to-background">
+      <div className="max-w-7xl mx-auto text-center">
         {/* Section Header */}
         <div className="mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
@@ -73,9 +73,9 @@ export function SubscriptionPlans() {
             passion. Start watching instantly.
           </p>
         </div>
-        <div>
-          <ActionButton href={"/plans"} className="cursor-pointer">
-            Discover <span className="text-yellow-400">Plans</span> to Enjoy
+        <div className="text-center mx-auto  mb-12">
+          <ActionButton href={"/plans"} className="cursor-pointer ">
+            Find Your <span className="text-yellow-400">Plans</span> to Enjoy
             Exclusive Features
           </ActionButton>
         </div>

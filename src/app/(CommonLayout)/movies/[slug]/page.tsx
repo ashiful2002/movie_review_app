@@ -2,10 +2,10 @@ import MovieDetails from "@/components/modules/movies/MovieDetailsCard";
 import { getUser } from "@/services/authentication";
 import { getSingleMovie } from "@/services/movies";
 
-export default async function Page({ params }: { params: { id: string } }) {
-  const { id } = await params;
+export default async function Page({ params }: { params: { slug: string } }) {
+  const { slug } = await params;
 
-  const { data: movie } = await getSingleMovie(id);
+  const { data: movie } = await getSingleMovie(slug);
   const user = await getUser();
 
   const premiumUser = user?.isPremium ?? false;

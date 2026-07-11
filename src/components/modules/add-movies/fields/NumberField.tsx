@@ -7,16 +7,21 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-export default function NumberField({ control, name, label }: any) {
+export default function NumberField({
+  control,
+  name,
+  label,
+  placeholder,
+}: any) {
   return (
     <FormField
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem>
+        <FormItem className="min-w-md">
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <Input type="number" {...field} />
+            <Input type="number" placeholder={placeholder} {...field} />
           </FormControl>
           <FormMessage />
         </FormItem>

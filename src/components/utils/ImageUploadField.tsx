@@ -27,6 +27,7 @@ export default function ImageUploadField({
   const handleUpload = async (file: File, onChange: any) => {
     try {
       setLoading(true);
+      setUploading?.(true);
 
       const formData = new FormData();
       formData.append("image", file);
@@ -45,6 +46,7 @@ export default function ImageUploadField({
       console.error(err);
     } finally {
       setLoading(false);
+      setUploading?.(false);
     }
   };
 
@@ -59,22 +61,19 @@ export default function ImageUploadField({
           <FormControl>
             <Input
               type="file"
+              className="cursor-pointer"
               accept="image/*"
               onChange={(e) => {
                 const file = e.target.files?.[0];
                 if (!file) return;
 
-                // ✅ Preview
                 const previewUrl = URL.createObjectURL(file);
                 setPreview(previewUrl);
-
-                // ✅ Upload
                 handleUpload(file, field.onChange);
               }}
             />
           </FormControl>
 
-          {/* Preview */}
           {preview && (
             <div className="mt-3">
               <Image

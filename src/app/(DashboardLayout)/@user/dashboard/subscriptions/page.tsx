@@ -4,12 +4,14 @@ import { getSubscriptionPlans } from "@/services/subscriptions";
 
 const page = async () => {
   const { data: plans } = await getSubscriptionPlans();
-
-
+  if (!plans || !plans.ok) {
+    // handle gracefully — return empty state, throw a controlled error, etc.
+    return <div>Unable to load subscriptions.</div>;
+  }
   return (
     <div className="min-h-screen bg-muted/20 p-6 md:p-10 flex justify-center">
       <div className="grid md:grid-cols-3 gap-6">
-        {plans.map((plan: any) => (
+        {plans?.map((plan: any) => (
           <SubscriptionPlanCard
             key={plan.id}
             id={plan.id}

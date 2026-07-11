@@ -9,9 +9,11 @@ import {
   SortingState,
   ColumnFiltersState,
   VisibilityState,
+  Table, // <-- add this
 } from "@tanstack/react-table";
 
 interface UseMovieTableConfig<T> {
+  table: Table<T>;
   columns: ColumnDef<T>[];
   data: T[];
   pageSize?: number;
@@ -22,7 +24,7 @@ interface UseMovieTableConfig<T> {
 }
 
 interface UseMovieTableReturn<T> {
-  table: ReturnType<typeof useReactTable>;
+  table: ReturnType<typeof useReactTable<T>>;
   sorting: SortingState;
   setSorting: (sorting: SortingState) => void;
   columnFilters: ColumnFiltersState;
@@ -78,11 +80,15 @@ export const useMovieTable = <T>({
     },
     onSortingChange: enableSorting ? setSorting : undefined,
     onColumnFiltersChange: enableFiltering ? setColumnFilters : undefined,
-    onColumnVisibilityChange: enableColumnVisibility ? setColumnVisibility : undefined,
+    onColumnVisibilityChange: enableColumnVisibility
+      ? setColumnVisibility
+      : undefined,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: enableSorting ? getSortedRowModel() : undefined,
     getFilteredRowModel: enableFiltering ? getFilteredRowModel() : undefined,
-    getPaginationRowModel: enablePagination ? getPaginationRowModel() : undefined,
+    getPaginationRowModel: enablePagination
+      ? getPaginationRowModel()
+      : undefined,
     initialState: {
       pagination: {
         pageSize,
@@ -240,11 +246,7 @@ export const useTableExport = <T>({
 /**
  * Helper function to trigger file download
  */
-const downloadFile = (
-  content: string,
-  fileName: string,
-  mimeType: string
-) => {
+const downloadFile = (content: string, fileName: string, mimeType: string) => {
   const blob = new Blob([content], { type: mimeType });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
@@ -261,12 +263,12 @@ const downloadFile = (
  *
  * @example
  * const { saveState, loadState } = useTableStatePersistence("movies-table");
- * 
+ *
  * // Save state
  * useEffect(() => {
  *   saveState({ sorting, columnFilters, columnVisibility });
  * }, [sorting, columnFilters, columnVisibility]);
- * 
+ *
  * // Load state on mount
  * useEffect(() => {
  *   const saved = loadState();

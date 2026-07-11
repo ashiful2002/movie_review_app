@@ -30,6 +30,7 @@ export default function MovieCard({ movie, premiumUser }: MovieCardProps) {
       ? movie.reviews.reduce((a: any, b: any) => a + b.rating, 0) /
         movie.reviews.length
       : 0;
+  console.log(movie);
 
   return (
     <motion.div
@@ -70,10 +71,23 @@ export default function MovieCard({ movie, premiumUser }: MovieCardProps) {
           </div>
         </CardHeader>
 
-        <CardContent className="p-5 space-y-2">
+        <CardContent className="px-5 space-y-2">
           <h3 className="text-xl font-bold leading-tight">{movie.title}</h3>
-          <p className="text-sm line-clamp-2">{movie.description}</p>
-
+          <p className="text-sm line-clamp-2">
+            {movie.description.slice(0, 50)}
+          </p>
+          {movie.cast.length > 0 && (
+            <div className="flex flex-wrap gap-2 pt-2">
+              <span>
+                Casts:{" "}
+                {movie.cast.slice(0, 2).map((cast: string) => (
+                  <span key={cast} className="">
+                    {cast.split(" ")[0]}
+                  </span>
+                ))}
+              </span>
+            </div>
+          )}
           <div className="flex items-center gap-2 pt-2">
             <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
             <span className="text-sm font-medium">
@@ -83,16 +97,21 @@ export default function MovieCard({ movie, premiumUser }: MovieCardProps) {
               ({movie.reviews?.length || 0})
             </span>
           </div>
-
-          {movie.cast.length > 0 && (
+          {movie.genres.length > 0 && (
             <div className="flex flex-wrap gap-2 pt-2">
-              {movie.cast.slice(0, 2).map((cast: string) => (
-                <Badge variant={"default"} key={cast} className="">
-                  {cast.split(" ")[0]}
-                </Badge>
+              {movie.genres.slice(0, 2).map((item) => (
+                <span
+                  className="border border-amber-400 rounded px-2"
+                  key={item.genreId}
+                >
+                  {item.genre.name}
+                </span>
               ))}
             </div>
           )}
+          <span className="text-sm font-medium">
+            IMDB Rating: {movie.imdbRating}
+          </span>
         </CardContent>
         <Separator />
 
@@ -101,8 +120,7 @@ export default function MovieCard({ movie, premiumUser }: MovieCardProps) {
             <AddWatchlistButton text=" " movieId={movie.id} />
             <AddFavouriteButton text=" " movieId={movie.id} />
           </div>
-          <MovieDetails movieId={movie.id} />
-
+          <MovieDetails movieId={movie.slug} />
           {premiumUser ? (
             // <AddtoWatchlist movie={movie} />
             ""
