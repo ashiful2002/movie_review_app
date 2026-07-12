@@ -31,13 +31,18 @@ export const getAllMovies = async (params?: Record<string, any>) => {
       return {
         success: false,
         message: data.message,
+        movies: [], // ← always predictable shape
       };
     }
 
     return data;
   } catch (err: any) {
     console.error(err);
-    return null;
+    return {
+      success: false,
+      message: err.message ?? "Failed to fetch movies",
+      movies: [], // ← never return null
+    };
   }
 };
 

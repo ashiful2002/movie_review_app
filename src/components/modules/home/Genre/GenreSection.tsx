@@ -3,6 +3,7 @@ import GenreCard from "./GenreCard";
 
 export default async function GenreSection() {
   const genres = await getAllGenres();
+  console.log(genres.data.length);
 
   return (
     <section className="container mx-auto px-4 py-20">
@@ -21,7 +22,7 @@ export default async function GenreSection() {
       </div>
 
       <div className="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
-        {genres?.data?.map((genre: any) => (
+        {genres?.data?.slice(0, 12).map((genre: any) => (
           <GenreCard key={genre.id} genre={genre} />
         ))}
       </div>

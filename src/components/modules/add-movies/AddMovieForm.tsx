@@ -25,8 +25,7 @@ const schema = z.object({
   description: z.string().min(10, "Description is required"),
   releaseYear: z.coerce.number(),
   director: z.string().min(2),
-  price: z.coerce.number().min(0),
-  isPremium: z.boolean(),
+
   genreIds: z.array(z.string()).min(1, "Select at least one genre"),
   cast: z.array(z.string()),
   language: z.array(z.string()).min(1, "Select at least one language"),
@@ -38,7 +37,6 @@ const schema = z.object({
   awards: z.array(z.string()),
   status: z.enum(["UPCOMING", "NOW_SHOWING", "RELEASED", "ARCHIVED"]),
   imdbRating: z.coerce.number().min(0).max(10),
-  averageRating: z.coerce.number().min(0).max(5),
   isFeatured: z.boolean(),
   trailerLink: z
     .string()
@@ -80,8 +78,7 @@ export default function AddMovieForm({ genres }: any) {
       description: "",
       releaseYear: new Date().getFullYear(),
       director: "",
-      price: 0,
-      isPremium: false,
+
       genreIds: [],
       cast: [],
       language: [],
@@ -93,9 +90,8 @@ export default function AddMovieForm({ genres }: any) {
       awards: [],
 
       trailerLink: "",
-      status: "UPCOMING",
+      status: "RELEASED",
       imdbRating: 0,
-      averageRating: 0,
       isFeatured: false,
       budget: 0,
     },

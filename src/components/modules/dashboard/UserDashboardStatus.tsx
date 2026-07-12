@@ -41,8 +41,6 @@ interface UserDashboardStatsProps {
 }
 
 export function UserDashboardStats({ data }: UserDashboardStatsProps) {
-  console.log(data?.totalReviews, "data");
-
   if (!data) {
     return <div>Failed to load your statistics</div>;
   }

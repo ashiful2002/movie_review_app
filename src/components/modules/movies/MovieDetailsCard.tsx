@@ -121,6 +121,8 @@ const TrailerModal = ({
 };
 
 const MovieDetails = ({ movie, premiumUser }: MovieDetailsProps) => {
+  console.log(movie);
+
   const [trailerOpen, setTrailerOpen] = useState(false);
 
   const userRating =
@@ -249,8 +251,8 @@ const MovieDetails = ({ movie, premiumUser }: MovieDetailsProps) => {
             )}
 
             <div className="flex flex-col gap-2 pt-2 border-t border-dashed border-[#2A2C36]">
-              <AddWatchlistButton movieId={movie.id} />
-              <AddFavouriteButton movieId={movie.id} />
+              <AddWatchlistButton movieId={movie?.id} />
+              <AddFavouriteButton movieId={movie?.id} />
               <ReviewModal movieId={movie?.id} />
             </div>
           </div>
