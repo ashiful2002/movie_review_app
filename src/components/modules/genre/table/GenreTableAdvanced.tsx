@@ -45,7 +45,7 @@ export default function GenreTableAdvanced({ genres }: { genres: Genre[] }) {
   const [editingGenre, setEditingGenre] = useState<Genre | null>(null);
 
   const filteredAndSortedGenres = useMemo(() => {
-    const filtered = genres.filter((genre) => {
+    const filtered = genres?.filter((genre) => {
       const matchesSearch = genre.name
         .toLowerCase()
         .includes(searchTerm.toLowerCase());

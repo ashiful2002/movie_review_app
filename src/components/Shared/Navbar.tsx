@@ -19,7 +19,6 @@ export default function Navbar() {
 
   const pathname = usePathname();
 
-
   useEffect(() => {
     const getCurrentUser = async () => {
       const userData = await getUser();
@@ -34,14 +33,15 @@ export default function Navbar() {
   const navLinks: any[] = [
     { name: "Home", href: "/" },
     { name: "Movies", href: "/movies" },
-
-
   ];
 
-  const userNavs = [{ name: "Watchlist", href: "/watchlist" },
-  { name: "favourite", href: "/favourite" }, { name: "plans", href: "/plans" }]
+  const userNavs = [
+    { name: "Watchlist", href: "/watchlist" },
+    { name: "Favourite", href: "/favourite" },
+    { name: "Plans", href: "/plans" },
+  ];
 
-  const userRole = user?.role
+  const userRole = user?.role;
 
   const firstName = user?.name?.trim()?.split(" ")?.[0] || "";
   return (
@@ -52,7 +52,10 @@ export default function Navbar() {
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-6">
           <div className="">
-            <Input placeholder="search movies" className="text-slate-400 w-96" />
+            <Input
+              placeholder="search movies"
+              className="text-slate-400 w-96"
+            />
           </div>
           {user && user?.isPremium && (
             <p className="flex">
@@ -63,8 +66,9 @@ export default function Navbar() {
             <Link
               key={link.name}
               href={link.href}
-              className={`text-sm font-medium transition-colors ${pathname === link.href ? "text-yellow-400" : ""
-                }`}
+              className={`text-sm font-medium transition-colors ${
+                pathname === link.href ? "text-yellow-400" : ""
+              }`}
             >
               {link.name}
             </Link>
@@ -72,17 +76,20 @@ export default function Navbar() {
 
           {user ? (
             <>
-              {user && userRole == "USER" ? userNavs.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className={`text-sm font-medium transition-colors ${pathname === link.href ? "text-yellow-400" : ""
-                    }`}
-                >
-                  {link.name}
-                </Link>
-              )) : ""}
-              <Link href={"/dashboard"} >
+              {user && userRole == "USER"
+                ? userNavs.map((link) => (
+                    <Link
+                      key={link.name}
+                      href={link.href}
+                      className={`text-sm font-medium transition-colors ${
+                        pathname === link.href ? "text-yellow-400" : ""
+                      }`}
+                    >
+                      {link.name}
+                    </Link>
+                  ))
+                : ""}
+              <Link href={"/dashboard"}>
                 <Button className="cursor-pointer">Dashboard</Button>
               </Link>
               <LogOut />
@@ -121,8 +128,9 @@ export default function Navbar() {
                   key={link.name}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className={`text-lg font-medium transition-colors ${pathname === link.href ? "text-yellow-400" : ""
-                    }`}
+                  className={`text-lg font-medium transition-colors ${
+                    pathname === link.href ? "text-yellow-400" : ""
+                  }`}
                 >
                   {link.name}
                 </Link>

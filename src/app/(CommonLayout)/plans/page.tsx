@@ -3,7 +3,6 @@ import { getSubscriptionPlans } from "@/services/subscriptions";
 
 const page = async () => {
   const { data: plans } = await getSubscriptionPlans();
-  console.log(plans);
 
   return (
     <div>

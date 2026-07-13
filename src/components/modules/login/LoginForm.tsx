@@ -52,12 +52,7 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
 
   const handleGoogleLogin = async () => {
     try {
-      // ✅ NEW: Use initiateGoogleLogin() from authentication service
-      // This uses your backend's Google OAuth endpoint
       await initiateGoogleLogin();
-
-      // Note: initiateGoogleLogin() uses redirect(), so this won't be reached
-      // unless there's an error
     } catch (error) {
       console.error("Google login error:", error);
       toast.error("Failed to initiate Google login");
@@ -72,7 +67,7 @@ export function LoginForm({ className, ...props }: LoginFormProps) {
       const result = await loginUser(data);
 
       if (result?.success) {
-        toast.success("Login successful!");
+        toast.success("Login successful!", { position: "top-center" });
         router.push("/dashboard");
       } else {
         setServerError(result?.message || "Login failed");

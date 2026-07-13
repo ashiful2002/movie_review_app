@@ -17,7 +17,6 @@ interface ActionButtonProps {
   className?: string;
   disabled?: boolean;
   tooltip?: ReactNode;
-
 }
 
 export const ActionButton = ({
@@ -32,7 +31,7 @@ export const ActionButton = ({
   tooltip,
 }: ActionButtonProps) => {
   const baseStyles =
-    "px-4 rounded-lg text-base font-semibold flex items-center justify-center gap-2";
+    "px-4 rounded -lg text-base font-semibold flex items-center justify-center gap-2";
 
   const variantStyles = {
     outline: "border",
@@ -68,9 +67,7 @@ export const ActionButton = ({
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>{content}</TooltipTrigger>
-        <TooltipContent>
-          {tooltip}
-        </TooltipContent>
+        <TooltipContent>{tooltip}</TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );

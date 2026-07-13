@@ -10,7 +10,7 @@ import Link from "next/link";
 
 export default async function Home() {
   const data = await getAllMovies();
-  const movies = data?.data;
+  const movies = data?.data || [];
   const user = await getUser();
   const premiumUser = user?.isPremium || false;
 
