@@ -16,10 +16,9 @@ export interface IRagSource {
 }
 
 export interface IMovie {
-  title: string;
-  poster: string;
+  name: string;
+  director: string;
   genre: string;
-  rating: number | string;
 }
 
 export interface IRagAnswerMovies {
@@ -27,9 +26,19 @@ export interface IRagAnswerMovies {
 }
 
 export interface IRagQueryData {
-  answer: IRagAnswerMovies | string;
-  source: IRagSource[];
-  contextUsed: string;
+  success: boolean;
+  message: string;
+  data: {
+    answer:
+      | string
+      | {
+          movies: IMovie[];
+        };
+    sources: {
+      similarity: number;
+    }[];
+    contextUsed: boolean;
+  };
 }
 
 export interface IIngestMovieData {
@@ -56,12 +65,14 @@ export const queryRagServices = async (
     throw new Error("Failed to fetch rag query");
   }
 
-  return response.json() as Promise<IRagQueryData>;
+  const result = await response.json();
+
+  return result;
 };
 
 export const ingestMovieServices = async (): Promise<IIngestMovieData> => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/rag/ingest-movies`,
+    `${process.env.NEXT_PUBLIC_BACKEND_API}/rag/ingest-movies`,
     {
       method: "POST",
       headers: {

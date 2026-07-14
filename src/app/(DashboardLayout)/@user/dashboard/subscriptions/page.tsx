@@ -1,16 +1,26 @@
 import SubscriptionPlanCard from "@/components/modules/Subscriptions/card/SubscriptionPlanCard";
-import { getUser } from "@/services/authentication";
 import { getSubscriptionPlans } from "@/services/subscriptions";
 
+export const dynamic = "force-dynamic";
+
 const page = async () => {
-  const { data: plans } = await getSubscriptionPlans();
-  if (!plans || !plans.ok) {
-     return <div>Unable to load subscriptions.</div>;
+  let plans: any[] = [];
+
+  try {
+    const res = await getSubscriptionPlans();
+    plans = res?.data ?? [];
+  } catch (error) {
+    console.error("Failed to load subscription plans:", error);
   }
+
+  if (!plans.length) {
+    return <div>Unable to load subscriptions.</div>;
+  }
+
   return (
     <div className="min-h-screen bg-muted/20 p-6 md:p-10 flex justify-center">
       <div className="grid md:grid-cols-3 gap-6">
-        {plans?.map((plan: any) => (
+        {plans.map((plan: any) => (
           <SubscriptionPlanCard
             key={plan.id}
             id={plan.id}

@@ -1,22 +1,15 @@
-// app/auth/callback/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { handleGoogleCallback } from "@/services/authentication";
 
-/**
- * Google OAuth Callback Handler
- * Called by Google after user authenticates
- * Expected query params: token or code depending on your backend setup
- */
+
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
     
-    // Try to get token directly from callback
     const token = searchParams.get("token");
     const code = searchParams.get("code");
     const error = searchParams.get("error");
 
-    // Handle OAuth errors
     if (error) {
       const errorDescription = searchParams.get("error_description") || error;
       console.error("Google OAuth error:", errorDescription);

@@ -1,5 +1,6 @@
 import MyFavourite from "@/components/modules/user/favourite/MyFavourite";
 import { getFavourite } from "@/services/favourite";
+export const dynamic = "force-dynamic";
 
 const FavouritePage = async () => {
   const result = await getFavourite();

@@ -43,7 +43,7 @@ export default function MovieCard({ movie, premiumUser }: MovieCardProps) {
       transition={{ duration: 0.25, ease: "easeOut" }}
       className="w-full h-full"
     >
-      <Card className="group overflow-hidden rounded-sm bg-[#171922] border border-[#2A2C36] p-0 gap-0 transition-shadow hover:shadow-[0_0_0_1px_#D4A24C,0_12px_28px_-8px_rgba(212,162,76,0.25)]">
+      <Card className="group overflow-hidden rounded-sm dark:bg-[#171922] bg-gray-100 border dark:border-[#2A2C36] p-0 gap-0 transition-shadow hover:shadow-[0_0_0_1px_#D4A24C,0_12px_28px_-8px_rgba(212,162,76,0.25)]">
         <CardHeader className="p-0 relative">
           <div className="relative w-full aspect-[2/3] overflow-hidden">
             <Image

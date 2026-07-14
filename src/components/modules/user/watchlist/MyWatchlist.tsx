@@ -1,4 +1,3 @@
-
 import { removeFromWatchlist } from "@/app/_actions/watchlist.actions";
 import { MovieTable } from "@/components/Shared/MovieTable";
 import { getWatchlist } from "@/services/watchlist";

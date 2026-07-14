@@ -3,7 +3,9 @@ import { getSubscriptionPlans } from "@/services/subscriptions";
 
 const page = async () => {
   const { data: plans } = await getSubscriptionPlans();
-
+  if (!plans) {
+    return <div>no plans found</div>;
+  }
   return (
     <div>
       <div className="container mx-auto bg-muted/20 p-6 md:p-10 flex justify-center">

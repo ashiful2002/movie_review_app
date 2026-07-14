@@ -33,7 +33,7 @@ export const SuperAdminDashboardStats = ({
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
           title="Total Users"
-          value={statsData.totalUsers.toLocaleString()}
+          value={statsData?.totalUsers?.toLocaleString()}
           description="Active platform users"
           icon={Users}
           bgColor="bg-blue-50 dark:bg-blue-950"

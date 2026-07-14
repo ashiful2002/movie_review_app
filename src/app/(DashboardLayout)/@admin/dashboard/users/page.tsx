@@ -11,8 +11,7 @@ const Page = async () => {
   return (
     <div className="space-y-10 ml-5">
       <UserTable title="Admins" users={admins} />
-      <UserTable title="Providers" users={providers} />
-      <UserTable title="Customers" users={customers} />
+   
     </div>
   );
 };

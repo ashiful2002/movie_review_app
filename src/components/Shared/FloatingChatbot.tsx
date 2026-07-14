@@ -91,7 +91,7 @@ export default function FloatingChatbot() {
               AI Assistant
             </CardTitle>
             <div className="flex items-center gap-2">
-              {(userRole === "admin" || userRole === "superAdmin") && (
+              {(userRole === "ADMIN" || userRole === "SUPER_ADMIN") && (
                 <Button
                   variant="outline"
                   size="icon"

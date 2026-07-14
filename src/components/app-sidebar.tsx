@@ -126,6 +126,16 @@ const admin_nav: NavItem[] = [
         url: "/dashboard/genre",
         icon: Tags,
       },
+      {
+        title: "Manage Users",
+        url: "/dashboard/manage-users",
+        icon: User,
+      },
+      {
+        title: "Profile",
+        url: "/dashboard/profile",
+        icon: Plus,
+      },
     ],
   },
 ];

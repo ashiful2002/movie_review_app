@@ -10,8 +10,11 @@ import {
 import { useState } from "react";
 import { useQueryFilters } from "@/hooks/useQueryFilters";
 
-export type Genre = { id: string; name: string };
-
+export type Genre = {
+  id: string;
+  name: string;
+  slug: string;
+};
 type MovieFilterProps = {
   genres?: Genre[];
 };
@@ -151,7 +154,10 @@ const MovieFilter = ({ genres = [] }: MovieFilterProps) => {
     isPending,
   } = useQueryFilters({ keys: FILTER_KEYS });
 
-  const genreOptions = genres.map((g) => ({ label: g.name, value: g.id }));
+  const genreOptions = genres.map((g) => ({
+    label: g.name,
+    value: g.slug,
+  }));
   const languageOptions = LANGUAGES.map((l) => ({ label: l, value: l }));
   const ageRatingOptions = AGE_RATINGS.map((r) => ({ label: r, value: r }));
   const statusOptions = STATUSES.map((s) => ({

@@ -2,6 +2,7 @@
 
 import { cookies } from "next/headers";
 import { CACHE_TAGS } from "@/lib/cache-tags";
+import { revalidateTag } from "next/cache";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BACKEND_API;
 
@@ -26,7 +27,7 @@ export const getWatchlist = async () => {
         message: data.message,
       };
     }
-
+    revalidateTag(CACHE_TAGS.WATCHLIST, {});
     return data;
   } catch (error) {
     console.error(error);
