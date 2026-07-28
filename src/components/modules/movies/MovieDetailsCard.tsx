@@ -75,7 +75,7 @@ const Perforation = ({ className = "" }: { className?: string }) => (
 );
 
 // Full-bleed backdrop modal with a 16:9 YouTube embed inside.
-const TrailerModal = ({
+export const TrailerModal = ({
   videoId,
   onClose,
 }: {

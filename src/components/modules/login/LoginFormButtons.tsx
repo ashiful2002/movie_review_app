@@ -29,12 +29,15 @@ export function LoginFormButtons({
         type="button"
         className="w-full"
       >
-        Login with Google
+        Continue with Google
       </Button>
 
       <FieldDescription className="text-center">
         Don&apos;t have an account?{" "}
-        <Link href="/signup" className="underline">
+        <Link
+          href="/signup"
+          className="underline text-yellow-400 hover:text-yellow-500"
+        >
           Sign up
         </Link>
       </FieldDescription>

@@ -8,12 +8,14 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Star, Eye, Play } from "lucide-react";
+import { Star, Eye, Play, X } from "lucide-react";
 import { motion } from "framer-motion";
 import MovieDetails from "@/components/Buttons/movie/ViewDetails";
 import { Movie } from "@/types/movie";
 import AddWatchlistButton from "@/components/Buttons/movie/AddtoWatchlist";
 import AddFavouriteButton from "@/components/Buttons/movie/AddFavourite";
+import { toast } from "sonner";
+import { useEffect } from "react";
 
 interface MovieCardProps {
   movie: Movie;
@@ -33,7 +35,73 @@ export default function MovieCard({ movie, premiumUser }: MovieCardProps) {
       : movie.averageRating ?? 0;
 
   const locked = movie.isPremium && !premiumUser;
+  // Pulls a video ID out of watch?v=, youtu.be/, embed/, and shorts/ URLs.
+  const getYouTubeId = (url?: string) => {
+    if (!url) return null;
+    const match = url.match(
+      /(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
+    );
+    return match ? match[1] : null;
+  };
 
+  const Perforation = ({ className = "" }: { className?: string }) => (
+    <div
+      className={`hidden md:block w-px self-stretch relative text-[#D8D5CC] dark:text-[#4A4C58] ${className}`}
+      style={{
+        backgroundImage:
+          "repeating-linear-gradient(to bottom, currentColor 0, currentColor 6px, transparent 6px, transparent 14px)",
+      }}
+    >
+      <span className="absolute -top-3 -left-[7px] w-3.5 h-3.5 rounded-full bg-[#F5F3EE] dark:bg-[#0E0F13] border border-[#D8D5CC] dark:border-[#2A2C36]" />
+      <span className="absolute -bottom-3 -left-[7px] w-3.5 h-3.5 rounded-full bg-[#F5F3EE] dark:bg-[#0E0F13] border border-[#D8D5CC] dark:border-[#2A2C36]" />
+    </div>
+  );
+
+  // Full-bleed backdrop modal with a 16:9 YouTube embed inside.
+  const TrailerModal = ({
+    videoId,
+    onClose,
+  }: {
+    videoId: string;
+    onClose: () => void;
+  }) => {
+    useEffect(() => {
+      const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+      document.addEventListener("keydown", onKey);
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.removeEventListener("keydown", onKey);
+        document.body.style.overflow = "";
+      };
+    }, [onClose]);
+
+    return (
+      <div
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 md:p-10"
+        onClick={onClose}
+      >
+        <button
+          onClick={onClose}
+          className="absolute top-5 right-5 md:top-8 md:right-8 text-[#EDEAE3] hover:text-[#D4A24C] transition-colors"
+          aria-label="Close trailer"
+        >
+          <X className="w-7 h-7" />
+        </button>
+        <div
+          className="w-full max-w-4xl aspect-video border border-[#2A2C36] shadow-2xl"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <iframe
+            className="w-full h-full"
+            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
+            title="Trailer"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            allowFullScreen
+          />
+        </div>
+      </div>
+    );
+  };
   return (
     <motion.div
       // initial={{ opacity: 0, y: 16 }}
@@ -58,7 +126,10 @@ export default function MovieCard({ movie, premiumUser }: MovieCardProps) {
             {/* Hover reveal */}
             <div className="absolute inset-0 bg-[#0E0F13]/0 group-hover:bg-[#0E0F13]/50 transition-colors flex items-center justify-center">
               <div className="w-11 h-11 rounded-full bg-yellow-400 flex items-center justify-center opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all">
-                <Play className="w-4 h-4 fill-[#0E0F13] text-[#0E0F13] ml-0.5" />
+                <Play
+                  onClick={() => toast("cloiekc")}
+                  className="w-4 h-4 fill-[#0E0F13] text-[#0E0F13] ml-0.5"
+                />
               </div>
             </div>
 

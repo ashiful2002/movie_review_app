@@ -12,7 +12,7 @@ async function getToken() {
 export async function getProfile() {
   const token = await getToken();
 
-  const res = await fetch(`${API}/users/me`, {
+  const res = await fetch(`${API}/auth/me`, {
     headers: {
       Authorization: token ?? "",
     },

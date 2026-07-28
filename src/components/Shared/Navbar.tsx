@@ -98,7 +98,9 @@ export default function Navbar() {
           ) : (
             <>
               <Link href={"/login"}>
-                <Button className="cursor-pointer">Login</Button>
+                <Button className="cursor-pointer bg-yellow-400 hover:bg-yellow-500 font-semibold">
+                  Login
+                </Button>
               </Link>
               <ModeToggle />
             </>
@@ -135,6 +137,19 @@ export default function Navbar() {
                   {link.name}
                 </Link>
               ))}
+              {user && userRole == "USER"
+                ? userNavs.map((link) => (
+                    <Link
+                      key={link.name}
+                      href={link.href}
+                      className={`text-lg font-medium transition-colors ${
+                        pathname === link.href ? "text-yellow-400" : ""
+                      }`}
+                    >
+                      {link.name}
+                    </Link>
+                  ))
+                : ""}
               {user ? (
                 <>
                   <Link href={"/dashboard"}>

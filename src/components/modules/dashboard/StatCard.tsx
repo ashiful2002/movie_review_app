@@ -45,7 +45,7 @@ export function StatCard({
       <CardContent>
         <div className="text-2xl font-bold">{value}</div>
         {description && (
-          <p className="text-xs text-green-600 dark:text-green-400mt-1">
+          <p className="text-xs text-yellow-400 mt-1">
             {description}
           </p>
         )}

@@ -15,6 +15,7 @@ import {
   ShieldCheck,
   Star,
   CreditCard,
+  ShieldUser,
 } from "lucide-react";
 import { NavMain } from "@/components/nav-main";
 import { NavUser } from "@/components/nav-user";
@@ -134,7 +135,7 @@ const admin_nav: NavItem[] = [
       {
         title: "Profile",
         url: "/dashboard/profile",
-        icon: Plus,
+        icon: ShieldUser,
       },
     ],
   },
