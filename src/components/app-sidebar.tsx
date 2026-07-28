@@ -133,7 +133,7 @@ const admin_nav: NavItem[] = [
         icon: User,
       },
       {
-        title: "Profile",
+        title: "My Profile",
         url: "/dashboard/profile",
         icon: ShieldUser,
       },
@@ -177,6 +177,11 @@ const super_admin_nav: NavItem[] = [
         title: "Add Genre",
         url: "/dashboard/add-genre",
         icon: Tag,
+      },
+      {
+        title: "My Profile",
+        url: "/dashboard/profile",
+        icon: ShieldUser,
       },
     ],
   },

@@ -6,13 +6,13 @@ import AddressInfo from "./AddressInfo";
 import AccountInfo from "./AccountInfo";
 import ProfileActions from "./ProfileActions";
 import { UserProfile } from "@/app/(DashboardLayout)/@user/dashboard/profile/types";
- 
+
 interface ProfileCardProps {
   user: UserProfile;
 }
 
 const ROLE_COLORS: Record<string, string> = {
-  USER: "bg-blue-500 hover:bg-blue-500",
+  USER: "bg-yellow-400 ",
   ADMIN: "bg-red-500 hover:bg-red-500",
   PROVIDER: "bg-emerald-500 hover:bg-emerald-500",
   SUPER_ADMIN: "bg-violet-500 hover:bg-violet-500",
@@ -55,12 +55,8 @@ const ProfileCard = ({ user }: ProfileCardProps) => {
                 {user.role}
               </Badge>
 
-              <Badge
-                variant={user.emailVerified ? "default" : "secondary"}
-              >
-                {user.emailVerified
-                  ? "Email Verified"
-                  : "Email Not Verified"}
+              <Badge variant={user.emailVerified ? "default" : "secondary"}>
+                {user.emailVerified ? "Email Verified" : "Email Not Verified"}
               </Badge>
 
               {user.isPremium && (
@@ -75,7 +71,7 @@ const ProfileCard = ({ user }: ProfileCardProps) => {
         <CardContent className="space-y-6 p-6">
           <ContactInfo user={user} />
 
-          <AddressInfo user={user} />
+          {/* <AddressInfo user={user} /> */}
 
           <AccountInfo user={user} />
 

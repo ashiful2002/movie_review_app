@@ -8,6 +8,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function TextField({
   control,
@@ -15,6 +16,7 @@ export default function TextField({
   label,
   placeholder,
   className,
+  textarea = false,
 }: any) {
   return (
     <FormField
@@ -24,7 +26,15 @@ export default function TextField({
         <FormItem className={className}>
           <FormLabel>{label}</FormLabel>
           <FormControl>
-            <Input placeholder={placeholder} {...field} />
+            {textarea ? (
+              <Textarea
+                placeholder={placeholder}
+                className="min-h-32"
+                {...field}
+              />
+            ) : (
+              <Input placeholder={placeholder} {...field} />
+            )}
           </FormControl>
           <FormMessage />
         </FormItem>

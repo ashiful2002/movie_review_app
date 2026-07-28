@@ -1,7 +1,7 @@
 import { Mail, Phone } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { UserProfile } from "@/app/(DashboardLayout)/@user/dashboard/profile/types";
- 
+
 interface ContactInfoProps {
   user: UserProfile;
 }
@@ -26,7 +26,7 @@ const ContactInfo = ({ user }: ContactInfoProps) => {
           </div>
         </div>
 
-        <div className="flex items-center gap-4 rounded-lg border p-4 transition-colors hover:bg-muted/50">
+        {/* <div className="flex items-center gap-4 rounded-lg border p-4 transition-colors hover:bg-muted/50">
           <div className="rounded-full bg-primary/10 p-3">
             <Phone className="h-5 w-5 text-primary" />
           </div>
@@ -44,7 +44,7 @@ const ContactInfo = ({ user }: ContactInfoProps) => {
               )}
             </p>
           </div>
-        </div>
+        </div> */}
       </CardContent>
     </Card>
   );

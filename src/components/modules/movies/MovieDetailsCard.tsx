@@ -119,9 +119,20 @@ export const TrailerModal = ({
     </div>
   );
 };
+const formatDuration = (minutes: number) => {
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
 
+  if (hours === 0) return `${mins} min`;
+  if (mins === 0) return `${hours} hour${hours > 1 ? "s" : ""}`;
+
+  return `${hours} hour${hours > 1 ? "s" : ""} ${mins} min`;
+};
 const MovieDetails = ({ movie, premiumUser }: MovieDetailsProps) => {
   const [trailerOpen, setTrailerOpen] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+
+  const shouldTruncate = movie?.description.length > 250;
 
   const userRating =
     movie?.reviews?.length > 0
@@ -156,9 +167,6 @@ const MovieDetails = ({ movie, premiumUser }: MovieDetailsProps) => {
                 Premium
               </Badge>
             )}
-            <Badge className="rounded-none px-2.5 py-1 text-[11px] font-mono tracking-widest uppercase bg-[#EDEAE3] dark:bg-[#171922] text-[#4A4B54] dark:text-[#9B9CA6] border border-[#D8D5CC] dark:border-[#2A2C36]">
-              {movie?.status}
-            </Badge>
           </div>
 
           {/* Text sits over the image, always needs to stay light regardless of theme */}
@@ -166,11 +174,25 @@ const MovieDetails = ({ movie, premiumUser }: MovieDetailsProps) => {
             {movie?.title}
           </h1>
 
-          <p className="text-[#C9C6BE] mt-1 max-w-2xl leading-relaxed">
-            {movie?.description}
+          <p className="mt-1 max-w-2xl leading-relaxed text-[#C9C6BE]">
+            {expanded || !shouldTruncate
+              ? movie?.description
+              : `${movie?.description.slice(0, 250)}...`}
+
+            {shouldTruncate && (
+              <button
+                onClick={() => setExpanded(!expanded)}
+                className="ml-2 font-medium text-primary hover:underline"
+              >
+                {expanded ? "Show Less" : "Show More"}
+              </button>
+            )}
           </p>
 
-          <div className="flex flex-wrap items-center gap-3 pt-2">
+          <div className="flex flex-wrap gap-3 pt-2">
+            <Badge className="rounded-none px-2.5 py-1 text-[11px] font-mono tracking-widest uppercase bg-[#EDEAE3] dark:bg-[#171922] text-[#4A4B54] dark:text-[#9B9CA6] border border-[#D8D5CC] dark:border-[#2A2C36]">
+              {movie?.status}
+            </Badge>{" "}
             {trailerId && (
               <button
                 onClick={() => setTrailerOpen(true)}
@@ -239,7 +261,9 @@ const MovieDetails = ({ movie, premiumUser }: MovieDetailsProps) => {
                 <span className="flex items-center gap-1">
                   <Ticket className="w-3.5 h-3.5" /> Rated
                 </span>
-                <span className="text-[#1A1B22] dark:text-[#EDEAE3]">{movie.rating}</span>
+                <span className="text-[#1A1B22] dark:text-[#EDEAE3]">
+                  {movie.rating}
+                </span>
               </div>
             )}
 
@@ -257,14 +281,18 @@ const MovieDetails = ({ movie, premiumUser }: MovieDetailsProps) => {
             <div className="flex flex-col md:flex-row justify-between items-start gap-4">
               <div className="space-y-1.5">
                 <p className="text-sm">
-                  <span className="text-[#6B6C76] dark:text-[#9B9CA6]">Director </span>
+                  <span className="text-[#6B6C76] dark:text-[#9B9CA6]">
+                    Director{" "}
+                  </span>
                   <span className="font-medium">
                     {movie?.director || "Unknown"}
                   </span>
                 </p>
                 {movie?.cast?.length > 0 && (
                   <p className="text-sm">
-                    <span className="text-[#6B6C76] dark:text-[#9B9CA6]">Cast </span>
+                    <span className="text-[#6B6C76] dark:text-[#9B9CA6]">
+                      Cast{" "}
+                    </span>
                     {movie.cast.join(", ")}
                   </p>
                 )}
@@ -320,12 +348,12 @@ const MovieDetails = ({ movie, premiumUser }: MovieDetailsProps) => {
               )}
               {movie?.duration && (
                 <div className="flex items-start gap-2">
-                  <Clock className="w-4 h-4 mt-0.5 text-[#6B6C76] dark:text-[#9B9CA6]" />
+                  <Clock className="mt-0.5 h-4 w-4 text-[#6B6C76] dark:text-[#9B9CA6]" />
                   <div>
                     <div className="text-[10px] uppercase tracking-wider text-[#6B6C76] dark:text-[#9B9CA6]">
                       Duration
                     </div>
-                    {movie.duration} min
+                    {formatDuration(movie.duration)}
                   </div>
                 </div>
               )}

@@ -32,6 +32,7 @@ export default function MultiInputField({
               placeholder={`Add ${label}`}
             />
             <Button
+              className="bg-yellow-400 font-semibold hover:bg-yellow-500 cursor-pointer"
               type="button"
               onClick={() => {
                 if (!input) return;

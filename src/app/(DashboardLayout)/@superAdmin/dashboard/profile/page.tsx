@@ -1,10 +1,11 @@
+import { getProfile } from "@/app/(DashboardLayout)/@user/dashboard/profile/_actions";
 import ProfileCard from "@/components/modules/profile/ProfileCard";
-import { getProfile } from "./_actions";
 
 const ProfilePage = async () => {
-  const response = await getProfile();
+  const { data } = await getProfile();
+  console.log(data, "user ");
 
-  return <ProfileCard user={response?.data} />;
+  return <ProfileCard user={data?.user} />;
 };
 
 export default ProfilePage;

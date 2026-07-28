@@ -118,10 +118,7 @@ export default function AddMovieForm({ genres }: any) {
 
         <CardContent>
           <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="max-w-3xl border"
-            >
+            <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-3xl ">
               <fieldset disabled={isLoading} className="space-y-6 max-w-3xl">
                 <div className="flex items-start justify-between gap-5">
                   <ImageUploadField
@@ -149,6 +146,7 @@ export default function AddMovieForm({ genres }: any) {
                   name="description"
                   label="Description"
                   placeholder="Movie description"
+                  textarea
                 />
                 <TextField
                   control={form.control}
