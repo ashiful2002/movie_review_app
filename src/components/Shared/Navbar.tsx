@@ -90,7 +90,9 @@ export default function Navbar() {
                   ))
                 : ""}
               <Link href={"/dashboard"}>
-                <Button className="cursor-pointer">Dashboard</Button>
+                <Button className="cursor-pointer bg-yellow-400 hover:bg-yellow-500">
+                  Dashboard
+                </Button>
               </Link>
               <LogOut />
               <ModeToggle />

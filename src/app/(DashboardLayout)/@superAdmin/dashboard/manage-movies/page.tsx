@@ -2,7 +2,7 @@ import { getAllMovies } from "@/services/movies";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, MoveRightIcon, Plus } from "lucide-react";
 import Link from "next/link";
-import { MoviesTable } from "@/components/modules/super-admin/Manage-movies/movie-table";
+import { MoviesTable } from "@/components/modules/super-admin/manage-movies/movie-table";
 
 interface Movie {
   id: string;

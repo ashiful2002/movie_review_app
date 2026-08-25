@@ -1,6 +1,9 @@
 import { UserDashboardStats } from "@/components/modules/dashboard/UserDashboardStatus";
 import getStats from "@/services/stats";
-
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "Dashboard",
+};
 const UserDashboard = async () => {
   const statsData = await getStats();
 

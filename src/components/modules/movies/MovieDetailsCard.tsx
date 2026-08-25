@@ -25,6 +25,15 @@ import AddWatchlistButton from "@/components/Buttons/movie/AddtoWatchlist";
 import AddFavouriteButton from "@/components/Buttons/movie/AddFavourite";
 import { Movie } from "@/types/movie";
 
+// export async function generateMetadata({ params }: any) {
+//   const movie = await getSingleMovie(params.slug);
+
+//   return {
+//     title: movie.title,
+//     description: movie.description,
+//   };
+// }
+
 interface MovieDetailsProps {
   movie: Movie;
   premiumUser: boolean;

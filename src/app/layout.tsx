@@ -15,9 +15,75 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const siteUrl = "https://mm-db.vercel.app"; // Change if needed
+
 export const metadata: Metadata = {
-  title: "MMDB | Movie Review Server",
-  description: "mmdb movie revire platform",
+  metadataBase: new URL(siteUrl),
+
+  title: {
+    default: "MMDB | Movie Reviews & Ratings",
+    template: "%s | MMDB",
+  },
+
+  description:
+    "Discover movies, write reviews, rate your favourites, build watchlists, and explore community recommendations on MMDB.",
+
+  keywords: [
+    "movie reviews",
+    "movie ratings",
+    "movies",
+    "watchlist",
+    "film reviews",
+    "MMDB",
+    "cinema",
+  ],
+
+  applicationName: "MMDB",
+
+  authors: [
+    {
+      name: "Ashiful Islam Mukto",
+    },
+  ],
+
+  creator: "Ashiful Islam Mukto",
+
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: siteUrl,
+    siteName: "MMDB",
+    title: "MMDB | Movie Reviews & Ratings",
+    description:
+      "Discover, rate, and review movies with MMDB. Build your watchlist and explore what the community is watching.",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "MMDB",
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "MMDB | Movie Reviews & Ratings",
+    description:
+      "Discover, rate, and review movies with MMDB.",
+    images: ["/og-image.png"],
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+  },
+
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export default function RootLayout({

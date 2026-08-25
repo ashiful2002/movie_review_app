@@ -2,7 +2,7 @@ import { SuperAdminDashboardStats } from "@/components/modules/dashboard/AdminDa
 import getStats from "@/services/stats";
 
 const page = async () => {
-  const statsData = await getStats();
+  const { data: statsData } = await getStats();
 
   return (
     <div className="space-y-6">

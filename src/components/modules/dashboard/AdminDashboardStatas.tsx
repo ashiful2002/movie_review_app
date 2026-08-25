@@ -26,7 +26,7 @@ export const SuperAdminDashboardStats = ({
 }: {
   statsData: DashboardStats;
 }) => {
-  console.log(statsData.topReviewedMovies, "statsData");
+  // console.log(statsData, "statsData");
 
   return (
     <div className="space-y-8">
